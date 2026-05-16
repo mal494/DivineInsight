@@ -1,0 +1,318 @@
+/* --- 1. Global Variables & Theming --- */
+:root {
+    /* Color Palette */
+    --bg-base: #050508;
+    --bg-surface: rgba(18, 18, 28, 0.4);
+    --accent-primary: #00ffcc;
+    --accent-glow: rgba(0, 255, 204, 0.6);
+    --text-primary: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.6);
+    
+    /* Layout */
+    --card-width: 200px;
+    --card-height: 340px;
+    --border-radius: 12px;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif; /* Clean, modern font for UI */
+    overflow: hidden; /* Prevent scrolling during swipe/drag */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#audio-manager {
+    display: none;
+}
+
+/* --- Typography --- */
+h1, .cinzel {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+/* --- 2. Environment & Layers --- */
+.page-header {
+    position: relative;
+    z-index: 20;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px 10px;
+    box-sizing: border-box;
+}
+
+#reading-table {
+    position: relative;
+    width: 100vw;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The Canvas Particle Layer */
+#interaction-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none; /* Crucial: Lets clicks pass through to the cards/UI */
+}
+
+/* Ambient Vignette - Darkens edges to create a spotlight on the cards */
+#ambient-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 40%, transparent 20%, rgba(0, 0, 0, 0.8) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- 3. The Physical Table (Cards & Stack) --- */
+#table-center {
+    position: relative;
+    width: var(--card-width);
+    height: var(--card-height);
+    z-index: 10;
+    perspective: 1000px; /* Gives the 3D flip realistic depth */
+    /* Reset vertical nudge — we'll keep the deck centered when controls are at the top */
+    transform: translateY(0);
+}
+
+/* The illusion of a physical deck waiting underneath */
+#deck-stack {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+    background-image: url('assets/img/card-back.jpg'); /* Match the available card back asset */
+    background-position: center;
+    background-size: cover;
+    /* Uses multiple box-shadows to simulate stacked thickness */
+    box-shadow: 
+        -2px 2px 0px rgba(255,255,255,0.1),
+        -4px 4px 0px rgba(0,0,0,0.6),
+        -5px 5px 15px rgba(0,0,0,0.8);
+    z-index: 1;
+}
+
+#deck-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+/* --- 4. The Interactive Card --- */
+.card {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out; /* Baseline physics transition */
+}
+
+.card:active {
+    cursor: grabbing;
+}
+
+/* Smooth interpolation handled by JS overrides this during active drag */
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy, physical flip */
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg) scale(1.1); /* Slightly enlarge when revealed */
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+}
+
+.card-front {
+    background: url('assets/img/card-back.jpg') center/cover;
+}
+
+.card-back {
+    background-color: #1a1a2e; /* Placeholder until Worker returns the image */
+    background-position: center;
+    background-size: cover;
+    transform: rotateY(180deg);
+}
+
+/* The Magic Glow Layer */
+.card-glow {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 30px 10px var(--accent-glow);
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+}
+
+.card.flipped .card-glow {
+    opacity: 1; /* Ignites the glow when the card flips */
+}
+
+/* --- 5. UI & Glassmorphism --- */
+#ui-controls {
+    position: relative;
+    width: min(92vw, 560px);
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-header #ui-controls {
+    width: min(92vw, 560px);
+}
+
+.glass-panel {
+    background: var(--bg-surface);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.app-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--accent-primary);
+    text-shadow: 0 0 10px var(--accent-glow);
+    text-transform: uppercase;
+}
+
+/* Intent Input Field */
+.intent-group {
+    width: 100%;
+}
+
+#intent-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    padding: 8px 0;
+    transition: border-color 0.3s ease;
+    outline: none;
+}
+
+#intent-input::placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+#intent-input:focus {
+    border-bottom-color: var(--accent-primary);
+}
+
+/* Mystic Button */
+.mystic-button {
+    position: relative;
+    background: transparent;
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    padding: 12px 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.mystic-button .btn-text {
+    position: relative;
+    z-index: 2;
+}
+
+.mystic-button .btn-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--accent-glow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+    z-index: 1;
+    filter: blur(10px);
+}
+
+.mystic-button:hover .btn-glow {
+    width: 150%;
+    height: 300%;
+}
+
+.mystic-button:hover {
+    color: var(--bg-base);
+    text-shadow: none;
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+#status-text {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    min-height: 1.2rem;
+}
+
+/* Responsive adjustments: reduce the upward nudge on small screens */
+@media (max-width: 600px) {
+    .page-header {
+        padding: 12px 12px 8px;
+    }
+
+    #reading-table {
+        flex: 1;
+    }
+
+    #ui-controls {
+        width: 100%;
+        max-width: none;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}

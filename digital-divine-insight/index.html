@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Insight</title>
+    <link rel="stylesheet" href="styles.css?v=2">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="ambient-light"></div>
+
+    <header id="page-header" class="page-header">
+        <div id="ui-controls" class="glass-panel">
+            <h1 class="app-title">Divine Insight</h1>
+            
+            <div class="intent-group">
+                <input type="text" id="intent-input" placeholder="Whisper your question to the void..." autocomplete="off">
+            </div>
+
+            <button id="draw-btn" class="mystic-button">
+                <span class="btn-text">Seek Insight</span>
+                <span class="btn-glow"></span>
+            </button>
+            
+            <p id="status-text" aria-live="polite">Concentrate on your intent...</p>
+        </div>
+    </header>
+
+    <main id="reading-table">
+        <canvas id="interaction-layer"></canvas>
+
+        <div id="table-center">
+            <div id="deck-stack" class="deck-visual"></div>
+
+            <div id="deck-container">
+                <div class="card" id="active-card">
+                    <div class="card-inner">
+                        <div class="card-front"></div>
+                        <div class="card-back">
+                            <div class="card-glow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <audio id="ambient-base" src="assets/audio/ambient-hum-base.mp3" preload="auto" loop></audio>
+    <audio id="ambient-swoosh" src="assets/audio/ambient-hum-swoosh.mp3" preload="auto" loop></audio>
+    <audio id="sfx-hover" src="assets/audio/card-hover.mp3" preload="auto"></audio>
+    <audio id="sfx-slide" src="assets/audio/card-slide.mp3" preload="auto"></audio>
+    <audio id="sfx-flip" src="assets/audio/card-flip.mp3" preload="auto"></audio>
+
+    <script src="assets/fx/particles.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
