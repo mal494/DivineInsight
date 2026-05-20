@@ -5,7 +5,7 @@ import { AmbientEngine } from './ambientEngine.js';
 export class DivineInsightApp {
     constructor() {
         // --- Core State ---
-        this.deckData = null;
+        this.deckDataText = null;
         this.logicWorker = null;
         
         // --- Module Instances ---
@@ -21,9 +21,9 @@ export class DivineInsightApp {
         console.log("🔮 Booting Divine Insight Orchestrator...");
         
         try {
-            // 1. Fetch the JSON data
+            // 1. Fetch the raw JSON text so the worker owns parsing and normalization
             const response = await fetch('deck-data.json');
-            this.deckData = await response.json();
+            this.deckDataText = await response.text();
             
             // 2. Spin up the logic worker and wire up result/error handling
             this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url));
@@ -36,7 +36,7 @@ export class DivineInsightApp {
             };
             
             // 3. Initialize the deck in the worker
-            this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckData });
+            this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
             
             // 4. Bind UI listeners
             this.bindEvents();

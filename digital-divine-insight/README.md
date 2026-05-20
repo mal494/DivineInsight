@@ -11,6 +11,14 @@ This MVP focuses on processing speed and fluid interaction, utilizing modern web
 * **Decoupled Taxonomy:** Card data is managed via a rigid JSON schema (`tarot_data.json`) containing structured metadata (elemental affinities, astrological associations) for dynamic, context-aware readings.
 * **Interactive Audio:** Utilizes the Web Audio API to drive an ambient soundscape that reacts to the application's state.
 
+## Vector Spread Contract
+
+The worker now parses and normalizes `deck-data.json` once during initialization, then returns deterministic vector metadata with each draw result.
+
+* `vectorState` describes the session-level direction, drift, magnitude, and spread radius.
+* `positionVector` describes the selected card's derived placement and spread index.
+* `CardView.showResult()` consumes this data additively, so the existing flip and reveal flow remains intact.
+
 ## 📁 Project Structure
 
 The application utilizes a small, module-based JavaScript structure for clear separation of concerns:

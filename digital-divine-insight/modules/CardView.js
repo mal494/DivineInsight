@@ -24,12 +24,57 @@ export class CardView {
         this._queuedFinal = null;
         this._resolveQueued = null;
         this._glowTimeout = null;
+        this._spreadLayout = null;
+        this._vectorDynamics = {
+            velocity: { x: 0, y: 0 },
+            ambientDrift: { x: 0, y: 0 },
+            noise: 0
+        };
+        this._rafId = null;
+        this._lastFrameTime = performance.now();
+    }
+
+    // DYNAMICS / RENDERING
+    startDynamicsLoop() {
+        if (this._rafId) return;
+        const loop = (now) => {
+            const dt = (now - this._lastFrameTime) / 1000;
+            this._lastFrameTime = now;
+            this._updateDynamics(dt);
+            this._rafId = requestAnimationFrame(loop);
+        };
+        this._rafId = requestAnimationFrame(loop);
+    }
+
+    stopDynamicsLoop() {
+        if (this._rafId) cancelAnimationFrame(this._rafId);
+        this._rafId = null;
+    }
+
+    _updateDynamics(dt) {
+        if (!this.cardEl || !this._spreadLayout) return;
+
+        // Apply ambient drift based on vector profile
+        const sessionNoise = Math.sin(this._lastFrameTime * 0.001) * this._vectorDynamics.noise;
+        const driftX = Math.cos(this._lastFrameTime * 0.0007) * this._vectorDynamics.ambientDrift.x * 20;
+        const driftY = Math.sin(this._lastFrameTime * 0.0009) * this._vectorDynamics.ambientDrift.y * 20;
+
+        const currentX = this._spreadLayout.x + driftX + sessionNoise;
+        const currentY = this._spreadLayout.y + driftY + sessionNoise;
+        const currentRotate = this._spreadLayout.rotation + Math.sin(this._lastFrameTime * 0.0012) * this._vectorDynamics.noise * 2;
+
+        this.cardEl.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentRotate}deg) scale(${this._spreadLayout.scale})`;
     }
 
     // TRANSFORM / DRAG
     setDragging(isDragging) {
         if (!this.cardEl) return;
-        this.cardEl.style.transition = isDragging ? 'none' : 'transform 0.3s ease-out';
+        if (isDragging) {
+            this.stopDynamicsLoop();
+            this.cardEl.style.transition = 'none';
+        } else {
+            this.cardEl.style.transition = 'transform 0.3s ease-out';
+        }
     }
 
     setTransform({ x = 0, y = 0, rotation = 0, scale = 1 } = {}) {
@@ -38,7 +83,47 @@ export class CardView {
     }
 
     reset() {
+        this.stopDynamicsLoop();
+        this._spreadLayout = null;
         this.setTransform({ x: 0, y: 0, rotation: 0, scale: 1 });
+    }
+
+    applySpreadLayout(layout = {}) {
+        if (!this.cardEl) return;
+
+        const sourceVector = layout.positionVector || layout.vectorState?.vector || {};
+        const drift = layout.vectorState?.drift || { x: 0, y: 0 };
+        const entropy = layout.vectorState?.entropy || 0;
+        
+        const spreadRadius = typeof layout.spreadRadius === 'number'
+            ? layout.spreadRadius
+            : (typeof layout.vectorState?.spreadRadius === 'number' ? layout.vectorState.spreadRadius : 1);
+        const basis = layout.cardBasis || {};
+
+        const x = typeof sourceVector.x === 'number' ? sourceVector.x : 0;
+        const y = typeof sourceVector.y === 'number' ? sourceVector.y : 0;
+        const basisX = typeof basis.x === 'number' ? basis.x : 0;
+        const basisY = typeof basis.y === 'number' ? basis.y : 0;
+
+        const translateX = x + basisX * 14 * spreadRadius;
+        const translateY = y + basisY * 14 * spreadRadius;
+        const rotation = (typeof layout.angle === 'number' ? layout.angle : 0) * (180 / Math.PI) + basisX * 6;
+        const scale = layout.scale || 1 + Math.min(0.18, spreadRadius * 0.08);
+
+        this._spreadLayout = {
+            x: translateX,
+            y: translateY,
+            rotation,
+            scale
+        };
+
+        // Cache vector dynamics for the render loop
+        this._vectorDynamics = {
+            ambientDrift: { x: drift.x, y: drift.y },
+            noise: (entropy / 100) * 2 // Scale entropy to a small pixel jitter
+        };
+
+        this.startDynamicsLoop();
     }
 
     // GLOW / FLIP
@@ -148,10 +233,21 @@ export class CardView {
             cardName = '',
             cardId = null,
             applyGlow = true,
+            positionVector = null,
+            vectorState = null,
+            cardBasis = null,
         } = normalizedResult;
 
         // Ensure channeling stopped first
         this._stopChannelAnimation();
+
+        this.applySpreadLayout({
+            positionVector,
+            vectorState,
+            cardBasis,
+            angle: positionVector?.angle,
+            spreadRadius: positionVector?.spreadRadius || vectorState?.spreadRadius,
+        });
 
         const finish = () => {
             if (applyGlow) this.setGlow(true);
@@ -181,6 +277,9 @@ export class CardView {
 
     resetCard() {
         this.unflip();
+        this.stopDynamicsLoop();
+        this._spreadLayout = null;
+        this.setTransform({ x: 0, y: 0, rotation: 0, scale: 1 });
         if (this.statusTextEl) this.statusTextEl.innerText = 'Concentrate on your intent...';
         if (this.drawBtn) {
             this.drawBtn.disabled = false;
