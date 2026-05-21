@@ -1,0 +1,3299 @@
+{
+  "deck_metadata": {
+    "name": "Divine Insight Dictionary",
+    "version": "2.0-optimized",
+    "engine_compatibility": "OmniSolve-Core",
+    "total_cards": 78
+  },
+  "taxonomy": {
+    "life_domains": [
+      "Career",
+      "Personal Growth",
+      "Travel",
+      "Education",
+      "Finance",
+      "Spirituality",
+      "Mental Health",
+      "Family",
+      "Love",
+      "Relationships",
+      "Legal",
+      "Home",
+      "Community",
+      "Health",
+      "Life Cycles"
+    ]
+  },
+  "cards": [
+    {
+      "key": "major-00",
+      "id": 1,
+      "name": "The Fool",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Air",
+      "astrology": "Uranus",
+      "life_domains": [],
+      "tags": [
+        "travel",
+        "new_project",
+        "risk",
+        "youth",
+        "change",
+        "new_city"
+      ],
+      "description": "A leap of faith into the unknown.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Beginnings",
+            "Spontaneity",
+            "Faith"
+          ],
+          "description": "A leap of faith into the unknown."
+        },
+        "reversed": {
+          "keywords": [
+            "Recklessness",
+            "Naivety",
+            "Risk"
+          ],
+          "description": "Acting without a safety net."
+        }
+      },
+      "positional_weighting": {
+        "past": "Historically, you took a significant leap of faith with a beginner's mindset, setting the foundation for the present.",
+        "obstacle": "Your obstacle is recklessness or naivety; you are ignoring crucial details or acting impulsively.",
+        "present": "The energy of The Fool is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Fool will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Fool suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Fool. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-01",
+      "id": 2,
+      "name": "The Magician",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Air",
+      "astrology": "Mercury",
+      "life_domains": [],
+      "tags": [
+        "skill",
+        "manifestation",
+        "action",
+        "creation"
+      ],
+      "description": "The alignment of will and tools.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Manifestation",
+            "Power",
+            "Resourcefulness"
+          ],
+          "description": "The alignment of will and tools."
+        },
+        "reversed": {
+          "keywords": [
+            "Manipulation",
+            "Poor Planning",
+            "Trickery"
+          ],
+          "description": "Misuse of influence."
+        }
+      },
+      "positional_weighting": {
+        "past": "You actively manifested a goal using the resources and skills available to you at the time.",
+        "obstacle": "A lack of focus, poor planning, or manipulation is blocking your ability to translate ideas into reality.",
+        "present": "The energy of The Magician is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Magician will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Magician suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Magician. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-02",
+      "id": 3,
+      "name": "The High Priestess",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Water",
+      "astrology": "Moon",
+      "life_domains": [],
+      "tags": [
+        "spirituality",
+        "secrets",
+        "subconscious",
+        "dreams"
+      ],
+      "description": "Silence reveals what is hidden.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Intuition",
+            "Mystery",
+            "Inner Voice"
+          ],
+          "description": "Silence reveals what is hidden."
+        },
+        "reversed": {
+          "keywords": [
+            "Secrets",
+            "Disconnection",
+            "Withdrawal"
+          ],
+          "description": "Ignoring the inner voice."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period of deep introspection and reliance on your intuition shaped your past trajectory.",
+        "obstacle": "You are ignoring your gut feelings or being kept in the dark by hidden information.",
+        "present": "The energy of The High Priestess is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The High Priestess will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The High Priestess suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The High Priestess. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-03",
+      "id": 4,
+      "name": "The Empress",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Earth",
+      "astrology": "Venus",
+      "life_domains": [],
+      "tags": [
+        "nature",
+        "fertility",
+        "abundance",
+        "family"
+      ],
+      "description": "The peak of creative fertility.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Abundance",
+            "Nurturing",
+            "Creation"
+          ],
+          "description": "The peak of creative fertility."
+        },
+        "reversed": {
+          "keywords": [
+            "Blockage",
+            "Dependence",
+            "Smothering"
+          ],
+          "description": "Lack of growth or over-reliance."
+        }
+      },
+      "positional_weighting": {
+        "past": "A time of great abundance, nurturing, and creative growth established your current resources.",
+        "obstacle": "Creative blocks, financial insecurity, or smothering relationships are halting your progress.",
+        "present": "The energy of The Empress is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Empress will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Empress suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Empress. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-04",
+      "id": 5,
+      "name": "The Emperor",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Fire",
+      "astrology": "Aries",
+      "life_domains": [],
+      "tags": [
+        "government",
+        "business",
+        "authority",
+        "structure"
+      ],
+      "description": "Implementation of order.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Structure",
+            "Establishment",
+            "Control"
+          ],
+          "description": "Implementation of order."
+        },
+        "reversed": {
+          "keywords": [
+            "Domination",
+            "Inflexibility",
+            "Chaos"
+          ],
+          "description": "Abuse of power."
+        }
+      },
+      "positional_weighting": {
+        "past": "Discipline, rules, and established structures provided the framework for your past actions.",
+        "obstacle": "Rigidity, excessive control, or a lack of necessary discipline is creating a bottleneck.",
+        "present": "The energy of The Emperor is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Emperor will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Emperor suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Emperor. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-05",
+      "id": 6,
+      "name": "The Hierophant",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Earth",
+      "astrology": "Taurus",
+      "life_domains": [],
+      "tags": [
+        "religion",
+        "mentorship",
+        "tradition",
+        "education"
+      ],
+      "description": "Seeking counsel in established systems.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Tradition",
+            "Beliefs",
+            "Conformity"
+          ],
+          "description": "Seeking counsel in established systems."
+        },
+        "reversed": {
+          "keywords": [
+            "Rebellion",
+            "Freedom",
+            "New Paradigms"
+          ],
+          "description": "Breaking from the status quo."
+        }
+      },
+      "positional_weighting": {
+        "past": "Adherence to traditional beliefs, formal education, or a mentor guided your previous path.",
+        "obstacle": "Blind conformity or restrictive traditional structures are preventing necessary innovation.",
+        "present": "The energy of The Hierophant is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Hierophant will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Hierophant suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Hierophant. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-06",
+      "id": 7,
+      "name": "The Lovers",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Air",
+      "astrology": "Gemini",
+      "life_domains": [],
+      "tags": [
+        "romance",
+        "partnership",
+        "alignment",
+        "choices"
+      ],
+      "description": "A choice based on deep core values.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Harmony",
+            "Values",
+            "Partnership"
+          ],
+          "description": "A choice based on deep core values."
+        },
+        "reversed": {
+          "keywords": [
+            "Disharmony",
+            "Imbalance",
+            "Misalignment"
+          ],
+          "description": "Conflict in partnership."
+        }
+      },
+      "positional_weighting": {
+        "past": "A significant relationship or a major crossroads requiring a values-based choice defined your past.",
+        "obstacle": "Disharmony in a relationship or a misalignment of your core values is causing internal friction.",
+        "present": "The energy of The Lovers is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Lovers will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Lovers suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Lovers. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-07",
+      "id": 8,
+      "name": "The Chariot",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Water",
+      "astrology": "Cancer",
+      "life_domains": [],
+      "tags": [
+        "travel",
+        "vehicle",
+        "determination",
+        "momentum"
+      ],
+      "description": "Steering opposing forces toward success.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Victory",
+            "Willpower",
+            "Control"
+          ],
+          "description": "Steering opposing forces toward success."
+        },
+        "reversed": {
+          "keywords": [
+            "Opposition",
+            "Aggression",
+            "Loss of Control"
+          ],
+          "description": "Feeling pulled in many directions."
+        }
+      },
+      "positional_weighting": {
+        "past": "Through sheer willpower and determination, you overcame obstacles and achieved a hard-fought victory.",
+        "obstacle": "A lack of direction, opposing forces, or aggressive attempts to control the uncontrollable are derailing you.",
+        "present": "The energy of The Chariot is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Chariot will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Chariot suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Chariot. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-08",
+      "id": 9,
+      "name": "Strength",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Fire",
+      "astrology": "Leo",
+      "life_domains": [],
+      "tags": [
+        "perseverance"
+      ],
+      "description": "Mastery of the self through gentleness.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Courage",
+            "Influence",
+            "Compassion"
+          ],
+          "description": "Mastery of the self through gentleness."
+        },
+        "reversed": {
+          "keywords": [
+            "Self-Doubt",
+            "Weakness",
+            "Raw Emotion"
+          ],
+          "description": "Overwhelmed by instinct."
+        }
+      },
+      "positional_weighting": {
+        "past": "You utilized inner resilience, patience, and soft power to navigate a difficult period.",
+        "obstacle": "Self-doubt, insecurity, or a failure to control your emotional reactions is undermining your strength.",
+        "present": "The energy of Strength is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Strength will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Strength suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Strength. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-09",
+      "id": 10,
+      "name": "The Hermit",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Earth",
+      "astrology": "Virgo",
+      "life_domains": [],
+      "tags": [
+        "solitude",
+        "wisdom"
+      ],
+      "description": "Withdrawal to seek inner truth.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Introspection",
+            "Solitude",
+            "Guidance"
+          ],
+          "description": "Withdrawal to seek inner truth."
+        },
+        "reversed": {
+          "keywords": [
+            "Isolation",
+            "Loneliness",
+            "Withdrawal"
+          ],
+          "description": "Forced isolation or losing the way."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period of deliberate solitude and soul-searching provided you with vital self-knowledge.",
+        "obstacle": "Unhealthy isolation, antisocial behavior, or an inability to integrate your insights into the real world.",
+        "present": "The energy of The Hermit is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Hermit will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Hermit suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Hermit. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-10",
+      "id": 11,
+      "name": "Wheel of Fortune",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Fire",
+      "astrology": "Jupiter",
+      "life_domains": [],
+      "tags": [
+        "change",
+        "luck",
+        "karma",
+        "cycles"
+      ],
+      "description": "Accepting the inevitable motion of the universe.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Cycles",
+            "Luck",
+            "Destiny"
+          ],
+          "description": "Accepting the inevitable motion of the universe."
+        },
+        "reversed": {
+          "keywords": [
+            "Bad Luck",
+            "Resistance",
+            "Misfortune"
+          ],
+          "description": "Stagnation or difficult karmic lessons."
+        }
+      },
+      "positional_weighting": {
+        "past": "A sudden turning point, stroke of luck, or destined event fundamentally shifted your circumstances.",
+        "obstacle": "You are resisting inevitable change or repeating a negative karmic cycle you have yet to learn from.",
+        "present": "The energy of Wheel of Fortune is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Wheel of Fortune will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Wheel of Fortune suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Wheel of Fortune. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-11",
+      "id": 12,
+      "name": "Justice",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Air",
+      "astrology": "Libra",
+      "life_domains": [],
+      "tags": [
+        "honesty",
+        "legal",
+        "contracts"
+      ],
+      "description": "Objective evaluation and balance.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Fairness",
+            "Truth",
+            "Cause and Effect"
+          ],
+          "description": "Objective evaluation and balance."
+        },
+        "reversed": {
+          "keywords": [
+            "Unfairness",
+            "Dishonesty",
+            "Injustice"
+          ],
+          "description": "Truth obscured; consequences avoided."
+        }
+      },
+      "positional_weighting": {
+        "past": "Your past was defined by a need for accountability, a legal decision, or the balancing of karmic scales.",
+        "obstacle": "A lack of accountability, dishonesty, or an unfair situation is preventing resolution.",
+        "present": "The energy of Justice is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Justice will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Justice suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Justice. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-12",
+      "id": 13,
+      "name": "The Hanged Man",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Water",
+      "astrology": "Neptune",
+      "life_domains": [],
+      "tags": [
+        "waiting",
+        "sacrifice",
+        "perspective"
+      ],
+      "description": "Finding clarity through stillness.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Pause",
+            "Surrender",
+            "New Perspective"
+          ],
+          "description": "Finding clarity through stillness."
+        },
+        "reversed": {
+          "keywords": [
+            "Delays",
+            "Stalling",
+            "Resistance"
+          ],
+          "description": "Stuck without the benefit of insight."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period of voluntary suspension or sacrifice allowed you to gain an entirely new perspective.",
+        "obstacle": "You are resisting the need to pause and let go, resulting in useless stalling and frustration.",
+        "present": "The energy of The Hanged Man is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Hanged Man will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Hanged Man suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Hanged Man. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-13",
+      "id": 14,
+      "name": "Death",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Water",
+      "astrology": "Scorpio",
+      "life_domains": [],
+      "tags": [
+        "change",
+        "transformation",
+        "endings",
+        "rebirth"
+      ],
+      "description": "Closing a door for a new beginning.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Endings",
+            "Transition",
+            "Rebirth"
+          ],
+          "description": "Closing a door for a new beginning."
+        },
+        "reversed": {
+          "keywords": [
+            "Resistance",
+            "Decay",
+            "Inability to Move On"
+          ],
+          "description": "Clinging to the past."
+        }
+      },
+      "positional_weighting": {
+        "past": "A profound transformation or absolute ending cleared the way for your current life structure.",
+        "obstacle": "A refusal to let go of dead ends, decaying relationships, or old habits is poisoning your growth.",
+        "present": "The energy of Death is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Death will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Death suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Death. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-14",
+      "id": 15,
+      "name": "Temperance",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Fire",
+      "astrology": "Sagittarius",
+      "life_domains": [],
+      "tags": [
+        "alchemy",
+        "peace",
+        "moderation"
+      ],
+      "description": "The alchemy of blending opposites.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Balance",
+            "Moderation",
+            "Purpose"
+          ],
+          "description": "The alchemy of blending opposites."
+        },
+        "reversed": {
+          "keywords": [
+            "Imbalance",
+            "Excess",
+            "Conflict"
+          ],
+          "description": "Conflict caused by a lack of moderation."
+        }
+      },
+      "positional_weighting": {
+        "past": "You found success through moderation, patience, and synthesizing opposing forces into a harmonious blend.",
+        "obstacle": "Extremes, excess, or a deep internal imbalance are creating discord and poor health.",
+        "present": "The energy of Temperance is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Temperance will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Temperance suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Temperance. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-15",
+      "id": 16,
+      "name": "The Devil",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Earth",
+      "astrology": "Capricorn",
+      "life_domains": [],
+      "tags": [
+        "addiction",
+        "materialism",
+        "obsession",
+        "fear"
+      ],
+      "description": "Self-imposed chains of materialism.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Shadow",
+            "Attachment",
+            "Restriction"
+          ],
+          "description": "Self-imposed chains of materialism."
+        },
+        "reversed": {
+          "keywords": [
+            "Detachment",
+            "Liberation",
+            "Release"
+          ],
+          "description": "Dropping the chains and beliefs."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period defined by unhealthy attachments, materialistic focus, or restrictive behavioral loops.",
+        "obstacle": "You are tethered by toxic attachments, addictions, or fear-based thinking that gives away your power.",
+        "present": "The energy of The Devil is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Devil will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Devil suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Devil. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-17",
+      "id": 18,
+      "name": "The Star",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Air",
+      "astrology": "Aquarius",
+      "life_domains": [],
+      "tags": [
+        "peace",
+        "healing",
+        "hope",
+        "inspiration"
+      ],
+      "description": "The healing waters of inspiration.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Hope",
+            "Faith",
+            "Renewal"
+          ],
+          "description": "The healing waters of inspiration."
+        },
+        "reversed": {
+          "keywords": [
+            "Despair",
+            "Disconnection",
+            "Lack of Faith"
+          ],
+          "description": "Spiritual exhaustion."
+        }
+      },
+      "positional_weighting": {
+        "past": "After a period of turbulence, you experienced profound healing, hope, and renewed spiritual purpose.",
+        "obstacle": "Pessimism, despair, or a disconnection from your spiritual center is blinding you to the light.",
+        "present": "The energy of The Star is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Star will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Star suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Star. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-18",
+      "id": 19,
+      "name": "The Moon",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Water",
+      "astrology": "Pisces",
+      "life_domains": [],
+      "tags": [
+        "subconscious",
+        "dreams",
+        "anxiety",
+        "mystery"
+      ],
+      "description": "Navigating the uncertainty of the night.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Illusion",
+            "Fear",
+            "Subconscious"
+          ],
+          "description": "Navigating the uncertainty of the night."
+        },
+        "reversed": {
+          "keywords": [
+            "Release of Fear",
+            "Clarity",
+            "Misinterpretation"
+          ],
+          "description": "Dissipation of illusion."
+        }
+      },
+      "positional_weighting": {
+        "past": "You navigated a confusing time filled with anxiety, illusions, and heavy subconscious activity.",
+        "obstacle": "Deception, deep-seated anxieties, or projecting your fears onto reality is creating a mental fog.",
+        "present": "The energy of The Moon is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Moon will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Moon suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Moon. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-19",
+      "id": 20,
+      "name": "The Sun",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Fire",
+      "astrology": "Sun",
+      "life_domains": [],
+      "tags": [
+        "success",
+        "joy",
+        "vitality",
+        "clarity"
+      ],
+      "description": "Radiant clarity and achievement.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Success",
+            "Vitality",
+            "Joy"
+          ],
+          "description": "Radiant clarity and achievement."
+        },
+        "reversed": {
+          "keywords": [
+            "Inner Child",
+            "Depression",
+            "Lack of Joy"
+          ],
+          "description": "Success that feels dimmed."
+        }
+      },
+      "positional_weighting": {
+        "past": "A time of great joy, clarity, and undeniable success illuminated your path.",
+        "obstacle": "An inability to connect with your joy, an over-inflated ego, or ignoring the inner child's needs.",
+        "present": "The energy of The Sun is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Sun will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Sun suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Sun. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-20",
+      "id": 21,
+      "name": "Judgement",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Fire",
+      "astrology": "Pluto",
+      "life_domains": [],
+      "tags": [
+        "evaluation",
+        "calling",
+        "awakening",
+        "absolution"
+      ],
+      "description": "Spiritual awakening and reckoning.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Rebirth",
+            "Absolution",
+            "Inner Calling"
+          ],
+          "description": "Spiritual awakening and reckoning."
+        },
+        "reversed": {
+          "keywords": [
+            "Self-Doubt",
+            "Ignoring the Call",
+            "Indecision"
+          ],
+          "description": "Hesitation in the face of change."
+        }
+      },
+      "positional_weighting": {
+        "past": "You underwent a major self-evaluation and answered a higher calling, leading to a personal rebirth.",
+        "obstacle": "A harsh inner critic or a refusal to answer your true calling is keeping you stagnant.",
+        "present": "The energy of Judgement is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Judgement will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Judgement suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Judgement. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-21",
+      "id": 22,
+      "name": "The World",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Earth",
+      "astrology": "Saturn",
+      "life_domains": [],
+      "tags": [
+        "travel",
+        "success",
+        "completion",
+        "wholeness"
+      ],
+      "description": "The successful end of a cycle.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Completion",
+            "Integration",
+            "Accomplishment"
+          ],
+          "description": "The successful end of a cycle."
+        },
+        "reversed": {
+          "keywords": [
+            "Closure Needed",
+            "Shortcuts",
+            "Delays"
+          ],
+          "description": "Cycle nearly finished; final effort needed."
+        }
+      },
+      "positional_weighting": {
+        "past": "You successfully completed a major life cycle or achieved a long-term goal, bringing a sense of wholeness.",
+        "obstacle": "A lack of closure or taking shortcuts is preventing you from fully completing this cycle.",
+        "present": "The energy of The World is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The World will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The World suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The World. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "major-16",
+      "id": 79,
+      "name": "The Tower",
+      "arcana": "Major",
+      "card_type": "Major Arcana",
+      "suit": "None",
+      "elemental_weight": "Fire",
+      "astrology": "Mars",
+      "life_domains": [],
+      "tags": [
+        "shock",
+        "chaos",
+        "revelation",
+        "breakthrough"
+      ],
+      "description": "Collapse of a faulty foundation.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Upheaval",
+            "Revelation",
+            "Sudden Change"
+          ],
+          "description": "Collapse of a faulty foundation."
+        },
+        "reversed": {
+          "keywords": [
+            "Averting Disaster",
+            "Delay",
+            "Fear of Change"
+          ],
+          "description": "Narrowly escaped crisis."
+        }
+      },
+      "positional_weighting": {
+        "past": "A sudden, shocking event dismantled your previous foundations, forcing a radical reset.",
+        "obstacle": "You are attempting to delay inevitable destruction, clinging to structures that are fundamentally flawed.",
+        "present": "The energy of The Tower is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of The Tower will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of The Tower suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of The Tower. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-01",
+      "id": 23,
+      "name": "Ace of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Fire Signs",
+      "life_domains": [],
+      "tags": [
+        "innovation",
+        "initiative",
+        "passion"
+      ],
+      "description": "A burst of creative energy.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Inspiration",
+            "Potential"
+          ],
+          "description": "A burst of creative energy."
+        },
+        "reversed": {
+          "keywords": [
+            "Delays",
+            "Block"
+          ],
+          "description": "Inspiration lacks grounding."
+        }
+      },
+      "positional_weighting": {
+        "past": "A sudden burst of inspiration initiated your current path.",
+        "obstacle": "Creative blockages or a failure to act on your inspiration.",
+        "present": "The energy of Ace of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ace of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ace of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ace of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-11",
+      "id": 33,
+      "name": "Page of Wands",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Wands",
+      "elemental_weight": "Earth/Fire",
+      "astrology": "Earth/Fire",
+      "life_domains": [],
+      "tags": [
+        "youth",
+        "news",
+        "discovery"
+      ],
+      "description": "The youthful explorer.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Inspiration",
+            "Messages"
+          ],
+          "description": "The youthful explorer."
+        },
+        "reversed": {
+          "keywords": [
+            "Setbacks",
+            "Laziness"
+          ],
+          "description": "Lack of follow-through."
+        }
+      },
+      "positional_weighting": {
+        "past": "A new idea or exciting message sparked a fresh adventure.",
+        "obstacle": "Immaturity, scattered energy, or a failure to execute a good idea.",
+        "present": "The energy of Page of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Page of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Page of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Page of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-12",
+      "id": 34,
+      "name": "Knight of Wands",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Wands",
+      "elemental_weight": "Air/Fire",
+      "astrology": "Air/Fire",
+      "life_domains": [],
+      "tags": [
+        "travel",
+        "risk",
+        "action",
+        "adventure"
+      ],
+      "description": "Charging forward with high energy.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Action",
+            "Fearlessness"
+          ],
+          "description": "Charging forward with high energy."
+        },
+        "reversed": {
+          "keywords": [
+            "Recklessness",
+            "Anger"
+          ],
+          "description": "Energy that is scattered or aggressive."
+        }
+      },
+      "positional_weighting": {
+        "past": "You took bold, impulsive action that shifted your paradigm.",
+        "obstacle": "Recklessness, impatience, and a lack of foresight are causing chaos.",
+        "present": "The energy of Knight of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Knight of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Knight of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Knight of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-13",
+      "id": 35,
+      "name": "Queen of Wands",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Wands",
+      "elemental_weight": "Water/Fire",
+      "astrology": "Water/Fire",
+      "life_domains": [],
+      "tags": [
+        "charisma",
+        "leadership",
+        "confidence"
+      ],
+      "description": "The vibrant leader.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Confidence",
+            "Independence"
+          ],
+          "description": "The vibrant leader."
+        },
+        "reversed": {
+          "keywords": [
+            "Jealousy",
+            "Demanding"
+          ],
+          "description": "Using charisma to manipulate."
+        }
+      },
+      "positional_weighting": {
+        "past": "You navigated life with extreme confidence, charisma, and independence.",
+        "obstacle": "Jealousy, demanding behavior, or a loss of self-belief is dimming your light.",
+        "present": "The energy of Queen of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Queen of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a next milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Queen of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Queen of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-14",
+      "id": 36,
+      "name": "King of Wands",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire/Fire",
+      "astrology": "Fire/Fire",
+      "life_domains": [],
+      "tags": [
+        "authority",
+        "vision",
+        "entrepreneur"
+      ],
+      "description": "The master architect.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Leader",
+            "Visionary"
+          ],
+          "description": "The master architect."
+        },
+        "reversed": {
+          "keywords": [
+            "Impulsive",
+            "Ruthless"
+          ],
+          "description": "Dictatorial leadership."
+        }
+      },
+      "positional_weighting": {
+        "past": "You established yourself as a visionary leader with strong authority.",
+        "obstacle": "Overbearing expectations, ruthlessness, or a vision lacking practical grounding.",
+        "present": "The energy of King of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of King of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of King of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of King of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-02",
+      "id": 80,
+      "name": "Two of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Mars in Aries",
+      "life_domains": [],
+      "tags": [
+        "planning",
+        "decisions",
+        "expansion"
+      ],
+      "description": "Turning a spark into a roadmap.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Planning",
+            "Discovery"
+          ],
+          "description": "Turning a spark into a roadmap."
+        },
+        "reversed": {
+          "keywords": [
+            "Fear",
+            "Safe"
+          ],
+          "description": "Refusal to look beyond immediate surroundings."
+        }
+      },
+      "positional_weighting": {
+        "past": "You made strategic plans and envisioned a larger future.",
+        "obstacle": "Fear of the unknown is keeping you trapped in your comfort zone.",
+        "present": "The energy of Two of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Two of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Two of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Two of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-03",
+      "id": 81,
+      "name": "Three of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Sun in Aries",
+      "life_domains": [],
+      "tags": [
+        "foresight",
+        "trade",
+        "growth"
+      ],
+      "description": "Early efforts showing global potential.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Expansion",
+            "Foresight"
+          ],
+          "description": "Early efforts showing global potential."
+        },
+        "reversed": {
+          "keywords": [
+            "Delays",
+            "Frustration"
+          ],
+          "description": "Disappointment due to narrow thinking."
+        }
+      },
+      "positional_weighting": {
+        "past": "You launched your efforts and patiently awaited their return.",
+        "obstacle": "A lack of long-term vision or frustrating logistical delays.",
+        "present": "The energy of Three of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Three of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Three of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Three of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-04",
+      "id": 82,
+      "name": "Four of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Venus in Aries",
+      "life_domains": [],
+      "tags": [
+        "celebration",
+        "milestone",
+        "home"
+      ],
+      "description": "Finding belonging and security.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Celebration",
+            "Stability"
+          ],
+          "description": "Finding belonging and security."
+        },
+        "reversed": {
+          "keywords": [
+            "Instability",
+            "Transition"
+          ],
+          "description": "Feeling unsettled."
+        }
+      },
+      "positional_weighting": {
+        "past": "You reached a stable milestone and celebrated a foundational success.",
+        "obstacle": "Domestic instability or an inability to appreciate your achievements.",
+        "present": "The energy of Four of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Four of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Four of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Four of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-05",
+      "id": 83,
+      "name": "Five of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Saturn in Leo",
+      "life_domains": [],
+      "tags": [
+        "conflict",
+        "competition",
+        "rivalry"
+      ],
+      "description": "A struggle of wills.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Conflict",
+            "Competition"
+          ],
+          "description": "A struggle of wills."
+        },
+        "reversed": {
+          "keywords": [
+            "Avoidance",
+            "Burnout"
+          ],
+          "description": "Unhealthy avoidance of confrontation."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period of chaotic brainstorming or rivalry forced you to refine your stance.",
+        "obstacle": "Ego clashes and petty squabbles are distracting you from the real goal.",
+        "present": "The energy of Five of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Five of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Five of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Five of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-06",
+      "id": 84,
+      "name": "Six of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Jupiter in Leo",
+      "life_domains": [],
+      "tags": [
+        "success",
+        "recognition",
+        "victory"
+      ],
+      "description": "Receiving external validation.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Victory",
+            "Recognition"
+          ],
+          "description": "Receiving external validation."
+        },
+        "reversed": {
+          "keywords": [
+            "Fall from Grace",
+            "Arrogance"
+          ],
+          "description": "Winning but feeling isolated."
+        }
+      },
+      "positional_weighting": {
+        "past": "You experienced a public victory and gained significant confidence.",
+        "obstacle": "Arrogance, seeking constant validation, or a sudden fall from grace.",
+        "present": "The energy of Six of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Six of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Six of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Six of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-07",
+      "id": 85,
+      "name": "Seven of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Mars in Leo",
+      "life_domains": [],
+      "tags": [
+        "perseverance",
+        "defense",
+        "boundaries"
+      ],
+      "description": "Holding the high ground.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Defensiveness",
+            "Challenge"
+          ],
+          "description": "Holding the high ground."
+        },
+        "reversed": {
+          "keywords": [
+            "Giving Up",
+            "Overwhelmed"
+          ],
+          "description": "Losing the will to fight."
+        }
+      },
+      "positional_weighting": {
+        "past": "You successfully defended your position against challengers.",
+        "obstacle": "You are overwhelmed by competition and failing to hold your boundaries.",
+        "present": "The energy of Seven of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Seven of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Seven of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Seven of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-08",
+      "id": 86,
+      "name": "Eight of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Mercury in Sagittarius",
+      "life_domains": [],
+      "tags": [
+        "speed",
+        "communication",
+        "movement"
+      ],
+      "description": "Rapid development and events.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Speed",
+            "Action"
+          ],
+          "description": "Rapid development and events."
+        },
+        "reversed": {
+          "keywords": [
+            "Delays",
+            "Frustration"
+          ],
+          "description": "Sudden halt in momentum."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period of rapid growth and fast-paced communication propelled you forward.",
+        "obstacle": "Miscommunications, hasty decisions, or severe delays are halting progress.",
+        "present": "The energy of Eight of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Eight of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Eight of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Eight of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-09",
+      "id": 87,
+      "name": "Nine of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Moon in Sagittarius",
+      "life_domains": [],
+      "tags": [
+        "resilience",
+        "stamina",
+        "exhaustion"
+      ],
+      "description": "The final stretch.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Resilience",
+            "Grit"
+          ],
+          "description": "The final stretch."
+        },
+        "reversed": {
+          "keywords": [
+            "Exhaustion",
+            "Paranoia"
+          ],
+          "description": "Burnout has set in."
+        }
+      },
+      "positional_weighting": {
+        "past": "You endured a grueling test of faith, building massive resilience.",
+        "obstacle": "Paranoia, defensive posturing, and complete exhaustion are breaking you down.",
+        "present": "The energy of Nine of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Nine of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Nine of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Nine of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "wands-10",
+      "id": 88,
+      "name": "Ten of Wands",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Wands",
+      "elemental_weight": "Fire",
+      "astrology": "Saturn in Sagittarius",
+      "life_domains": [],
+      "tags": [
+        "burden",
+        "responsibility",
+        "stress"
+      ],
+      "description": "Carrying too much weight.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Burden",
+            "Hard Work"
+          ],
+          "description": "Carrying too much weight."
+        },
+        "reversed": {
+          "keywords": [
+            "Release",
+            "Collapse"
+          ],
+          "description": "Necessity of dropping the load."
+        }
+      },
+      "positional_weighting": {
+        "past": "You shouldered a massive burden to reach the finish line.",
+        "obstacle": "An inability to delegate is causing you to collapse under the weight of responsibilities.",
+        "present": "The energy of Ten of Wands is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ten of Wands will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ten of Wands suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ten of Wands. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-01",
+      "id": 37,
+      "name": "Ace of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Water Signs",
+      "life_domains": [],
+      "tags": [
+        "healing",
+        "love",
+        "intuition"
+      ],
+      "description": "An overflow of emotion.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Love",
+            "Spirituality"
+          ],
+          "description": "An overflow of emotion."
+        },
+        "reversed": {
+          "keywords": [
+            "Repressed",
+            "Emptiness"
+          ],
+          "description": "The cup is drained."
+        }
+      },
+      "positional_weighting": {
+        "past": "A new emotional beginning or spiritual awakening filled your cup.",
+        "obstacle": "Repressed emotions or a lack of self-love is keeping you empty.",
+        "present": "The energy of Ace of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ace of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ace of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ace of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-11",
+      "id": 47,
+      "name": "Page of Cups",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Cups",
+      "elemental_weight": "Earth/Water",
+      "astrology": "Earth/Water",
+      "life_domains": [],
+      "tags": [
+        "spirituality",
+        "intuition",
+        "creativity",
+        "education",
+        "messages"
+      ],
+      "description": "The dreamer.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Intuition",
+            "Messages"
+          ],
+          "description": "The dreamer."
+        },
+        "reversed": {
+          "keywords": [
+            "Immaturity",
+            "Insecurity"
+          ],
+          "description": "Feeling overly sensitive."
+        }
+      },
+      "positional_weighting": {
+        "past": "You received an intuitive message that opened your heart.",
+        "obstacle": "Emotional immaturity, insecurity, or taking things far too personally.",
+        "present": "The energy of Page of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Page of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Page of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Page of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-12",
+      "id": 48,
+      "name": "Knight of Cups",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Cups",
+      "elemental_weight": "Air/Water",
+      "astrology": "Air/Water",
+      "life_domains": [],
+      "tags": [
+        "romance",
+        "love",
+        "charm",
+        "idealism"
+      ],
+      "description": "Following the heart.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Romance",
+            "Imagination"
+          ],
+          "description": "Following the heart."
+        },
+        "reversed": {
+          "keywords": [
+            "Unrealistic",
+            "Moodiness"
+          ],
+          "description": "In love with the idea of love."
+        }
+      },
+      "positional_weighting": {
+        "past": "You followed a romantic or creative impulse with absolute idealism.",
+        "obstacle": "Moodiness, unrealistic expectations, or losing touch with reality.",
+        "present": "The energy of Knight of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Knight of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Knight of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Knight of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-13",
+      "id": 49,
+      "name": "Queen of Cups",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Cups",
+      "elemental_weight": "Water/Water",
+      "astrology": "Water/Water",
+      "life_domains": [],
+      "tags": [
+        "healing",
+        "compassion",
+        "empathy",
+        "family"
+      ],
+      "description": "The empathetic healer.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Compassion",
+            "Comfort"
+          ],
+          "description": "The empathetic healer."
+        },
+        "reversed": {
+          "keywords": [
+            "Self-Centered",
+            "Martyrdom"
+          ],
+          "description": "Emotionally overwhelmed."
+        }
+      },
+      "positional_weighting": {
+        "past": "A nurturing, empathetic presence provided you with profound emotional safety.",
+        "obstacle": "Playing the martyr or lacking emotional boundaries is draining your energy.",
+        "present": "The energy of Queen of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Queen of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Queen of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Queen of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-14",
+      "id": 50,
+      "name": "King of Cups",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Cups",
+      "elemental_weight": "Fire/Water",
+      "astrology": "Fire/Water",
+      "life_domains": [],
+      "tags": [
+        "diplomacy",
+        "control"
+      ],
+      "description": "Master of emotions.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Emotional Balance",
+            "Diplomacy"
+          ],
+          "description": "Master of emotions."
+        },
+        "reversed": {
+          "keywords": [
+            "Manipulation",
+            "Volatility"
+          ],
+          "description": "Using emotions to control."
+        }
+      },
+      "positional_weighting": {
+        "past": "You navigated a complex situation with emotional maturity and diplomacy.",
+        "obstacle": "Emotional manipulation, volatility, or repressing feelings until they explode.",
+        "present": "The energy of King of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of King of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of King of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of King of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-02",
+      "id": 89,
+      "name": "Two of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Venus in Cancer",
+      "life_domains": [],
+      "tags": [
+        "partnership",
+        "union",
+        "attraction"
+      ],
+      "description": "Perfect balance of two forces.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Partnership",
+            "Attraction"
+          ],
+          "description": "Perfect balance of two forces."
+        },
+        "reversed": {
+          "keywords": [
+            "Disharmony",
+            "Break-up"
+          ],
+          "description": "Misalignment of values."
+        }
+      },
+      "positional_weighting": {
+        "past": "A deeply aligned partnership or mutual connection was formed.",
+        "obstacle": "A rift in a relationship or a fundamental misalignment of values.",
+        "present": "The energy of Two of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Two of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Two of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Two of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-03",
+      "id": 90,
+      "name": "Three of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Mercury in Cancer",
+      "life_domains": [],
+      "tags": [
+        "celebration",
+        "friendship",
+        "community"
+      ],
+      "description": "Sharing joy with others.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Celebration",
+            "Friendship"
+          ],
+          "description": "Sharing joy with others."
+        },
+        "reversed": {
+          "keywords": [
+            "Isolation",
+            "Gossip"
+          ],
+          "description": "Feeling like the third wheel."
+        }
+      },
+      "positional_weighting": {
+        "past": "You experienced a period of joyful collaboration and social abundance.",
+        "obstacle": "Gossip, overindulgence, or a toxic social circle is draining you.",
+        "present": "The energy of Three of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Three of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Three of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Three of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-04",
+      "id": 91,
+      "name": "Four of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Moon in Cancer",
+      "life_domains": [],
+      "tags": [
+        "apathy",
+        "contemplation",
+        "boredom"
+      ],
+      "description": "Dissatisfaction and introspection.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Contemplation",
+            "Apathy"
+          ],
+          "description": "Dissatisfaction and introspection."
+        },
+        "reversed": {
+          "keywords": [
+            "Awareness",
+            "Acceptance"
+          ],
+          "description": "Coming out of isolation."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period of apathy caused you to miss opportunities while you looked inward.",
+        "obstacle": "You are willfully ignoring the opportunities being handed to you due to discontent.",
+        "present": "The energy of Four of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Four of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Four of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Four of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-05",
+      "id": 92,
+      "name": "Five of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Mars in Scorpio",
+      "life_domains": [],
+      "tags": [
+        "loss",
+        "grief",
+        "regret"
+      ],
+      "description": "Focusing on the spilled wine.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Loss",
+            "Grief"
+          ],
+          "description": "Focusing on the spilled wine."
+        },
+        "reversed": {
+          "keywords": [
+            "Moving On",
+            "Forgiveness"
+          ],
+          "description": "Healing process begins."
+        }
+      },
+      "positional_weighting": {
+        "past": "A significant loss or disappointment left a lasting mark on your emotional state.",
+        "obstacle": "You are stuck in the past, mourning what is gone rather than utilizing what remains.",
+        "present": "The energy of Five of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Five of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Five of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Five of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-06",
+      "id": 93,
+      "name": "Six of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Sun in Scorpio",
+      "life_domains": [],
+      "tags": [
+        "nostalgia",
+        "childhood",
+        "innocence"
+      ],
+      "description": "Return to a simpler time.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Nostalgia",
+            "Innocence"
+          ],
+          "description": "Return to a simpler time."
+        },
+        "reversed": {
+          "keywords": [
+            "Living in the Past",
+            "Growing Up"
+          ],
+          "description": "Clinging to nostalgia unhealthily."
+        }
+      },
+      "positional_weighting": {
+        "past": "Your foundation was built on deep childhood roots or a significant past connection.",
+        "obstacle": "You are romanticizing the past and refusing to face present realities.",
+        "present": "The energy of Six of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Six of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Six of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Six of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-07",
+      "id": 94,
+      "name": "Seven of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Venus in Scorpio",
+      "life_domains": [],
+      "tags": [
+        "choices",
+        "illusion",
+        "fantasy"
+      ],
+      "description": "Getting lost in fantasy.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Choices",
+            "Illusion"
+          ],
+          "description": "Getting lost in fantasy."
+        },
+        "reversed": {
+          "keywords": [
+            "Clarity",
+            "Alignment"
+          ],
+          "description": "Cutting through the fog."
+        }
+      },
+      "positional_weighting": {
+        "past": "You were presented with many options but struggled with wishful thinking.",
+        "obstacle": "Decision paralysis and chasing illusions are preventing real-world action.",
+        "present": "The energy of Seven of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Seven of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Seven of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Seven of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-08",
+      "id": 95,
+      "name": "Eight of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Saturn in Pisces",
+      "life_domains": [],
+      "tags": [
+        "travel",
+        "spirituality",
+        "walking away",
+        "search",
+        "abandonment"
+      ],
+      "description": "Walking away for higher meaning.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Withdrawal",
+            "Escapism"
+          ],
+          "description": "Walking away for higher meaning."
+        },
+        "reversed": {
+          "keywords": [
+            "Indecision",
+            "Fear of Loss"
+          ],
+          "description": "Hesitating to leave."
+        }
+      },
+      "positional_weighting": {
+        "past": "You chose to walk away from a situation that no longer served your emotional needs.",
+        "obstacle": "A fear of moving on is keeping you tethered to a draining situation.",
+        "present": "The energy of Eight of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Eight of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Eight of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Eight of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-09",
+      "id": 96,
+      "name": "Nine of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Jupiter in Pisces",
+      "life_domains": [],
+      "tags": [
+        "contentment",
+        "wishes",
+        "satisfaction"
+      ],
+      "description": "Emotional fulfillment.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Contentment",
+            "Wish Come True"
+          ],
+          "description": "Emotional fulfillment."
+        },
+        "reversed": {
+          "keywords": [
+            "Materialism",
+            "Dissatisfaction"
+          ],
+          "description": "Superficial success."
+        }
+      },
+      "positional_weighting": {
+        "past": "You achieved a deeply desired wish and enjoyed a period of immense satisfaction.",
+        "obstacle": "Smugness, overindulgence, or relying entirely on material comfort for happiness.",
+        "present": "The energy of Nine of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Nine of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Nine of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Nine of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "cups-10",
+      "id": 97,
+      "name": "Ten of Cups",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Cups",
+      "elemental_weight": "Water",
+      "astrology": "Mars in Pisces",
+      "life_domains": [],
+      "tags": [
+        "harmony",
+        "bliss",
+        "family"
+      ],
+      "description": "Ultimate emotional completion.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Divine Love",
+            "Harmony"
+          ],
+          "description": "Ultimate emotional completion."
+        },
+        "reversed": {
+          "keywords": [
+            "Disconnected",
+            "Conflict"
+          ],
+          "description": "Image of perfect family cracked."
+        }
+      },
+      "positional_weighting": {
+        "past": "A harmonious family life or deep communal connection provided a secure base.",
+        "obstacle": "Domestic conflict or a shattered illusion of perfection is causing deep unrest.",
+        "present": "The energy of Ten of Cups is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ten of Cups will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ten of Cups suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ten of Cups. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-01",
+      "id": 51,
+      "name": "Ace of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Air Signs",
+      "life_domains": [],
+      "tags": [
+        "breakthrough",
+        "clarity",
+        "truth"
+      ],
+      "description": "Cutting through confusion.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Breakthrough",
+            "Clarity"
+          ],
+          "description": "Cutting through confusion."
+        },
+        "reversed": {
+          "keywords": [
+            "Confusion",
+            "Hostility"
+          ],
+          "description": "Logic used to wound."
+        }
+      },
+      "positional_weighting": {
+        "past": "A sudden mental breakthrough or realization of truth changed your perspective.",
+        "obstacle": "Hostile communication or clouded judgment is preventing a clear resolution.",
+        "present": "The energy of Ace of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ace of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ace of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ace of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-11",
+      "id": 61,
+      "name": "Page of Swords",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Swords",
+      "elemental_weight": "Earth/Air",
+      "astrology": "Earth/Air",
+      "life_domains": [],
+      "tags": [
+        "communication",
+        "curiosity",
+        "vigilance",
+        "education"
+      ],
+      "description": "A sharp mind eager to learn.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Curiosity",
+            "Restlessness"
+          ],
+          "description": "A sharp mind eager to learn."
+        },
+        "reversed": {
+          "keywords": [
+            "Deception",
+            "Cynicism"
+          ],
+          "description": "Using words as a weapon."
+        }
+      },
+      "positional_weighting": {
+        "past": "A keen sense of curiosity and a desire for truth initiated your journey.",
+        "obstacle": "Gossip, cynicism, or acting on unverified information.",
+        "present": "The energy of Page of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Page of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Page of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Page of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-12",
+      "id": 62,
+      "name": "Knight of Swords",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Swords",
+      "elemental_weight": "Air/Air",
+      "astrology": "Air/Air",
+      "life_domains": [],
+      "tags": [
+        "travel",
+        "action",
+        "ambition",
+        "directness"
+      ],
+      "description": "Charging forward with total commitment.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Action",
+            "Directness"
+          ],
+          "description": "Charging forward with total commitment."
+        },
+        "reversed": {
+          "keywords": [
+            "Recklessness",
+            "Aggression"
+          ],
+          "description": "Destructive energy."
+        }
+      },
+      "positional_weighting": {
+        "past": "You charged into a situation with absolute intellectual conviction and speed.",
+        "obstacle": "Tactless aggression and a failure to consider others' feelings.",
+        "present": "The energy of Knight of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Knight of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Knight of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Knight of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-13",
+      "id": 63,
+      "name": "Queen of Swords",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Swords",
+      "elemental_weight": "Water/Air",
+      "astrology": "Water/Air",
+      "life_domains": [],
+      "tags": [
+        "clarity",
+        "boundaries",
+        "independence"
+      ],
+      "description": "Objective, sharp, and fair.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Clarity",
+            "Independence"
+          ],
+          "description": "Objective, sharp, and fair."
+        },
+        "reversed": {
+          "keywords": [
+            "Coldness",
+            "Cruelty"
+          ],
+          "description": "Using logic to freeze others out."
+        }
+      },
+      "positional_weighting": {
+        "past": "You established strict boundaries and navigated trauma with cold objectivity.",
+        "obstacle": "Bitterness, extreme coldness, or a lack of compassion is isolating you.",
+        "present": "The energy of Queen of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Queen of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Queen of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Queen of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-14",
+      "id": 64,
+      "name": "King of Swords",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Swords",
+      "elemental_weight": "Fire/Air",
+      "astrology": "Fire/Air",
+      "life_domains": [],
+      "tags": [
+        "authority",
+        "intellect",
+        "legal"
+      ],
+      "description": "A master of logic determining truth.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Clarity",
+            "Authority"
+          ],
+          "description": "A master of logic determining truth."
+        },
+        "reversed": {
+          "keywords": [
+            "Manipulation",
+            "Tyranny"
+          ],
+          "description": "Using intelligence to control."
+        }
+      },
+      "positional_weighting": {
+        "past": "You ruled a situation with absolute intellectual authority and fairness.",
+        "obstacle": "Intellectual tyranny, manipulation, or a lack of ethical grounding.",
+        "present": "The energy of King of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of King of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of King of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of King of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-02",
+      "id": 98,
+      "name": "Two of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Moon in Libra",
+      "life_domains": [],
+      "tags": [
+        "stalemate",
+        "indecision",
+        "denial"
+      ],
+      "description": "A mental standoff.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Choices",
+            "Stalemate"
+          ],
+          "description": "A mental standoff."
+        },
+        "reversed": {
+          "keywords": [
+            "Information Overload",
+            "Confusion"
+          ],
+          "description": "The blindfold comes off."
+        }
+      },
+      "positional_weighting": {
+        "past": "You faced a difficult stalemate and chose to avoid making a painful decision.",
+        "obstacle": "Willful blindness and an absolute refusal to make a choice are freezing your progress.",
+        "present": "The energy of Two of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Two of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Two of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Two of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-03",
+      "id": 99,
+      "name": "Three of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Saturn in Libra",
+      "life_domains": [],
+      "tags": [
+        "love",
+        "grief",
+        "betrayal",
+        "heartbreak"
+      ],
+      "description": "The pain of realizing truth.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Heartbreak",
+            "Sorrow"
+          ],
+          "description": "The pain of realizing truth."
+        },
+        "reversed": {
+          "keywords": [
+            "Recovery",
+            "Forgiveness"
+          ],
+          "description": "Healing process begins."
+        }
+      },
+      "positional_weighting": {
+        "past": "A painful separation or heartbreak fundamentally altered your mental landscape.",
+        "obstacle": "Unresolved grief or an inability to forgive is keeping you trapped in pain.",
+        "present": "The energy of Three of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Three of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Three of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Three of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-04",
+      "id": 100,
+      "name": "Four of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Jupiter in Libra",
+      "life_domains": [],
+      "tags": [
+        "rest",
+        "recovery"
+      ],
+      "description": "Withdrawal to recharge.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Rest",
+            "Recovery"
+          ],
+          "description": "Withdrawal to recharge."
+        },
+        "reversed": {
+          "keywords": [
+            "Restlessness",
+            "Burnout"
+          ],
+          "description": "Pushing when exhausted."
+        }
+      },
+      "positional_weighting": {
+        "past": "You took a necessary period of rest and mental recuperation after a conflict.",
+        "obstacle": "Severe mental burnout or an inability to slow down is harming your well-being.",
+        "present": "The energy of Four of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Four of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Four of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Four of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-05",
+      "id": 101,
+      "name": "Five of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Venus in Aquarius",
+      "life_domains": [],
+      "tags": [
+        "conflict",
+        "defeat",
+        "hostility"
+      ],
+      "description": "A hollow victory.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Conflict",
+            "Self-Interest"
+          ],
+          "description": "A hollow victory."
+        },
+        "reversed": {
+          "keywords": [
+            "Resolution",
+            "Forgiveness"
+          ],
+          "description": "Burying the hatchet."
+        }
+      },
+      "positional_weighting": {
+        "past": "You engaged in a conflict where winning the argument cost you a relationship.",
+        "obstacle": "Self-interest, pride, and an insistence on being 'right' are isolating you.",
+        "present": "The energy of Five of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Five of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Five of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Five of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-06",
+      "id": 102,
+      "name": "Six of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Mercury in Aquarius",
+      "life_domains": [],
+      "tags": [
+        "travel",
+        "transition",
+        "moving on"
+      ],
+      "description": "Moving toward calmer waters.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Transition",
+            "Departure"
+          ],
+          "description": "Moving toward calmer waters."
+        },
+        "reversed": {
+          "keywords": [
+            "Stagnation",
+            "Baggage"
+          ],
+          "description": "Inability to leave the past."
+        }
+      },
+      "positional_weighting": {
+        "past": "You navigated away from a turbulent situation toward a more peaceful mindset.",
+        "obstacle": "Carrying heavy mental baggage is preventing you from completing your transition.",
+        "present": "The energy of Six of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Six of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Six of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Six of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-07",
+      "id": 103,
+      "name": "Seven of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Moon in Aquarius",
+      "life_domains": [],
+      "tags": [
+        "secrets",
+        "strategy",
+        "deception"
+      ],
+      "description": "Using cunning to get what you want.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Deception",
+            "Strategy"
+          ],
+          "description": "Using cunning to get what you want."
+        },
+        "reversed": {
+          "keywords": [
+            "Confession",
+            "Caught"
+          ],
+          "description": "The weight of a secret."
+        }
+      },
+      "positional_weighting": {
+        "past": "You used strategy, stealth, or perhaps deception to navigate a complex problem.",
+        "obstacle": "Dishonesty, imposter syndrome, or cutting corners is about to backfire.",
+        "present": "The energy of Seven of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Seven of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Seven of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Seven of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-08",
+      "id": 104,
+      "name": "Eight of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Jupiter in Gemini",
+      "life_domains": [],
+      "tags": [
+        "anxiety",
+        "entrapment",
+        "victim"
+      ],
+      "description": "Mental imprisonment.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Imprisonment",
+            "Self-Victimization"
+          ],
+          "description": "Mental imprisonment."
+        },
+        "reversed": {
+          "keywords": [
+            "Release",
+            "Freedom"
+          ],
+          "description": "Realizing the blindfold was loose."
+        }
+      },
+      "positional_weighting": {
+        "past": "You felt completely trapped by circumstances, paralyzed by your own thoughts.",
+        "obstacle": "A victim mentality and self-imposed limitations are the only things holding you back.",
+        "present": "The energy of Eight of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Eight of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Eight of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Eight of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-09",
+      "id": 105,
+      "name": "Nine of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Mars in Gemini",
+      "life_domains": [],
+      "tags": [
+        "fear",
+        "anxiety",
+        "nightmares"
+      ],
+      "description": "The pain of a racing mind.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Anxiety",
+            "Fear"
+          ],
+          "description": "The pain of a racing mind."
+        },
+        "reversed": {
+          "keywords": [
+            "Hope",
+            "Release"
+          ],
+          "description": "Coming to terms with anxiety."
+        }
+      },
+      "positional_weighting": {
+        "past": "A period of intense anxiety and sleepless nights severely taxed your mental state.",
+        "obstacle": "Catastrophizing and allowing fear to dominate your logic is paralyzing you.",
+        "present": "The energy of Nine of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Nine of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Nine of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Nine of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "swords-10",
+      "id": 106,
+      "name": "Ten of Swords",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Swords",
+      "elemental_weight": "Air",
+      "astrology": "Sun in Gemini",
+      "life_domains": [],
+      "tags": [
+        "endings",
+        "betrayal",
+        "rock bottom"
+      ],
+      "description": "A painful ending that cannot be undone.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Betrayal",
+            "Rock Bottom"
+          ],
+          "description": "A painful ending that cannot be undone."
+        },
+        "reversed": {
+          "keywords": [
+            "Recovery",
+            "Regeneration"
+          ],
+          "description": "The worst is over."
+        }
+      },
+      "positional_weighting": {
+        "past": "You hit rock bottom or experienced a definitive, painful ending to a situation.",
+        "obstacle": "Playing the martyr or refusing to accept that an ending is final.",
+        "present": "The energy of Ten of Swords is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ten of Swords will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ten of Swords suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ten of Swords. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-01",
+      "id": 65,
+      "name": "Ace of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Earth Signs",
+      "life_domains": [],
+      "tags": [
+        "manifestation",
+        "opportunity",
+        "wealth"
+      ],
+      "description": "A seed planted in fertile soil.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Abundance",
+            "Opportunity"
+          ],
+          "description": "A seed planted in fertile soil."
+        },
+        "reversed": {
+          "keywords": [
+            "Lost Opportunity",
+            "Greed"
+          ],
+          "description": "Project fails to launch."
+        }
+      },
+      "positional_weighting": {
+        "past": "You seized a physical or financial opportunity that provided a solid foundation.",
+        "obstacle": "Poor financial planning or missing a crucial physical opportunity.",
+        "present": "The energy of Ace of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ace of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ace of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ace of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-11",
+      "id": 75,
+      "name": "Page of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth/Earth",
+      "astrology": "Earth/Earth",
+      "life_domains": [],
+      "tags": [
+        "skill",
+        "manifestation",
+        "new job",
+        "education"
+      ],
+      "description": "A practical idea with potential.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Manifestation",
+            "Skill"
+          ],
+          "description": "A practical idea with potential."
+        },
+        "reversed": {
+          "keywords": [
+            "Procrastination",
+            "Laziness"
+          ],
+          "description": "Failure to take physical steps."
+        }
+      },
+      "positional_weighting": {
+        "past": "You applied yourself to studying a practical skill or launched a grounded project.",
+        "obstacle": "Procrastination and a failure to do the actual work is keeping your ideas as dreams.",
+        "present": "The energy of Page of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Page of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Page of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Page of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-12",
+      "id": 76,
+      "name": "Knight of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Air/Earth",
+      "astrology": "Air/Earth",
+      "life_domains": [],
+      "tags": [
+        "routine",
+        "reliability",
+        "hard work"
+      ],
+      "description": "Making progress through consistent effort.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Hard Work",
+            "Routine"
+          ],
+          "description": "Making progress through consistent effort."
+        },
+        "reversed": {
+          "keywords": [
+            "Stagnation",
+            "Obsessive"
+          ],
+          "description": "Getting stuck in a rut."
+        }
+      },
+      "positional_weighting": {
+        "past": "You achieved steady progress through sheer reliability and an unyielding routine.",
+        "obstacle": "Stubbornness and an obsessive adherence to a routine that no longer works.",
+        "present": "The energy of Knight of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Knight of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Knight of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Knight of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-13",
+      "id": 77,
+      "name": "Queen of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Water/Earth",
+      "astrology": "Water/Earth",
+      "life_domains": [],
+      "tags": [
+        "security",
+        "nurturing",
+        "practicality",
+        "family"
+      ],
+      "description": "Balancing material success and home.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Nurturing",
+            "Security"
+          ],
+          "description": "Balancing material success and home."
+        },
+        "reversed": {
+          "keywords": [
+            "Self-Centered",
+            "Smothering"
+          ],
+          "description": "Losing sight of priorities."
+        }
+      },
+      "positional_weighting": {
+        "past": "You created a secure, nurturing environment that supported both wealth and well-being.",
+        "obstacle": "An imbalance between work and home life is creating deep insecurity.",
+        "present": "The energy of Queen of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Queen of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Queen of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Queen of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-14",
+      "id": 78,
+      "name": "King of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Court Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Fire/Earth",
+      "astrology": "Fire/Earth",
+      "life_domains": [],
+      "tags": [
+        "abundance",
+        "leadership",
+        "mastery"
+      ],
+      "description": "Master of the material realm.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Abundance",
+            "Mastery"
+          ],
+          "description": "Master of the material realm."
+        },
+        "reversed": {
+          "keywords": [
+            "Greed",
+            "Corruption"
+          ],
+          "description": "Success on shaky moral ground."
+        }
+      },
+      "positional_weighting": {
+        "past": "You reached the pinnacle of material success and established solid authority.",
+        "obstacle": "Greed, corruption, or prioritizing profit over ethical principles.",
+        "present": "The energy of King of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of King of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of King of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of King of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-02",
+      "id": 107,
+      "name": "Two of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Jupiter in Capricorn",
+      "life_domains": [],
+      "tags": [
+        "adaptability",
+        "time management"
+      ],
+      "description": "Juggling multiple responsibilities.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Balance",
+            "Adaptability"
+          ],
+          "description": "Juggling multiple responsibilities."
+        },
+        "reversed": {
+          "keywords": [
+            "Disorganization",
+            "Stress"
+          ],
+          "description": "Failure to prioritize."
+        }
+      },
+      "positional_weighting": {
+        "past": "You successfully managed fluctuating resources and adapted to changing demands.",
+        "obstacle": "You are severely overextended and dropping the ball on crucial responsibilities.",
+        "present": "The energy of Two of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Two of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Two of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Two of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-03",
+      "id": 108,
+      "name": "Three of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Mars in Capricorn",
+      "life_domains": [],
+      "tags": [
+        "skill",
+        "teamwork",
+        "collaboration",
+        "education"
+      ],
+      "description": "Achieving a goal through specialized skill.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Teamwork",
+            "Skill"
+          ],
+          "description": "Achieving a goal through specialized skill."
+        },
+        "reversed": {
+          "keywords": [
+            "Lack of Teamwork",
+            "Poor Workmanship"
+          ],
+          "description": "Project stalled by ego."
+        }
+      },
+      "positional_weighting": {
+        "past": "A successful collaboration or dedication to a craft built your reputation.",
+        "obstacle": "A refusal to collaborate or a lack of necessary skills is halting production.",
+        "present": "The energy of Three of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Three of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Three of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Three of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-04",
+      "id": 109,
+      "name": "Four of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Sun in Capricorn",
+      "life_domains": [],
+      "tags": [
+        "conservation",
+        "security",
+        "possessiveness",
+        "home"
+      ],
+      "description": "Clinging to what you have.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Security",
+            "Conservation"
+          ],
+          "description": "Clinging to what you have."
+        },
+        "reversed": {
+          "keywords": [
+            "Generosity",
+            "Release"
+          ],
+          "description": "Opening the hands."
+        }
+      },
+      "positional_weighting": {
+        "past": "You focused heavily on resource conservation and built a secure fortress.",
+        "obstacle": "A scarcity mindset and hoarding resources is preventing necessary growth.",
+        "present": "The energy of Four of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Four of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Four of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Four of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-05",
+      "id": 110,
+      "name": "Five of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Mercury in Taurus",
+      "life_domains": [],
+      "tags": [
+        "loss",
+        "poverty"
+      ],
+      "description": "A period of hardship.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Loss",
+            "Isolation"
+          ],
+          "description": "A period of hardship."
+        },
+        "reversed": {
+          "keywords": [
+            "Recovery",
+            "Forgiveness"
+          ],
+          "description": "Regaining stability."
+        }
+      },
+      "positional_weighting": {
+        "past": "You endured a period of severe material hardship or physical isolation.",
+        "obstacle": "Focusing solely on what you lack is blinding you to available help.",
+        "present": "The energy of Five of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Five of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Five of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Five of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-06",
+      "id": 111,
+      "name": "Six of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Moon in Taurus",
+      "life_domains": [],
+      "tags": [
+        "community",
+        "generosity",
+        "charity",
+        "sharing"
+      ],
+      "description": "Balanced exchange of resources.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Generosity",
+            "Charity"
+          ],
+          "description": "Balanced exchange of resources."
+        },
+        "reversed": {
+          "keywords": [
+            "Self-Interest",
+            "Unpaid Debts"
+          ],
+          "description": "Power imbalance."
+        }
+      },
+      "positional_weighting": {
+        "past": "A cycle of receiving or giving help created a balanced flow of resources.",
+        "obstacle": "A power imbalance, unpaid debts, or generosity with strings attached.",
+        "present": "The energy of Six of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Six of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Six of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Six of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-07",
+      "id": 112,
+      "name": "Seven of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Saturn in Taurus",
+      "life_domains": [],
+      "tags": [
+        "evaluation",
+        "investment"
+      ],
+      "description": "Pausing to evaluate the harvest.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Investment",
+            "Patience"
+          ],
+          "description": "Pausing to evaluate the harvest."
+        },
+        "reversed": {
+          "keywords": [
+            "Lack of Vision",
+            "Impatience"
+          ],
+          "description": "Frustration with slow growth."
+        }
+      },
+      "positional_weighting": {
+        "past": "You planted seeds and patiently waited for your investments to mature.",
+        "obstacle": "Impatience and a lack of long-term vision are making you want to quit prematurely.",
+        "present": "The energy of Seven of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Seven of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Seven of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Seven of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-08",
+      "id": 113,
+      "name": "Eight of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Sun in Virgo",
+      "life_domains": [],
+      "tags": [
+        "apprenticeship",
+        "mastery",
+        "craft",
+        "education"
+      ],
+      "description": "Dedicated effort toward a craft.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Apprenticeship",
+            "Mastery"
+          ],
+          "description": "Dedicated effort toward a craft."
+        },
+        "reversed": {
+          "keywords": [
+            "Perfectionism",
+            "Boredom"
+          ],
+          "description": "Working without a soul."
+        }
+      },
+      "positional_weighting": {
+        "past": "You dedicated yourself to mastering a skill through intense, repetitive focus.",
+        "obstacle": "Crippling perfectionism or a lack of ambition is stalling your mastery.",
+        "present": "The energy of Eight of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Eight of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Eight of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Eight of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-09",
+      "id": 114,
+      "name": "Nine of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Venus in Virgo",
+      "life_domains": [],
+      "tags": [
+        "independence",
+        "luxury",
+        "self-sufficiency"
+      ],
+      "description": "Enjoying the fruits of labor.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Independence",
+            "Luxury"
+          ],
+          "description": "Enjoying the fruits of labor."
+        },
+        "reversed": {
+          "keywords": [
+            "Overspending",
+            "Isolation"
+          ],
+          "description": "Living beyond means."
+        }
+      },
+      "positional_weighting": {
+        "past": "You achieved a state of comfortable independence through your own hard work.",
+        "obstacle": "Material obsession, overspending, or feeling isolated by your success.",
+        "present": "The energy of Nine of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Nine of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Nine of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Nine of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    },
+    {
+      "key": "pentacles-10",
+      "id": 115,
+      "name": "Ten of Pentacles",
+      "arcana": "Minor",
+      "card_type": "Pip Card",
+      "suit": "Pentacles",
+      "elemental_weight": "Earth",
+      "astrology": "Mercury in Virgo",
+      "life_domains": [],
+      "tags": [
+        "legacy",
+        "inheritance",
+        "family",
+        "tradition"
+      ],
+      "description": "Generational wealth and stability.",
+      "meanings": {
+        "upright": {
+          "keywords": [
+            "Legacy",
+            "Tradition"
+          ],
+          "description": "Generational wealth and stability."
+        },
+        "reversed": {
+          "keywords": [
+            "Loss",
+            "Feud"
+          ],
+          "description": "Breakdown in structures."
+        }
+      },
+      "positional_weighting": {
+        "past": "You benefited from family structures, inheritance, or deeply rooted traditions.",
+        "obstacle": "A focus on short-term gains is destroying long-term stability or legacy.",
+        "present": "The energy of Ten of Pentacles is currently manifesting as a dominant force in your environment. You are likely feeling the direct impact of its archetypal themes—whether through external events or a internal shift in perspective—demanding your immediate attention and conscious engagement.",
+        "future": "As you move forward, the essence of Ten of Pentacles will crystallize into a definitive outcome. If current trajectories remain unchanged, you can expect this energy to be the primary catalyst for the next major milestone in your journey, bringing either the fruition of your efforts or a necessary point of reckoning.",
+        "advice": "The wisdom of Ten of Pentacles suggests a strategic approach: lean into its highest expression. Align your actions with its core strengths while remaining vigilant against its potential pitfalls. Success in your current endeavor depends on your ability to embody these specific qualities with integrity and discipline.",
+        "hopes_fears": "Subconsciously, you are navigating the dual nature of Ten of Pentacles. You likely harbor a deep hope that its positive aspects will lead to your personal or professional fulfillment, yet this is shadowed by a persistent fear that you may be overwhelmed by the responsibilities or transformations it requires."
+      }
+    }
+  ]
+}
