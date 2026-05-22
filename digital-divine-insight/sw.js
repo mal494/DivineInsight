@@ -1,4 +1,4 @@
-const CACHE_NAME = 'divine-insight-v1';
+const CACHE_NAME = 'divine-insight-v2';
 
 // The core assets that MUST be cached immediately for the UI to load offline
 const CORE_ASSETS = [
@@ -7,7 +7,7 @@ const CORE_ASSETS = [
     './styles.css',
     './app.js',
     './logic-worker.js',
-    './deck-data.json',
+    './divine-insight-optimized.json',
     './assets/img/card-back.jpg',
     './assets/fx/particles.js'
 ];

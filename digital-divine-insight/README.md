@@ -13,7 +13,7 @@ This MVP focuses on processing speed and fluid interaction, utilizing modern web
 
 ## Vector Spread Contract
 
-The worker now parses and normalizes `deck-data.json` once during initialization, then returns deterministic vector metadata with each draw result.
+The worker now parses and normalizes `divine-insight-optimized.json` once during initialization, then returns deterministic vector metadata with each draw result.
 
 * `vectorState` describes the session-level direction, drift, magnitude, and spread radius.
 * `positionVector` describes the selected card's derived placement and spread index.

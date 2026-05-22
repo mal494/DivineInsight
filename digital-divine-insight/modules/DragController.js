@@ -3,11 +3,13 @@ const lerp = (start, end, factor) => start + (end - start) * factor;
 export class DragController {
     constructor(cardElement, interactionCallback) {
         this.cardEl = cardElement;
+        this.cardInner = cardElement?.querySelector('#card-inner');
         this.onInteraction = interactionCallback;
 
         this.isPointerDown = false;
+        this.dragStartPos = { x: 0, y: 0 };
         this.inputState = { x: 0, y: 0, velocity: 0, lastTime: performance.now() };
-        this.visualState = { x: 0, y: 0, rotation: 0 };
+        this.visualState = { x: 0, y: 0, rotation: 0, tiltX: 0, tiltY: 0 };
         this._rafId = null;
 
         this._handlePointerDown = this._handlePointerDown.bind(this);
@@ -32,8 +34,8 @@ export class DragController {
         const renderFrame = () => {
             if (this.isPointerDown) {
                 // Interpolate visual state towards actual input for smooth, weighty drag
-                this.visualState.x = this.lerp(this.visualState.x, this.inputState.x - window.innerWidth / 2, 0.2);
-                this.visualState.y = this.lerp(this.visualState.y, this.inputState.y - window.innerHeight / 2, 0.2);
+                this.visualState.x = this.lerp(this.visualState.x, this.inputState.x - this.dragStartPos.x, 0.2);
+                this.visualState.y = this.lerp(this.visualState.y, this.inputState.y - this.dragStartPos.y, 0.2);
 
                 // Add slight tilt based on horizontal movement
                 this.visualState.rotation = this.lerp(this.visualState.rotation, this.visualState.x * 0.05, 0.1);
@@ -66,9 +68,11 @@ export class DragController {
     }
 
     _handlePointerDown(e) {
-        if (e.target?.id === 'draw-btn' || e.target?.id === 'intent-input') return;
+        if (e.target?.id === 'draw-btn' || e.target?.id === 'btn-seek-insight' || e.target?.id === 'intent-input') return;
 
         this.isPointerDown = true;
+        this.dragStartPos.x = e.clientX;
+        this.dragStartPos.y = e.clientY;
         this.inputState.x = e.clientX;
         this.inputState.y = e.clientY;
         this.inputState.lastTime = performance.now();
@@ -81,8 +85,6 @@ export class DragController {
     }
 
     _handlePointerMove(e) {
-        if (!this.isPointerDown) return;
-
         const currentTime = performance.now();
         const deltaTime = currentTime - this.inputState.lastTime;
         const dx = e.clientX - this.inputState.x;
@@ -92,6 +94,11 @@ export class DragController {
         this.inputState.x = e.clientX;
         this.inputState.y = e.clientY;
         this.inputState.lastTime = currentTime;
+
+        // Send raw coordinates for the tilt loop
+        this.onInteraction?.({ type: 'MOUSE_MOVE', x: e.clientX, y: e.clientY });
+
+        if (!this.isPointerDown) return;
 
         if (this.inputState.velocity > 2) {
             this.onInteraction?.({ type: 'HIGH_VELOCITY', value: this.inputState.velocity });
@@ -113,7 +120,23 @@ export class DragController {
     applyTransform() {
         if (!this.cardEl) return;
 
+        // Container handles layout translation and slight drag rotation
         this.cardEl.style.transform = `translate(${this.visualState.x}px, ${this.visualState.y}px) rotate(${this.visualState.rotation}deg) scale(1.05)`;
+
+        // Inner layer handles 3D tilt during drag to match the interactive feel
+        if (this.cardInner) {
+            const rect = this.cardEl.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const rotateX = -(this.inputState.y - centerY) / 25;
+            // Check for flip state by inspecting the matrix or string
+            const transform = this.cardInner.style.transform;
+            const isFlipped = transform.includes('rotateY(180') || transform.includes('180deg');
+            const rotateY = ((this.inputState.x - centerX) / 25) + (isFlipped ? 180 : 0);
+            
+            this.cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
     }
 
     triggerVisualJuice() {
