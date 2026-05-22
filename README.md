@@ -14,11 +14,12 @@ This MVP focuses on processing speed and fluid interaction, utilizing modern web
 
 The application utilizes a small, module-based JavaScript structure for clear separation of concerns:
 
-    app.js — The bootstrap entrypoint that initializes the application.
-    modules/app/DivineInsightApp.js — Core application orchestration, managing state and connecting the UI components to the background worker.
-    modules/components/DragController.js — Handles precise pointer tracking and drives the render loop for physical card interactions.
-    modules/components/CardView.js — Manages DOM updates, flip animations, and visual status handling for the deck.
-    ambientEngine.js — The Web Audio API ambient controller responsible for the interactive soundscape.
+    digital-divine-insight/app.js — The bootstrap entrypoint that initializes the application.
+    digital-divine-insight/modules/DivineInsightApp.js — Core application orchestration/state management.
+    digital-divine-insight/modules/DragController.js — Pointer tracking and drag signal emission.
+    digital-divine-insight/modules/CardView.js — Card rendering, flip flow, and insight panel binding.
+    digital-divine-insight/modules/ambientEngine.js — Ambient audio orchestration.
+    digital-divine-insight/logic-worker.js — Deterministic draw engine + vector synthesis contract.
 
 💻 Local Setup
 

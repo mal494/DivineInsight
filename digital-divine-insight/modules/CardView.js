@@ -1,10 +1,20 @@
 export class CardView {
-    constructor({ cardEl = null, statusTextEl = null, options = {} } = {}) {
-        // Cache DOM elements so we aren't querying the document repeatedly.
-        // Support both injected elements and the original zero-arg wiring style.
-        this.cardEl = cardEl || document.getElementById('active-card');
-        this.statusTextEl = statusTextEl || document.getElementById('status-text');
+    constructor({ options = {} } = {}) {
+        // Map to the new premium UI elements
+        this.cardEl = document.getElementById('tarot-card');
+        this.cardInner = document.getElementById('card-inner');
+        this.cardBackLayer = document.getElementById('card-back');
+        this.slotGlow = document.getElementById('slot-glow');
+        this.insightPanel = document.getElementById('insight-panel');
+
+        // New DOM References for the Data Binding
+        this.insightTitle = this.insightPanel?.querySelector('h4');
+        this.insightKeywordsContainer = this.insightPanel?.querySelector('.flex.flex-wrap.gap-2');
+        this.insightDescription = this.insightPanel?.querySelector('p.leading-relaxed');
+
         this.drawBtn = document.getElementById('draw-btn');
+        this.statusTextEl = document.getElementById('status-text'); // Fallback for various status readouts
+        this.seekBtn = document.getElementById('btn-seek-insight');
 
         // Configurable selectors / classes
         this.edgeSelector = options.edgeSelector || '.card-edge';
@@ -12,10 +22,6 @@ export class CardView {
         this.flipClass = options.flipClass || 'flipped';
         this.drawingClass = options.drawingClass || 'drawing-animation';
         this.defaultGlowDuration = typeof options.defaultGlowDuration === 'number' ? options.defaultGlowDuration : 1200;
-
-        // DOM references (prefer local cardEl scope, fallback to document)
-        this.cardBackLayer = (this.cardEl && this.cardEl.querySelector('.card-back')) || document.querySelector('.card-back');
-        this.edgeEl = (this.cardEl && this.cardEl.querySelector(this.edgeSelector)) || document.querySelector(this.edgeSelector);
 
         // Animation state
         this._deckImages = [];
@@ -30,8 +36,16 @@ export class CardView {
             ambientDrift: { x: 0, y: 0 },
             noise: 0
         };
+        this._mousePos = { x: 0, y: 0 };
+        this._isFlipped = false;
         this._rafId = null;
         this._lastFrameTime = performance.now();
+        this._prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    updateMousePos(x, y) {
+        this._mousePos.x = x;
+        this._mousePos.y = y;
     }
 
     // DYNAMICS / RENDERING
@@ -52,7 +66,7 @@ export class CardView {
     }
 
     _updateDynamics(dt) {
-        if (!this.cardEl || !this._spreadLayout) return;
+        if (!this.cardEl || !this._spreadLayout || this._prefersReducedMotion) return;
 
         // Apply ambient drift based on vector profile
         const sessionNoise = Math.sin(this._lastFrameTime * 0.001) * this._vectorDynamics.noise;
@@ -64,6 +78,20 @@ export class CardView {
         const currentRotate = this._spreadLayout.rotation + Math.sin(this._lastFrameTime * 0.0012) * this._vectorDynamics.noise * 2;
 
         this.cardEl.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentRotate}deg) scale(${this._spreadLayout.scale})`;
+
+        // 3D Tilt calculation (Interactive hover response)
+        if (this.cardInner) {
+            const rect = this.cardEl.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const mouseX = this._mousePos.x - centerX;
+            const mouseY = this._mousePos.y - centerY;
+
+            const rotateX = -mouseY / 25;
+            const rotateY = (mouseX / 25) + (this._isFlipped ? 180 : 0);
+
+            this.cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        }
     }
 
     // TRANSFORM / DRAG
@@ -107,13 +135,22 @@ export class CardView {
 
         const translateX = x + basisX * 14 * spreadRadius;
         const translateY = y + basisY * 14 * spreadRadius;
-        const rotation = (typeof layout.angle === 'number' ? layout.angle : 0) * (180 / Math.PI) + basisX * 6;
+        // If caller provided a discrete orientation, force rotation to exactly 0 or 180 degrees
+        // to ensure the pulled card only has two possible orientations (upright/reversed).
+        let rotationDeg;
+        if (layout.orientation === 'upright') {
+            rotationDeg = 0;
+        } else if (layout.orientation === 'reversed') {
+            rotationDeg = 180;
+        } else {
+            rotationDeg = (typeof layout.angle === 'number' ? layout.angle : 0) * (180 / Math.PI) + basisX * 6;
+        }
         const scale = layout.scale || 1 + Math.min(0.18, spreadRadius * 0.08);
 
         this._spreadLayout = {
             x: translateX,
             y: translateY,
-            rotation,
+            rotation: rotationDeg,
             scale
         };
 
@@ -176,10 +213,14 @@ export class CardView {
     }
 
     showChanneling() {
-        if (this.statusTextEl) this.statusTextEl.innerText = 'Channeling intent...';
+        this.setStatus('Channeling intent...');
         if (this.drawBtn) {
             this.drawBtn.disabled = true;
             this.drawBtn.style.opacity = '0.5';
+        }
+        if (this.seekBtn) {
+            this.seekBtn.disabled = true;
+            this.seekBtn.style.opacity = '0.7';
         }
         if (this.cardEl) this.cardEl.classList.add(this.drawingClass);
         if (this.cardEl) this.cardEl.classList.remove(this.flipClass);
@@ -223,44 +264,103 @@ export class CardView {
         if (this.cardEl) this.cardEl.classList.remove(this.drawingClass);
     }
 
-    // SHOW RESULT
-    showResult(result = {}) {
-        const normalizedResult = typeof result === 'string'
-            ? { cardName: result }
-            : result;
+    _populateInsightPanel(nodeData) {
+        if (!nodeData) return;
+        if (!this.insightTitle || !this.insightKeywordsContainer || !this.insightDescription) return;
 
-        const {
-            cardName = '',
-            cardId = null,
-            applyGlow = true,
-            positionVector = null,
-            vectorState = null,
-            cardBasis = null,
-        } = normalizedResult;
+        // 1. Update the Title & Orientation
+        const titleText = (nodeData.cardName || nodeData.name) + (nodeData.orientation === 'reversed' ? ' (Reversed)' : '');
+        this.insightTitle.innerText = titleText;
+
+        // 2. Clear and Rebuild Keyword Tags
+        this.insightKeywordsContainer.innerHTML = ''; 
+        
+        if (nodeData.keywords && Array.isArray(nodeData.keywords)) {
+            nodeData.keywords.forEach((keyword, index) => {
+                const span = document.createElement('span');
+                
+                // Style the final keyword as the "Primary" highlighted tag
+                if (index === nodeData.keywords.length - 1) {
+                    span.className = 'px-3 py-1 bg-ethereal-teal text-midnight-obsidian rounded-full font-label-sm text-label-sm uppercase shadow-[0_0_10px_rgba(0,255,204,0.3)]';
+                } else {
+                    span.className = 'px-3 py-1 border border-moon-silver/20 rounded-full font-label-sm text-label-sm text-moon-silver/60 uppercase';
+                }
+                
+                span.innerText = keyword;
+                this.insightKeywordsContainer.appendChild(span);
+            });
+        }
+
+        // 3. Generate Dynamic Synthesis Text from Vector Weights
+        // This acts as your engine's voice until you hook up an external LLM agent
+        let dominantAxis = "balance";
+        if (nodeData.localWeights) {
+            const weights = nodeData.localWeights;
+            dominantAxis = Object.keys(weights).reduce((a, b) => weights[a] > weights[b] ? a : b);
+        }
+
+        const axisInterpretations = {
+            intellect: "a surge of structural logic and mental clarity.",
+            emotion: "deep intuitive currents and emotional resonance.",
+            material: "a grounding force anchored in physical reality.",
+            volition: "high-velocity manifestation and fiery drive."
+        };
+
+        const orientationContext = nodeData.orientation === 'reversed' 
+            ? "However, its reversed position suggests this energy is currently internalized, blocked, or experiencing friction."
+            : "This energy is flowing freely, open to external manifestation.";
+
+        this.insightDescription.innerText = `The presence of ${nodeData.cardName || nodeData.name} at the threshold introduces ${axisInterpretations[dominantAxis] || "a shifting dynamic."} ${orientationContext}`;
+    }
+
+    // Overriding the flip to use the new premium transitions
+    showResult(result = {}) {
+        const normalizedResult = typeof result === 'string' ? { cardName: result } : result;
+        const targetNode = normalizedResult.nodes ? normalizedResult.nodes[0] : normalizedResult;
+        const { cardKey, cardId, cardName } = targetNode;
 
         // Ensure channeling stopped first
         this._stopChannelAnimation();
 
-        this.applySpreadLayout({
-            positionVector,
-            vectorState,
-            cardBasis,
-            angle: positionVector?.angle,
-            spreadRadius: positionVector?.spreadRadius || vectorState?.spreadRadius,
-        });
+        // Hide the table glow and ensure card is visible
+        if (this.slotGlow) this.slotGlow.classList.add('hidden');
+        if (this.cardEl) this.cardEl.classList.remove('hidden');
+
+        // Apply vector layout lerp
+        this.applySpreadLayout(result);
+        
+        // --- NEW: Populate the UI text fields with the Worker's JSON ---
+        this._populateInsightPanel(targetNode);
+
+        // Update physical card front title (fallback for h3)
+        const cardTitle = document.querySelector('#tarot-card h3');
+        if (cardTitle) cardTitle.innerText = cardName || targetNode.name || '';
 
         const finish = () => {
-            if (applyGlow) this.setGlow(true);
-            if (this.cardEl) this.cardEl.classList.add(this.flipClass);
-            if (this.statusTextEl) this.statusTextEl.innerText = `You drew: ${cardName}`;
-            if (this.drawBtn) {
-                this.drawBtn.disabled = false;
-                this.drawBtn.style.opacity = '1';
-            }
+            // Execute the 3D flip and panel reveal
+            setTimeout(() => {
+                this._isFlipped = true;
+                if (this.cardInner) this.cardInner.style.transform = 'rotateY(180deg)';
+                
+                setTimeout(() => {
+                    if (this.insightPanel) {
+                        this.insightPanel.style.opacity = '1';
+                        this.insightPanel.style.transform = 'translateX(-50%) translateY(0)';
+                    }
+                    if (!this._prefersReducedMotion) {
+                        document.body.classList.add('animate-pulse');
+                        setTimeout(() => document.body.classList.remove('animate-pulse'), 1000);
+                    }
+                }, 800);
+            }, 100);
         };
 
-        if (cardId) {
-            this.setDeckImage(cardId).then(finish);
+        const imageKey = cardKey || cardId;
+        if (imageKey) {
+            // Update the front image as well as the animated back
+            const frontImg = (this.cardEl && this.cardEl.querySelector('.rotate-y-180 img')) || document.querySelector('.rotate-y-180 img');
+            if (frontImg) frontImg.src = `assets/img/deck/${imageKey}.jpg`;
+            this.setDeckImage(imageKey).then(finish);
         } else {
             finish();
         }
@@ -276,19 +376,54 @@ export class CardView {
     }
 
     resetCard() {
-        this.unflip();
+        // Reset 3D flip and hide insight panel
+        this._isFlipped = false;
+        if (this.cardInner) this.cardInner.style.transform = 'rotateY(0deg)';
+        if (this.insightPanel) {
+            this.insightPanel.style.opacity = '0';
+            this.insightPanel.style.transform = 'translateX(-50%) translateY(40px)';
+        }
+        if (this.slotGlow) this.slotGlow.classList.remove('hidden');
+
         this.stopDynamicsLoop();
         this._spreadLayout = null;
         this.setTransform({ x: 0, y: 0, rotation: 0, scale: 1 });
-        if (this.statusTextEl) this.statusTextEl.innerText = 'Concentrate on your intent...';
+        
+        this.setStatus('Concentrate on your intent...');
+        
         if (this.drawBtn) {
             this.drawBtn.disabled = false;
             this.drawBtn.style.opacity = '1';
+        }
+        if (this.seekBtn) {
+            this.seekBtn.disabled = false;
+            this.seekBtn.style.opacity = '1';
         }
 
         // Clear the background image after the flip finishes so the user doesn't see it.
         setTimeout(() => {
             if (this.cardBackLayer) this.cardBackLayer.style.backgroundImage = 'none';
         }, 600);
+    }
+
+    setStatus(message, { isError = false } = {}) {
+        if (!this.statusTextEl) return;
+        this.statusTextEl.innerText = message || '';
+        this.statusTextEl.classList.toggle('text-red-300', isError);
+        this.statusTextEl.classList.toggle('text-ethereal-teal', !isError);
+    }
+
+    setUiState({ state } = {}) {
+        const isBusy = state === 'channeling';
+        const isRecoverable = state !== 'error';
+
+        if (this.drawBtn) {
+            this.drawBtn.disabled = isBusy || !isRecoverable;
+            this.drawBtn.style.opacity = this.drawBtn.disabled ? '0.5' : '1';
+        }
+        if (this.seekBtn) {
+            this.seekBtn.disabled = isBusy || !isRecoverable;
+            this.seekBtn.style.opacity = this.seekBtn.disabled ? '0.7' : '1';
+        }
     }
 }

@@ -186,6 +186,33 @@ export class AmbientEngine {
         return this.playEffect('flip');
     }
 
+    swell(durationMs = 1200) {
+        const ambientEl = this.bgmMagic ?? this.baseEl;
+        if (!ambientEl) return;
+
+        const originalVolume = ambientEl.volume;
+        const targetVolume = Math.min(originalVolume + 0.3, 0.9);
+
+        // Quick ramp up
+        ambientEl.volume = targetVolume;
+
+        // Slow ramp back
+        setTimeout(() => {
+            const steps = 30;
+            const stepMs = durationMs / steps;
+            let currentStep = 0;
+
+            const fadeOut = setInterval(() => {
+                currentStep++;
+                ambientEl.volume = targetVolume - (targetVolume - originalVolume) * (currentStep / steps);
+                if (currentStep >= steps) {
+                    clearInterval(fadeOut);
+                    ambientEl.volume = originalVolume;
+                }
+            }, stepMs);
+        }, 300);
+    }
+
     playEffect(name, { restart = true } = {}) {
         const el = this._resolveEffectElement(name);
         if (!el) return false;

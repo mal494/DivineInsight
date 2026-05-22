@@ -1,17 +1,22 @@
-/* --- 1. Global Variables & Theming --- */
+/* --- 1. Global Variables & Theming (merged) --- */
 :root {
     /* Color Palette */
     --bg-base: #050508;
     --bg-surface: rgba(18, 18, 28, 0.4);
     --accent-primary: #00ffcc;
-    --accent-glow: rgba(0, 255, 204, 0.6);
+    /* chosen for a slightly softer glow consistent with the design */
+    --accent-glow: rgba(0, 255, 204, 0.4);
     --text-primary: #ffffff;
     --text-muted: rgba(255, 255, 255, 0.6);
-    
-    /* Layout */
-    --card-width: 200px;
-    --card-height: 340px;
+
+    /* Layout & sizing (prefer the UI's card size from index.html)
+       note: card dimensions used by Tailwind utility w-[var(--card-width)] */
+    --card-width: 280px;
+    --card-height: 480px;
     --border-radius: 12px;
+
+    /* Motion tokens */
+    --premium-bezier: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body, html {
@@ -262,6 +267,23 @@ h1, .cinzel {
     transition: all 0.3s ease;
 }
 
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 .mystic-button .btn-text {
     position: relative;
     z-index: 2;
@@ -299,6 +321,55 @@ h1, .cinzel {
     min-height: 1.2rem;
 }
 
+/* Meanings panel shown under the controls with stylized cards */
+.meanings-panel {
+    margin-top: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.meaning-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 10px 12px;
+    border-radius: 10px;
+    max-width: 320px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+.meaning-title {
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-bottom: 6px;
+}
+
+.meaning-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.keyword-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.keyword-chip {
+    background: rgba(0,0,0,0.35);
+    color: var(--text-primary);
+    padding: 6px 8px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
 /* Responsive adjustments: reduce the upward nudge on small screens */
 @media (max-width: 600px) {
     .page-header {
@@ -315,4 +386,136 @@ h1, .cinzel {
         padding-left: 12px;
         padding-right: 12px;
     }
+}
+
+
+/* --- Styles moved from inline <style> in index.html --- */
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.preserve-3d {
+    transform-style: preserve-3d;
+}
+
+.backface-hidden {
+    backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+    transform: rotateY(180deg);
+}
+
+.card-reveal-glow {
+    box-shadow: 0 0 40px var(--accent-glow);
+}
+
+.aurora-corner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid #00ffcc;
+    border-left: 2px solid #00ffcc;
+}
+
+.aurora-corner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid #00ffcc;
+    border-right: 2px solid #00ffcc;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(1.5deg); }
+}
+
+.float-animation {
+    animation: float 8s ease-in-out infinite;
+}
+
+.float-delay-1 {
+    animation-delay: -2s;
+}
+
+@keyframes fadeInSlideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.entrance-header {
+    animation: fadeInSlideDown 1s var(--premium-bezier) forwards;
+}
+
+.entrance-panel {
+    animation: fadeInSlideUp 1s var(--premium-bezier) forwards;
+}
+
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.whisper-input::placeholder {
+    transition: opacity 0.3s ease;
+}
+
+.whisper-input:focus::placeholder {
+    opacity: 0;
+}
+
+.intent-focus-glow:focus-within {
+    box-shadow: 0 0 20px var(--accent-glow);
+    border-bottom-color: #00ffcc;
+}
+
+/* Tilt effect classes */
+.tilt-card {
+    transition: transform 0.1s ease-out;
+}
+
+/* Premium Transitions */
+.transition-premium {
+    transition: all 0.7s var(--premium-bezier);
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+
+@keyframes channelPulse {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 10px rgba(212,175,55,0.2)); }
+    50% { filter: brightness(1.2) drop-shadow(0 0 30px rgba(212,175,55,0.8)); }
+}
+
+
+.channeling {
+    animation: channelPulse 1.5s ease-in-out infinite;
+}
+
+/* Ensure the tarot card container does not allow default touch gestures to interfere */
+#tarot-card {
+    touch-action: none;
 }
