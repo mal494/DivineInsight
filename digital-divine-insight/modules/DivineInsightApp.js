@@ -196,7 +196,7 @@ export class DivineInsightApp {
             readings.forEach((entry) => {
                 const li = document.createElement('li');
                 li.className = 'rounded-lg border border-moon-silver/15 bg-white/5 p-3';
-                const date = new Date(entry.date || Date.now()).toLocaleString();
+                const date = entry.date ? new Date(entry.date).toLocaleString() : 'Unknown date';
                 li.innerHTML = `<div class="font-semibold text-ethereal-teal">${entry.cardName || 'Unknown Card'} (${entry.orientation || 'upright'})</div>
 <div class="text-moon-silver/70 text-xs mt-1">${date}</div>
 <div class="text-moon-silver/60 text-xs mt-1">Axis: ${entry.dominantAxis || 'balance'}</div>`;
@@ -295,7 +295,7 @@ export class DivineInsightApp {
 
         const intentWeight = intentText.trim().length > 0 ? intentText.length : 1;
         const seedData = {
-            timestamp: Date.now(),
+            timestamp: performance.now(),
             velocityMetric: physicalVelocity * intentWeight
         };
 

@@ -354,7 +354,9 @@ function calculateDraw(seedData) {
     const localWeights = { intellect: 0.1, emotion: 0.1, material: 0.1, volition: 0.1 };
     
     // Boost weight based on elements
-    const primaryAxis = weightMap[selected.element];
+    const legacyElement = String(selected.fullData?.elemental_weight || '').trim();
+    const selectedElement = selected.element || (ELEMENT_VECTORS[legacyElement] ? legacyElement : 'None');
+    const primaryAxis = weightMap[selectedElement];
     if (primaryAxis) localWeights[primaryAxis] += 0.7;
 
     // Surface keywords at top level for UI binding

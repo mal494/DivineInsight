@@ -9,6 +9,7 @@ const CORE_ASSETS = [
     './logic-worker.js',
     './divine-insight-optimized.json',
     './manifest.webmanifest',
+    './assets/img/icon.svg',
     './assets/img/card-back.jpg',
     './assets/fx/particles.js'
 ];
