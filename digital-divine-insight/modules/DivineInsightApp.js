@@ -1,6 +1,7 @@
 import { DragController } from './DragController.js';
 import { CardView } from './CardView.js';
 import { AmbientEngine } from './ambientEngine.js';
+import { updateParticleTheme, createBurst } from '../assets/fx/particles.js';
 
 export class DivineInsightApp {
     constructor() {
@@ -61,6 +62,7 @@ export class DivineInsightApp {
         const intentInput = document.querySelector('.whisper-input');
         const cardElement = document.getElementById('tarot-card');
         const deckStack = document.querySelector('.group.float-animation');
+        const resetBtn = document.getElementById('btn-reset-altar');
 
         seekBtn.addEventListener('click', () => {
             const intentText = intentInput.value;
@@ -75,6 +77,10 @@ export class DivineInsightApp {
             this.requestDraw(intentText, currentVelocity);
         });
 
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => this.resetAltar());
+        }
+
         // Add Hover Effects
         [cardElement, deckStack].forEach(el => {
             if (el) {
@@ -83,6 +89,47 @@ export class DivineInsightApp {
                 });
             }
         });
+
+        // Past Readings listener
+        const pastReadingsBtn = document.querySelector('.text-ethereal-teal.font-bold.bg-white/5');
+        if (pastReadingsBtn) {
+            pastReadingsBtn.addEventListener('click', () => this.showJournal());
+        }
+    }
+
+    resetAltar() {
+        // Clear UI
+        this.cardView.resetCard();
+        this.ambientEngine.transitionTo('passive');
+        updateParticleTheme('balance');
+        
+        // Reset local state if needed
+        const intentInput = document.querySelector('.whisper-input');
+        if (intentInput) intentInput.value = '';
+    }
+
+    showJournal() {
+        const readings = JSON.parse(localStorage.getItem('divine_readings') || '[]');
+        console.log("📜 Arcana Journal:", readings);
+        alert(`You have ${readings.length} saved readings. (Check console for details)`);
+    }
+
+    saveToJournal(result) {
+        const readings = JSON.parse(localStorage.getItem('divine_readings') || '[]');
+        const entry = {
+            id: Date.now(),
+            date: new Date().toISOString(),
+            cardName: result.cardName,
+            orientation: result.orientation,
+            dominantAxis: this._getDominantAxis(result.localWeights)
+        };
+        readings.unshift(entry);
+        localStorage.setItem('divine_readings', JSON.stringify(readings.slice(0, 50)));
+    }
+
+    _getDominantAxis(weights) {
+        if (!weights) return 'balance';
+        return Object.keys(weights).reduce((a, b) => weights[a] > weights[b] ? a : b);
     }
 
     // --- Module Routing ---
@@ -127,9 +174,23 @@ export class DivineInsightApp {
         if (event.data.type === 'DRAW_RESULT') {
             const result = event.data.payload;
             
-            // Route the final result to the View and trigger the flip audio
+            // 1. Route the final result to the View and trigger the flip audio
             this.cardView.showResult(result);
             this.ambientEngine.playFlipSound();
+
+            // 2. Synthesize Particle Theme based on Dominant Axis
+            const axis = this._getDominantAxis(result.localWeights);
+            updateParticleTheme(axis);
+            
+            // 3. Trigger a visual "bloom" burst at the card location
+            const rect = document.getElementById('tarot-card')?.getBoundingClientRect();
+            if (rect) {
+                createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+            }
+
+            // 4. Persistence
+            this.saveToJournal(result);
+            this.ambientEngine.transitionTo('active');
         }
     }
 }

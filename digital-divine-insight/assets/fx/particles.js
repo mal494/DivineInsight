@@ -1,109 +1,141 @@
-// assets/fx/particles.js
+/**
+ * Particle System (Deep Obsidian Void with Drifting Stardust)
+ * Handles background starfield and interactive ripple/burst effects.
+ */
 
-const canvas = document.getElementById('interaction-layer');
-const ctx = canvas.getContext('2d');
+let canvas;
+let ctx;
+let particles = [];
+let themeColor = '#00ffcc';
+let themeRgb = '0, 255, 204';
 
-// --- Canvas Sizing ---
-// Ensure the canvas always fills the window to catch interactions anywhere
+/**
+ * Updates the global particle theme color.
+ * @param {string} axis - One of 'intellect', 'emotion', 'material', 'volition'.
+ */
+export function updateParticleTheme(axis) {
+    const colors = {
+        intellect: { hex: '#00ccff', rgb: '0, 204, 255' }, // Cyan/Air
+        emotion: { hex: '#ff00cc', rgb: '255, 0, 204' },   // Magenta/Water
+        material: { hex: '#ffcc00', rgb: '255, 204, 0' },  // Gold/Earth
+        volition: { hex: '#ff3300', rgb: '255, 51, 0' },   // Red/Fire
+        balance: { hex: '#00ffcc', rgb: '0, 255, 204' }    // Teal/Default
+    };
+
+    const theme = colors[axis] || colors.balance;
+    themeColor = theme.hex;
+    themeRgb = theme.rgb;
+    
+    // Convert 20% of existing stars to the new theme color immediately
+    particles.forEach(p => {
+        if (Math.random() > 0.8) p.color = themeColor;
+    });
+}
+
+/**
+ * Initializes the canvas and starts the animation loop.
+ * @param {string} canvasId - The ID of the canvas element to use.
+ */
+export function initParticleSystem(canvasId) {
+    canvas = document.getElementById(canvasId);
+    if (!canvas) {
+        console.error(`Particle system could not find canvas with ID: ${canvasId}`);
+        return;
+    }
+    ctx = canvas.getContext('2d');
+    
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    // Seed initial starfield
+    for (let i = 0; i < 250; i++) {
+        particles.push(new Particle());
+    }
+    
+    animate();
+}
+
 function resizeCanvas() {
+    if (!canvas) return;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-// --- Particle Configuration ---
-const particles = [];
-// Matching the video's aesthetic: Cyan from the logo, deep blue, and fiery orange/gold sparks
-const magicColors = ['#00ffcc', '#00b3ff', '#ff8c00', '#ffd700'];
 
 class Particle {
-    constructor(x, y, inputVelocity) {
-        this.x = x;
-        this.y = y;
-        
-        // Scatter physics: Higher user velocity = more explosive scatter
-        const angle = Math.random() * Math.PI * 2;
-        // Map the user's velocity to the particle's speed, adding a baseline
-        const speed = Math.random() * (inputVelocity * 0.4 + 1); 
-        
-        this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed;
+    constructor() {
+        this.reset();
+    }
 
-        // Visual properties
-        this.life = 1.0; // Starts at 100% opacity
-        this.decay = Math.random() * 0.03 + 0.01; // How fast it fades
-        this.size = Math.random() * 5 + 2; // Radius between 2 and 7
-        this.color = magicColors[Math.floor(Math.random() * magicColors.length)];
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 1.5;
+        this.speedX = (Math.random() - 0.5) * 0.05;
+        this.speedY = (Math.random() - 0.5) * 0.05;
+        this.opacity = Math.random() * 0.6;
+        this.pulse = Math.random() * 0.02;
+        this.pulseDir = Math.random() > 0.5 ? 1 : -1;
+        this.color = Math.random() > 0.8 ? themeColor : '#ffffff';
     }
 
     update() {
-        // Move particle
-        this.x += this.vx;
-        this.y += this.vy;
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.opacity += this.pulse * this.pulseDir;
         
-        // Add slight "drag" or friction so they slow down naturally
-        this.vx *= 0.95;
-        this.vy *= 0.95;
-        
-        // Add a slight upward drift to simulate smoke/magic energy
-        this.vy -= 0.05; 
+        if (this.opacity > 0.8 || this.opacity < 0.1) {
+            this.pulseDir *= -1;
+        }
 
-        // Fade and shrink
-        this.life -= this.decay;
-        this.size *= 0.96; 
+        if (this.x < 0 || this.x > canvas.width) this.reset();
+        if (this.y < 0 || this.y > canvas.height) this.reset();
     }
 
-    draw(ctx) {
+    draw() {
+        ctx.shadowBlur = this.color !== '#ffffff' ? 8 : 2;
+        ctx.shadowColor = this.color;
+        
+        let fillColor = `rgba(255, 255, 255, ${this.opacity})`;
+        if (this.color !== '#ffffff') {
+            fillColor = `rgba(${themeRgb}, ${this.opacity})`;
+        }
+        
+        ctx.fillStyle = fillColor;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        // Fade out based on remaining life
-        ctx.globalAlpha = Math.max(0, this.life); 
         ctx.fill();
     }
 }
 
-// --- Global API for app.js ---
-// Exposing this function so app.js can trigger it during the pointermove loop
-window.spawnParticles = function(x, y, velocity = 5) {
-    // Dynamic generation: Faster mouse movement spawns more particles, 
-    // but we cap it at 15 per frame to protect the sub-16ms performance budget.
-    const amountToSpawn = Math.min(Math.floor(velocity / 2), 15);
-    
-    for (let i = 0; i < amountToSpawn; i++) {
-        // Add a little randomness to the origin x/y so they don't spawn in a perfect line
-        const offsetX = x + (Math.random() * 10 - 5);
-        const offsetY = y + (Math.random() * 10 - 5);
-        particles.push(new Particle(offsetX, offsetY, velocity));
+/**
+ * Creates a localized burst of particles at the specified coordinates.
+ */
+export function createBurst(x, y) {
+    if (!canvas || !ctx) return;
+    for (let i = 0; i < 30; i++) {
+        const p = new Particle();
+        p.x = x;
+        p.y = y;
+        p.speedX = (Math.random() - 0.5) * 5;
+        p.speedY = (Math.random() - 0.5) * 5;
+        p.size = Math.random() * 3;
+        p.opacity = 1;
+        p.color = themeColor;
+        particles.push(p);
     }
 }
 
-// --- Render Loop ---
-function animateMagic() {
-    // Clear the previous frame
+function animate() {
+    if (!ctx || !canvas) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    // THIS is the secret sauce for the "magical" look. 
-    // It makes overlapping colors brighten, simulating glowing light.
-    ctx.globalCompositeOperation = 'screen'; 
-
-    // Loop backwards when removing items from an array to avoid index shifting bugs
-    for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
+    particles.forEach((p, index) => {
         p.update();
-        p.draw(ctx);
-
-        // Garbage collection: remove dead particles
-        if (p.life <= 0 || p.size <= 0.1) {
-            particles.splice(i, 1);
+        p.draw();
+        
+        // Remove high velocity burst particles eventually as they fade
+        if (Math.abs(p.speedX) > 1 && p.opacity < 0.2) {
+            particles.splice(index, 1);
         }
-    }
-    
-    // Reset alpha for the next loop
-    ctx.globalAlpha = 1.0; 
-    requestAnimationFrame(animateMagic);
+    });
+    requestAnimationFrame(animate);
 }
-
-// Kick off the animation loop
-animateMagic();
