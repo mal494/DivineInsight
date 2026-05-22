@@ -13,7 +13,7 @@ export class DivineInsightApp {
         this.ambientEngine = new AmbientEngine();
         
         // Pass the interaction callback to DragController so it can send velocity UP
-        const cardElement = document.getElementById('active-card');
+        const cardElement = document.getElementById('tarot-card');
         this.dragController = new DragController(cardElement, this.handleInteraction.bind(this));
     }
 
@@ -22,7 +22,7 @@ export class DivineInsightApp {
         
         try {
             // 1. Fetch the raw JSON text so the worker owns parsing and normalization
-            const response = await fetch('deck-data.json');
+            const response = await fetch('divine-insight-optimized.json');
             this.deckDataText = await response.text();
             
             // 2. Spin up the logic worker and wire up result/error handling
@@ -37,8 +37,17 @@ export class DivineInsightApp {
             
             // 3. Initialize the deck in the worker
             this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
+
+            // 4. Initialize the Audio Engine with DOM elements
+            await this.ambientEngine.init({
+                baseEl: document.getElementById('audio-base'),
+                swooshEl: document.getElementById('audio-swoosh'),
+                sfxHover: document.getElementById('audio-hover'),
+                sfxDraw: document.getElementById('audio-draw'),
+                sfxFlip: document.getElementById('audio-flip')
+            });
             
-            // 4. Bind UI listeners
+            // 5. Bind UI listeners
             this.bindEvents();
 
             console.log("✨ System Ready");
@@ -48,13 +57,31 @@ export class DivineInsightApp {
     }
 
     bindEvents() {
-        const drawBtn = document.getElementById('draw-btn');
-        drawBtn.addEventListener('click', () => {
-            const intent = document.getElementById('intent-input').value;
+        const seekBtn = document.getElementById('btn-seek-insight');
+        const intentInput = document.querySelector('.whisper-input');
+        const cardElement = document.getElementById('tarot-card');
+        const deckStack = document.querySelector('.group.float-animation');
+
+        seekBtn.addEventListener('click', () => {
+            const intentText = intentInput.value;
             
-            // Using the actual velocity tracked by the DragController
-            const currentVelocity = this.dragController.inputState.velocity;
-            this.requestDraw(intent, currentVelocity); 
+            // 1. Swell the actual Web Audio API nodes
+            this.ambientEngine.swell(); 
+            
+            // 2. Fetch current physical velocity from your DragController
+            const currentVelocity = this.dragController?.inputState?.velocity || 1.0;
+            
+            // 3. Send the prompt to the Web Worker for deterministic synthesis
+            this.requestDraw(intentText, currentVelocity);
+        });
+
+        // Add Hover Effects
+        [cardElement, deckStack].forEach(el => {
+            if (el) {
+                el.addEventListener('mouseenter', () => {
+                    this.ambientEngine.playEffect('hover');
+                });
+            }
         });
     }
 
@@ -64,6 +91,17 @@ export class DivineInsightApp {
         if (event.type === 'HIGH_VELOCITY') {
             // Tell the audio engine to swell the volume based on physical swipe speed
             this.ambientEngine.adjustHum(event.value);
+        } else if (event.type === 'MOUSE_MOVE') {
+            // Route coordinates to the card view for 3D tilt
+            this.cardView.updateMousePos(event.x, event.y);
+        } else if (event.type === 'DRAG_START') {
+            this.cardView.setDragging(true);
+        } else if (event.type === 'DRAG_END') {
+            this.cardView.setDragging(false);
+            // If the card is already in a spread/result layout, resume dynamics
+            if (this.cardView._spreadLayout) {
+                this.cardView.startDynamicsLoop();
+            }
         }
     }
 

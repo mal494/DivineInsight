@@ -1,5 +1,5 @@
 // --- Internal State ---
-let tarotDeck = []; // Normalized deck cache built once from deck-data.json
+let tarotDeck = []; // Normalized deck cache built once from the primary dictionary JSON
 let deckStats = {
     totalCards: 0,
     majorCount: 0,
@@ -57,10 +57,64 @@ function normalizeVector(vector = ZERO_VECTOR) {
     };
 }
 
+function toArray(value) {
+    return Array.isArray(value) ? value : (value == null ? [] : [value]);
+}
+
+function normalizeArcana(value) {
+    const normalized = String(value || '').toLowerCase();
+    return normalized === 'minor' ? 'minor' : 'major';
+}
+
+function normalizeElement(value) {
+    const raw = String(value || '').trim();
+
+    if (!raw) {
+        return 'None';
+    }
+
+    const [primary] = raw.split('/').map(part => part.trim());
+    return ELEMENT_VECTORS[primary] ? primary : (ELEMENT_VECTORS[raw] ? raw : 'None');
+}
+
+function normalizeSuit(value) {
+    const raw = String(value || '').trim();
+    return SUIT_VECTORS[raw] ? raw : 'None';
+}
+
+function extractCards(deckData) {
+    if (Array.isArray(deckData?.cards)) {
+        return deckData.cards;
+    }
+
+    const arcana = deckData?.deck?.arcana || {};
+    const majorCards = Array.isArray(arcana.major) ? arcana.major : [];
+    const minorGroups = arcana.minor && typeof arcana.minor === 'object' ? Object.values(arcana.minor) : [];
+
+    return [
+        ...majorCards,
+        ...minorGroups.flatMap(group => (Array.isArray(group) ? group : []))
+    ];
+}
+
+function normalizeMeaningBlock(card, blockName) {
+    const source = card?.meanings?.[blockName] || {};
+
+    return {
+        keywords: toArray(source.keywords),
+        description: source.description || (blockName === 'upright' ? card.description : card.meaningReversed) || ''
+    };
+}
+
+function buildLookupKey(card, index) {
+    const key = card?.key ?? card?.id ?? `card-${index}`;
+    return String(key);
+}
+
 function buildCardVector(card) {
-    const elementVector = ELEMENT_VECTORS[card.element] || ZERO_VECTOR;
-    const suitVector = SUIT_VECTORS[card.suit] || ZERO_VECTOR;
-    const arcanaVector = card.arcana === 'major' ? { x: 0, y: 0.25 } : { x: 0, y: -0.12 };
+    const elementVector = ELEMENT_VECTORS[normalizeElement(card.element)] || ZERO_VECTOR;
+    const suitVector = SUIT_VECTORS[normalizeSuit(card.suit)] || ZERO_VECTOR;
+    const arcanaVector = normalizeArcana(card.arcana) === 'major' ? { x: 0, y: 0.25 } : { x: 0, y: -0.12 };
 
     return normalizeVector({
         x: elementVector.x + suitVector.x + arcanaVector.x,
@@ -69,44 +123,65 @@ function buildCardVector(card) {
 }
 
 function normalizeDeck(deckData) {
-    const arcana = deckData?.deck?.arcana || {};
-    const majorCards = Array.isArray(arcana.major) ? arcana.major : [];
-    const minorSuitGroups = arcana.minor && typeof arcana.minor === 'object' ? Object.values(arcana.minor) : [];
+    const sourceCards = extractCards(deckData);
     const normalized = [];
 
-    majorCards.forEach((card, index) => {
+    sourceCards.forEach((card, index) => {
+        const lookupKey = buildLookupKey(card, index);
+        const arcana = normalizeArcana(card.arcana || card.card_type);
+        const element = normalizeElement(card.element || card.elemental_weight);
+        const suit = normalizeSuit(card.suit);
+
         normalized.push({
-            id: card.key || card.id || `major-${index}`,
-            name: card.name,
-            weight: 1.15,
-            element: card.element || 'None',
-            suit: card.suit || 'None',
-            arcana: 'major',
-            vectorBasis: buildCardVector({ ...card, arcana: 'major' }),
+            id: lookupKey,
+            key: lookupKey,
+            legacyId: card.id ?? null,
+            tags: toArray(card.tags),
+            name: card.name || lookupKey,
+            weight: arcana === 'major' ? 1.15 : 1.0,
+            element,
+            suit,
+            arcana,
+            meanings: {
+                upright: normalizeMeaningBlock(card, 'upright'),
+                reversed: normalizeMeaningBlock(card, 'reversed')
+            },
+            vectorBasis: buildCardVector({ ...card, arcana, element, suit }),
             fullData: card
         });
     });
 
-    minorSuitGroups.forEach(suitCards => {
-        if (!Array.isArray(suitCards)) {
-            return;
-        }
-
-        suitCards.forEach(card => {
-            normalized.push({
-                id: card.key || card.id || `${card.suit || 'minor'}-${normalized.length}`,
-                name: card.name,
-                weight: 1.0,
-                element: card.element || 'None',
-                suit: card.suit || 'None',
-                arcana: 'minor',
-                vectorBasis: buildCardVector({ ...card, arcana: 'minor' }),
-                fullData: card
-            });
-        });
-    });
-
     return normalized;
+}
+
+// Find a normalized card by its string key (preferred) or legacy id as fallback
+function findCardByKey(key) {
+    if (!key) return null;
+    const asString = String(key);
+    return tarotDeck.find(c => c.key === asString || String(c.legacyId) === asString) || null;
+}
+
+// Search cards by a term against normalized tags and meaning keywords (upright & reversed).
+// Matching is case-insensitive and will return any card where the term appears in tags or keywords.
+function searchCardsByTerm(term) {
+    if (!term) return [];
+    const needle = String(term).toLowerCase();
+
+    return tarotDeck.filter(card => {
+        // Check tags
+        const tags = Array.isArray(card.tags) ? card.tags : [];
+        if (tags.some(t => String(t).toLowerCase().includes(needle))) return true;
+
+        // Check upright keywords
+        const upKeys = Array.isArray(card.meanings?.upright?.keywords) ? card.meanings.upright.keywords : [];
+        if (upKeys.some(k => String(k).toLowerCase().includes(needle))) return true;
+
+        // Check reversed keywords
+        const revKeys = Array.isArray(card.meanings?.reversed?.keywords) ? card.meanings.reversed.keywords : [];
+        if (revKeys.some(k => String(k).toLowerCase().includes(needle))) return true;
+
+        return false;
+    });
 }
 
 function summarizeDeck(deck) {
@@ -184,7 +259,8 @@ function createSessionState(seedData = {}) {
 
 function scoreCard(card, session) {
     const alignment = ((card.vectorBasis.x * session.vector.x) + (card.vectorBasis.y * session.vector.y) + 1) / 2;
-    const resonance = hashToUnit(hashString(`${session.seedSignature}|${card.id}|${card.arcana}|${card.element}|${card.suit}`));
+    // Use the normalized string key for stable hashing (prefer card.key over legacy numeric ids)
+    const resonance = hashToUnit(hashString(`${session.seedSignature}|${card.key || card.id}|${card.arcana}|${card.element}|${card.suit}`));
 
     let adjustedWeight = card.weight * (0.78 + alignment * 0.52 + resonance * 0.28);
 
@@ -221,6 +297,7 @@ function synthesizePositionVector(card, session) {
     return {
         x: Number((x * 100).toFixed(3)),
         y: Number((y * 100).toFixed(3)),
+        // Keep the raw computed angle but callers may normalize to discrete orientations.
         angle: Number(angle.toFixed(6)),
         magnitude: Number(magnitude.toFixed(6)),
         spreadIndex,
@@ -241,12 +318,46 @@ function calculateDraw(seedData) {
     }, null);
 
     const selectedPosition = synthesizePositionVector(selected, session);
+    // Determine simple two-state orientation based on the horizontal component of the vector.
+    // If the computed angle points within +/-90deg of 0 (cos >= 0) we treat as 'upright', otherwise 'reversed'.
+    const orientation = Math.cos(selectedPosition.angle) >= 0 ? 'upright' : 'reversed';
+
+    // Normalize the angle we send to the UI so the card only appears in one of two orientations
+    // (0 rad for upright, PI rad for reversed). Keep the original angle on positionVectorRaw if needed.
+    const normalizedAngle = orientation === 'upright' ? 0 : Math.PI;
+    const positionVector = { ...selectedPosition, angle: Number(normalizedAngle.toFixed(6)), orientation };
+    const selectedKey = selected.key || selected.id;
+
+    // --- NEW: Dynamic Synthesis Calculation ---
+    // Map card metadata to the four logic axes used by the CardView
+    const weightMap = {
+        'Air': 'intellect',
+        'Water': 'emotion',
+        'Earth': 'material',
+        'Fire': 'volition'
+    };
+    
+    // Default weights
+    const localWeights = { intellect: 0.1, emotion: 0.1, material: 0.1, volition: 0.1 };
+    
+    // Boost weight based on elements
+    const primaryAxis = weightMap[selected.elemental_weight];
+    if (primaryAxis) localWeights[primaryAxis] += 0.7;
+
+    // Surface keywords at top level for UI binding
+    const activeMeaning = selected.meanings?.[orientation] || {};
+    const keywords = activeMeaning.keywords || [];
 
     return {
-        cardId: selected.id,
+        cardId: selectedKey,
+        cardKey: selectedKey,
         cardName: selected.name,
+        keywords,
+        localWeights,
+        orientation,
         systemState: Number(session.entropy.toFixed(4)),
         fullData: selected.fullData,
+        meanings: selected.meanings,
         vectorState: {
             seedSignature: session.seedSignature,
             vector: {
@@ -263,7 +374,8 @@ function calculateDraw(seedData) {
             dominantSuit: session.dominantSuit,
             spreadRadius: Number(session.spreadRadius.toFixed(6))
         },
-        positionVector: selectedPosition,
+        positionVector,
+        orientation,
         cardBasis: {
             x: Number(selected.vectorBasis.x.toFixed(6)),
             y: Number(selected.vectorBasis.y.toFixed(6))

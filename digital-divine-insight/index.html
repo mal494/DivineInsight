@@ -1,61 +1,245 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Divine Insight</title>
-    <link rel="stylesheet" href="styles.css?v=2">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Divine Insight - Reading Table</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-primary": "#006b54",
+                      "tertiary-fixed-dim": "#c1c7cf",
+                      "astral-gold": "#d4af37",
+                      "primary-fixed": "#24ffcd",
+                      "on-primary-fixed-variant": "#00513f",
+                      "on-tertiary-fixed": "#161c22",
+                      "secondary-fixed": "#ffe088",
+                      "ethereal-teal": "#00ffcc",
+                      "on-secondary": "#3c2f00",
+                      "on-tertiary-container": "#5e646b",
+                      "on-surface-variant": "#b9cbc2",
+                      "on-surface": "#e5e1e7",
+                      "surface-tint": "#00e0b3",
+                      "primary-container": "#00ffcc",
+                      "secondary-fixed-dim": "#e9c349",
+                      "tertiary": "#fffeff",
+                      "surface-container-lowest": "#0e0e12",
+                      "aurora-border": "rgba(0, 255, 204, 0.3)",
+                      "primary": "#fdfffc",
+                      "midnight-obsidian": "#050508",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-high": "#2a292e",
+                      "glass-surface": "rgba(18, 18, 28, 0.4)",
+                      "primary-fixed-dim": "#00e0b3",
+                      "surface-variant": "#353439",
+                      "background": "#131317",
+                      "on-primary-container": "#00725a",
+                      "secondary": "#e9c349",
+                      "surface-container-low": "#1b1b1f",
+                      "on-tertiary-fixed-variant": "#41474e",
+                      "outline-variant": "#3a4a44",
+                      "surface": "#131317",
+                      "secondary-container": "#af8d11",
+                      "on-primary-fixed": "#002118",
+                      "outline": "#83958d",
+                      "on-tertiary": "#2b3137",
+                      "inverse-surface": "#e5e1e7",
+                      "surface-container": "#1f1f23",
+                      "on-secondary-fixed": "#241a00",
+                      "inverse-on-surface": "#303034",
+                      "on-secondary-container": "#342800",
+                      "moon-silver": "#e2e8f0",
+                      "on-secondary-fixed-variant": "#574500",
+                      "on-primary": "#00382b",
+                      "surface-container-highest": "#353439",
+                      "surface-dim": "#131317",
+                      "tertiary-container": "#dce2ea",
+                      "tertiary-fixed": "#dde3eb",
+                      "error-container": "#93000a",
+                      "on-error": "#690005",
+                      "surface-bright": "#39393d",
+                      "error": "#ffb4ab",
+                      "on-background": "#e5e1e7"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "margin-desktop": "40px",
+                      "gutter": "24px",
+                      "unit": "8px",
+                      "container-max": "1200px",
+                      "stack-overlap": "-40px"
+              },
+              "fontFamily": {
+                      "label-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-md": ["Cinzel"],
+                      "label-sm": ["Inter"],
+                      "headline-lg-mobile": ["Cinzel"],
+                      "display-lg": ["Cinzel"],
+                      "headline-lg": ["Cinzel"]
+              },
+              "fontSize": {
+                      "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
 </head>
-<body>
-    <div id="ambient-light"></div>
-
-    <header id="page-header" class="page-header">
-        <div id="ui-controls" class="glass-panel">
-            <h1 class="app-title">Divine Insight</h1>
-            
-            <div class="intent-group">
-                <input type="text" id="intent-input" placeholder="Whisper your question to the void..." autocomplete="off">
-            </div>
-
-            <button id="draw-btn" class="mystic-button">
-                <span class="btn-text">Seek Insight</span>
-                <span class="btn-glow"></span>
-            </button>
-            
-            <p id="status-text" aria-live="polite">Concentrate on your intent...</p>
-        </div>
-    </header>
-
-    <main id="reading-table">
-        <canvas id="interaction-layer"></canvas>
-
-        <div id="table-center">
-            <div id="deck-stack" class="deck-visual"></div>
-
-            <div id="deck-container">
-                <div class="card" id="active-card">
-                    <div class="card-inner">
-                        <div class="card-front"></div>
-                        <div class="card-back">
-                            <div class="card-glow"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <audio id="ambient-base" src="assets/audio/ambient-hum-base.mp3" preload="auto" loop></audio>
-    <audio id="ambient-swoosh" src="assets/audio/ambient-hum-swoosh.mp3" preload="auto" loop></audio>
-    <audio id="sfx-hover" src="assets/audio/card-hover.mp3" preload="auto"></audio>
-    <audio id="sfx-slide" src="assets/audio/card-slide.mp3" preload="auto"></audio>
-    <audio id="sfx-flip" src="assets/audio/card-flip.mp3" preload="auto"></audio>
-
-    <script src="assets/fx/particles.js"></script>
-    <script type="module" src="app.js"></script>
-</body>
-</html>
+<body class="bg-midnight-obsidian text-on-surface">
+<canvas height="1024" id="starfield" width="1280"></canvas>
+<!-- SideNavBar -->
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col p-8 space-y-8 bg-glass-surface/60 backdrop-blur-3xl border-r border-aurora-border shadow-[20px_0_50px_rgba(0,0,0,0.9)] w-80 transition-all duration-500" id="sideNav"><div class="flex flex-col gap-10 mb-8">
+<div class="flex justify-center w-full mb-8"><img alt="Divine Insight Logo" class="max-w-full h-auto max-h-32 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBghyeWHLkdHYCWgq1y4CyJ0kLARLIO93il0bYzLCycVQN0NdPoiMwoT3jcoznuKKl9SIJ3BTD4XQs0Sr0ZznIJeakaqlXN_BtZyKjJ2-iycio2IBwuXRmg5MYceGsMZEYNd2GpM083AZ4DS1BuTvsxutbuqz7Xf8HHnc4QSdzmgQJA0ZYng6A0eQxkEvwNx4ypfd8n-SWK_nmQwZCqnymyj-HSZDR_nXQhKoJWvgTH_VVc2fgTbw0toU5eo-g_N3Yx2e8YxXSpZJ3s"></div>
+<div class="flex flex-col gap-4">
+<div class="relative group intent-focus-glow transition-all duration-500 rounded-sm">
+<input id="intent-input" class="whisper-input bg-transparent border-b border-moon-silver/20 focus:border-ethereal-teal outline-none text-moon-silver font-label-md text-label-md py-2 px-2 w-full transition-all duration-500 shadow-sm" placeholder="Whisper your intent..." type="text">
+<span class="absolute right-2 bottom-2 text-ethereal-teal/40 group-focus-within:text-ethereal-teal transition-colors">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</span>
+</div>
+<button id="btn-seek-insight" class="relative overflow-hidden group bg-transparent border border-astral-gold text-astral-gold font-headline-md text-label-md px-6 py-3 rounded-lg hover:text-ethereal-teal hover:border-ethereal-teal hover:shadow-[0_0_25px_rgba(0,255,204,0.5)] transition-all duration-300 uppercase tracking-widest active:scale-95 w-full">
+<span class="relative z-10 drop-shadow-md group-hover:drop-shadow-[0_0_8px_rgba(0,255,204,0.8)] transition-all duration-300">Seek Insight</span>
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-ethereal-teal/20 to-transparent -translate-x-[100%] group-hover:animate-[shimmer_1.5s_infinite]"></div>
+</button>
+<div class="flex justify-center gap-6 text-moon-silver/60 pt-2">
+<span class="material-symbols-outlined cursor-pointer hover:text-ethereal-teal transition-colors">auto_awesome</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-ethereal-teal transition-colors">volume_up</span>
+</div>
+</div>
+</div>
+<div class="pt-16"><h2 class="font-headline-lg text-astral-gold border-b border-astral-gold/30 pb-2">The Sanctum</h2>
+<p class="font-body-md text-body-md text-moon-silver/50 italic mt-2">Seeker of Arcane Truths</p></div>
+<nav class="flex flex-col space-y-4">
+<div class="text-ethereal-teal font-bold bg-white/5 rounded-lg p-3 flex items-center gap-3 cursor-pointer shadow-[0_0_15px_rgba(0,255,204,0.2)]">
+<span class="material-symbols-outlined">book_2</span>
+<span class="font-label-md text-label-md">Past Readings</span>
+</div>
+<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-label-md text-label-md">Journal</span>
+</div>
+<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+<span class="material-symbols-outlined">collections_bookmark</span>
+<span class="font-label-md text-label-md">Deck Gallery</span>
+</div>
+<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+<span class="material-symbols-outlined">settings_input_component</span>
+<span class="font-label-md text-label-md">Altar Settings</span>
+</div>
+</nav>
+</aside>
+<!-- Audio Assets -->
+<div class="hidden">
+    <audio id="audio-base" loop src="assets/audio/ambient-hum-base.mp3"></audio>
+    <audio id="audio-swoosh" loop src="assets/audio/ambient-hum-swoosh.mp3"></audio>
+    <audio id="audio-hover" src="assets/audio/card-hover.mp3"></audio>
+    <audio id="audio-draw" src="assets/audio/card-slide.mp3"></audio>
+    <audio id="audio-flip" src="assets/audio/card-flip.mp3"></audio>
+</div>
+<!-- Main Divination Table -->
+<main class="relative h-screen w-full flex items-center justify-center overflow-hidden ml-80 w-[calc(100%-320px)]">
+<div class="relative z-10 w-full max-w-6xl h-full flex items-center justify-center gap-32">
+<!-- Deck Stack -->
+<div class="relative hidden lg:block group float-animation w-[var(--card-width)] h-[var(--card-height)]">
+<div class="absolute inset-0 bg-midnight-obsidian border border-astral-gold/30 rounded-xl shadow-2xl translate-y-4 translate-x-4"></div>
+<div class="absolute inset-0 bg-midnight-obsidian border border-astral-gold/30 rounded-xl shadow-2xl translate-y-2 translate-x-2"></div>
+<div class="absolute inset-0 border border-astral-gold bg-midnight-obsidian rounded-xl shadow-2xl overflow-hidden cursor-pointer group-hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-shadow">
+<img class="w-full h-full object-cover opacity-60" alt="An intricate dark tarot card back design featuring complex golden sacred geometry" data-alt="An intricate dark tarot card back design featuring complex golden sacred geometry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_r--v7b28Gjn0FbTgeS-_NKvZMpZc3hZwRusfY_odwe62S8T5WEiSL3m5mrqVgfe7kGIfG_EundoWAPpu3bmbbSC09dLTGDp_lYZDPfbw3KJmYPEtBXTJmffSQ8XrKMhNvAB6juzvPljIJ3FDyji0Gsv8cpnUtENmFokVFD2IwmE-29vdW1-52Gf6NTk_ZENmIMn0hrBnSPtXp8JfthkAIkxtEfbjiKTx3gmu6rjfs0FJWKdjWRh2UznVJ-cFO6G9dJI6E8qR6CbsqJc">
+<div class="absolute inset-0 bg-gradient-to-t from-midnight-obsidian to-transparent"></div>
+</div>
+<p class="absolute -bottom-10 left-0 w-full text-center font-label-sm text-label-sm text-moon-silver/40 uppercase tracking-widest group-hover:text-astral-gold transition-colors">Draw Deck</p>
+</div>
+<!-- Active Card Slot -->
+<div class="relative flex items-center justify-center w-[320px] h-[540px]">
+<div class="absolute inset-0 border-2 border-dashed border-ethereal-teal/10 rounded-2xl flex items-center justify-center animate-pulse" id="slot-glow">
+<span class="material-symbols-outlined text-ethereal-teal/20 text-6xl">blur_on</span>
+</div>
+<!-- The Tarot Card -->
+<div class="perspective-1000 hidden float-animation float-delay-1 w-[var(--card-width)] h-[var(--card-height)] cursor-grab active:cursor-grabbing" id="tarot-card">
+<div class="relative w-full h-full preserve-3d transition-transform duration-1000 ease-out tilt-card shadow-[0_0_30px_rgba(0,0,0,0.8)] rounded-xl" id="card-inner">
+<!-- Card Back -->
+<div class="absolute inset-0 backface-hidden border-2 border-astral-gold rounded-xl overflow-hidden shadow-2xl bg-midnight-obsidian" id="card-back">
+<img class="w-full h-full object-cover opacity-80" alt="Luxurious tarot card back" data-alt="Luxurious tarot card back" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAtVhvWZgq2fE-nA9whvprdRoPJqk2E3PwIvWTrK-0ei2iIl41jAOHjVIMr4uwG0hKmZ5NJH--J9e0E2r_1nIQKtBd-Dq0v3lZcyI3p68mtrS_wzZM9aZ07I8uGwx3Go9Z4xEv-Tv1gSMGTnyuUxzYY5GRXlBpKuzdTy0ZbT2fDAQ7SMMKVG5gxgP7TJHhv8UVh2VkX7zzzuPDOBCF4RYv8F4demgkZ3UgSsmjle63Qb1qQlvc6EqJJxttP38d4bl53ZdZ5gHtdzTC">
+</div>
+<!-- Card Front -->
+<div class="absolute inset-0 backface-hidden rotate-y-180 border-2 border-ethereal-teal bg-white rounded-xl overflow-hidden shadow-2xl aurora-corner card-reveal-glow">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-white"></div>
+<img class="w-full h-full object-cover" alt="Tarot card illustration of The Fool" data-alt="Tarot card illustration of The Fool" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Cshj3NvsAjuI9RYoun4aiN33LJ4_2ED_GubAJjgJXc_0rHgctEeU-1AjyAaFbu3N627167RjW68rTIiX0sYLuYrpXQYqXtBJ_5nc85DBjxhKMMo7eSSzLRr8l2T_3j0vVxB0tAHMqMQkvx_fGdcCVLHHcXh-HXLfqEgZbHBQCcKbWGDTahnCRDw_02Y5-7944Z2kBidZ9zKNFWeaZG0E80Cmhjw8pY9cgZxg1ns818TbSosIpXeBlruOeMY0-NrvlcCZJZsWgtpu">
+<div class="absolute bottom-0 left-0 w-full p-4 text-center bg-gradient-to-t from-white to-transparent pt-12">
+<h3 class="font-headline-md text-headline-md text-midnight-obsidian tracking-tighter">The Fool</h3>
+<p class="text-[10px] font-label-sm uppercase tracking-widest text-midnight-obsidian/60">Arcana 0</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ritual Space / Particle Bloom -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-ethereal-teal/5 rounded-full blur-[120px] -z-10 pointer-events-none animate-pulse"></div>
+</div>
+<!-- Insight Panel -->
+<div class="fixed bottom-margin-desktop left-1/2 -translate-x-1/2 w-full max-w-4xl opacity-0 translate-y-10 transition-premium z-40" id="insight-panel">
+<div class="bg-glass-surface/60 backdrop-blur-2xl border border-aurora-border rounded-xl p-8 shadow-[0_-10px_30px_rgba(5,5,8,0.8)] aurora-corner overflow-hidden">
+<div class="relative z-10 flex flex-col md:flex-row gap-12">
+<div class="md:w-1/3 border-b md:border-b-0 md:border-r border-moon-silver/10 pb-6 md:pb-0">
+<h4 class="font-headline-lg text-ethereal-teal drop-shadow-[0_0_8px_rgba(0,255,204,0.6)]">The Fool</h4>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-3 py-1 border border-moon-silver/20 rounded-full font-label-sm text-label-sm text-moon-silver/60 uppercase">Beginnings</span>
+<span class="px-3 py-1 border border-moon-silver/20 rounded-full font-label-sm text-label-sm text-moon-silver/60 uppercase">Spontaneity</span>
+<span class="px-3 py-1 bg-ethereal-teal text-midnight-obsidian rounded-full font-label-sm text-label-sm uppercase shadow-[0_0_10px_rgba(0,255,204,0.3)]">Freedom</span>
+</div>
+</div>
+<div class="md:w-2/3">
+<p class="font-body-md text-body-md text-moon-silver leading-relaxed">
+                        A soul stands at the threshold of the infinite, unbound by the weight of the past. The Fool represents the pure potential of the subconscious—the leap of faith into the digital unknown. Your whisper has summoned a path of unscripted evolution. Embrace the chaos, for in the void of the abyss, all things are possible.
+                    </p>
+<div class="mt-6 flex justify-end">
+<button class="flex items-center gap-2 text-astral-gold font-label-md text-label-md hover:text-ethereal-teal transition-premium">
+<span class="material-symbols-outlined">auto_stories</span>
+                            Read Full Arcana Journal
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-glass-surface/60 backdrop-blur-2xl border-t border-aurora-border shadow-[0_-10px_30px_rgba(5,5,8,0.8)]">
+<div class="flex flex-col items-center justify-center text-ethereal-teal drop-shadow-[0_0_8px_rgba(0,255,204,0.6)] translate-y-[-4px] transition-transform duration-500">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-label-sm text-label-sm uppercase tracking-tighter">Oracle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-moon-silver transition-all duration-300">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="font-label-sm text-label-sm uppercase tracking-tighter">History</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-moon-silver transition-all duration-300">
+<span class="material-symbols-outlined">style</span>
+<span class="font-label-sm text-label-sm uppercase tracking-tighter">Arcana</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-moon-silver transition-all duration-300">
+<span class="material-symbols-outlined">brightness_3</span>
+<span class="font-label-sm text-label-sm uppercase tracking-tighter">Ritual</span>
+</div>
+</footer>
+<script type="module" src="app.js"></script>
+</body></html>
