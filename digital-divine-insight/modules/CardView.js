@@ -14,6 +14,7 @@ export class CardView {
 
         this.drawBtn = document.getElementById('draw-btn');
         this.statusTextEl = document.getElementById('status-text'); // Fallback for various status readouts
+        this.seekBtn = document.getElementById('btn-seek-insight');
 
         // Configurable selectors / classes
         this.edgeSelector = options.edgeSelector || '.card-edge';
@@ -39,6 +40,7 @@ export class CardView {
         this._isFlipped = false;
         this._rafId = null;
         this._lastFrameTime = performance.now();
+        this._prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 
     updateMousePos(x, y) {
@@ -64,7 +66,7 @@ export class CardView {
     }
 
     _updateDynamics(dt) {
-        if (!this.cardEl || !this._spreadLayout) return;
+        if (!this.cardEl || !this._spreadLayout || this._prefersReducedMotion) return;
 
         // Apply ambient drift based on vector profile
         const sessionNoise = Math.sin(this._lastFrameTime * 0.001) * this._vectorDynamics.noise;
@@ -211,10 +213,14 @@ export class CardView {
     }
 
     showChanneling() {
-        if (this.statusTextEl) this.statusTextEl.innerText = 'Channeling intent...';
+        this.setStatus('Channeling intent...');
         if (this.drawBtn) {
             this.drawBtn.disabled = true;
             this.drawBtn.style.opacity = '0.5';
+        }
+        if (this.seekBtn) {
+            this.seekBtn.disabled = true;
+            this.seekBtn.style.opacity = '0.7';
         }
         if (this.cardEl) this.cardEl.classList.add(this.drawingClass);
         if (this.cardEl) this.cardEl.classList.remove(this.flipClass);
@@ -341,9 +347,10 @@ export class CardView {
                         this.insightPanel.style.opacity = '1';
                         this.insightPanel.style.transform = 'translateX(-50%) translateY(0)';
                     }
-                    
-                    document.body.classList.add('animate-pulse');
-                    setTimeout(() => document.body.classList.remove('animate-pulse'), 1000);
+                    if (!this._prefersReducedMotion) {
+                        document.body.classList.add('animate-pulse');
+                        setTimeout(() => document.body.classList.remove('animate-pulse'), 1000);
+                    }
                 }, 800);
             }, 100);
         };
@@ -382,16 +389,41 @@ export class CardView {
         this._spreadLayout = null;
         this.setTransform({ x: 0, y: 0, rotation: 0, scale: 1 });
         
-        if (this.statusTextEl) this.statusTextEl.innerText = 'Concentrate on your intent...';
+        this.setStatus('Concentrate on your intent...');
         
         if (this.drawBtn) {
             this.drawBtn.disabled = false;
             this.drawBtn.style.opacity = '1';
+        }
+        if (this.seekBtn) {
+            this.seekBtn.disabled = false;
+            this.seekBtn.style.opacity = '1';
         }
 
         // Clear the background image after the flip finishes so the user doesn't see it.
         setTimeout(() => {
             if (this.cardBackLayer) this.cardBackLayer.style.backgroundImage = 'none';
         }, 600);
+    }
+
+    setStatus(message, { isError = false } = {}) {
+        if (!this.statusTextEl) return;
+        this.statusTextEl.innerText = message || '';
+        this.statusTextEl.classList.toggle('text-red-300', isError);
+        this.statusTextEl.classList.toggle('text-ethereal-teal', !isError);
+    }
+
+    setUiState({ state } = {}) {
+        const isBusy = state === 'channeling';
+        const isRecoverable = state !== 'error';
+
+        if (this.drawBtn) {
+            this.drawBtn.disabled = isBusy || !isRecoverable;
+            this.drawBtn.style.opacity = this.drawBtn.disabled ? '0.5' : '1';
+        }
+        if (this.seekBtn) {
+            this.seekBtn.disabled = isBusy || !isRecoverable;
+            this.seekBtn.style.opacity = this.seekBtn.disabled ? '0.7' : '1';
+        }
     }
 }

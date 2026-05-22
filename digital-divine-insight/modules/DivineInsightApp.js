@@ -3,52 +3,64 @@ import { CardView } from './CardView.js';
 import { AmbientEngine } from './ambientEngine.js';
 import { updateParticleTheme, createBurst, initParticleSystem } from '../assets/fx/particles.js';
 
+const APP_STATES = Object.freeze({
+    BOOTING: 'booting',
+    IDLE: 'idle',
+    CHANNELING: 'channeling',
+    REVEALED: 'revealed',
+    ERROR: 'error'
+});
+
+const DRAW_RESULT_SCHEMA_VERSION = 1;
+const JOURNAL_KEY = 'divine_readings';
+const MAX_JOURNAL_ENTRIES = 50;
+
 export class DivineInsightApp {
     constructor() {
-        // --- Core State ---
         this.deckDataText = null;
         this.logicWorker = null;
-        
-        // --- Module Instances ---
+        this.workerReady = false;
+        this.audioReady = false;
+        this.pendingDraw = false;
+        this.appState = APP_STATES.BOOTING;
+        this._lastBurstAt = 0;
+
         this.cardView = new CardView();
         this.ambientEngine = new AmbientEngine();
-        
-        // Pass the interaction callback to DragController so it can send velocity UP
+
         const cardElement = document.getElementById('tarot-card');
         this.dragController = new DragController(cardElement, this.handleInteraction.bind(this));
     }
 
     async initialize() {
-        console.log("🔮 Booting Divine Insight Orchestrator...");
-        
-        try {
-            // 1. Fetch the raw JSON text so the worker owns parsing and normalization
-            const response = await fetch('divine-insight-optimized.json');
-            this.deckDataText = await response.text();
-            
-            // 2. Initialize the Particle System
-            initParticleSystem('starfield');
+        this.setState(APP_STATES.BOOTING);
+        this.bindGlobalStatusEvents();
+        this.bindEvents();
 
-            // 3. Inject deck keys into View for channeling animation
+        try {
+            const response = await fetch('divine-insight-optimized.json');
+            if (!response.ok) throw new Error(`Deck fetch failed with status ${response.status}`);
+            this.deckDataText = await response.text();
             const parsed = JSON.parse(this.deckDataText);
-            const cards = parsed.cards || (parsed.deck && parsed.deck.arcana ? [...parsed.deck.arcana.major, ...Object.values(parsed.deck.arcana.minor).flat()] : []);
-            const keys = cards.map(c => c.key || c.id);
+
+            const cards = parsed.cards || (parsed.deck && parsed.deck.arcana
+                ? [...parsed.deck.arcana.major, ...Object.values(parsed.deck.arcana.minor).flat()]
+                : []);
+            const keys = cards.map(c => c.key || c.id).filter(Boolean);
             this.cardView.setDeckImages(keys);
 
-            // 4. Spin up the logic worker and wire up result/error handling
+            initParticleSystem('starfield');
+
             this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url));
             this.logicWorker.onmessage = this.handleWorkerResponse.bind(this);
             this.logicWorker.onerror = (error) => {
-                console.error('❌ Logic worker encountered an error:', error.message || error);
+                this.setError(`Logic engine error: ${error.message || 'unknown worker failure'}`);
             };
-            this.logicWorker.onmessageerror = (error) => {
-                console.error('❌ Logic worker could not deserialize a message:', error);
+            this.logicWorker.onmessageerror = () => {
+                this.setError('Logic engine sent an unreadable message.');
             };
-            
-            // 5. Initialize the deck in the worker
             this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
 
-            // 6. Initialize the Audio Engine with DOM elements
             await this.ambientEngine.init({
                 baseEl: document.getElementById('audio-base'),
                 swooshEl: document.getElementById('audio-swoosh'),
@@ -56,75 +68,161 @@ export class DivineInsightApp {
                 sfxDraw: document.getElementById('audio-draw'),
                 sfxFlip: document.getElementById('audio-flip')
             });
-            
-            // 7. Bind UI listeners
-            this.bindEvents();
+            this.audioReady = true;
 
-            console.log("✨ System Ready");
+            this.setState(APP_STATES.IDLE);
+            this.setStatus('Concentrate on your intent...');
         } catch (error) {
-            console.error("Failed to initialize system:", error);
+            this.setError(error?.message || 'Failed to initialize system.');
         }
+    }
+
+    bindGlobalStatusEvents() {
+        window.addEventListener('app:error', (event) => {
+            this.setError(event?.detail || 'An unexpected error occurred.');
+        });
+
+        window.addEventListener('app:status', (event) => {
+            const message = event?.detail;
+            if (message) this.setStatus(message);
+        });
     }
 
     bindEvents() {
         const seekBtn = document.getElementById('btn-seek-insight');
-        const intentInput = document.querySelector('.whisper-input');
+        const intentInput = document.getElementById('intent-input');
         const cardElement = document.getElementById('tarot-card');
         const deckStack = document.querySelector('.group.float-animation');
         const resetBtn = document.getElementById('btn-reset-altar');
+        const pastReadingsBtn = document.getElementById('btn-past-readings');
+        const journalPanel = document.getElementById('journal-panel');
+        const closeJournalBtn = document.getElementById('btn-close-journal');
+        const clearJournalBtn = document.getElementById('btn-clear-journal');
 
-        seekBtn.addEventListener('click', () => {
-            const intentText = intentInput.value;
-            
-            // 1. Swell the actual Web Audio API nodes
-            this.ambientEngine.swell(); 
-            
-            // 2. Fetch current physical velocity from your DragController
-            const currentVelocity = this.dragController?.inputState?.velocity || 1.0;
-            
-            // 3. Send the prompt to the Web Worker for deterministic synthesis
-            this.requestDraw(intentText, currentVelocity);
-        });
-
-        if (resetBtn) {
-            resetBtn.addEventListener('click', () => this.resetAltar());
+        if (seekBtn) {
+            seekBtn.addEventListener('click', () => {
+                const intentText = intentInput?.value || '';
+                const currentVelocity = this.dragController?.inputState?.velocity || 1.0;
+                this.requestDraw(intentText, currentVelocity);
+            });
         }
 
-        // Add Hover Effects
+        if (intentInput) {
+            intentInput.addEventListener('keydown', (event) => {
+                if (event.key !== 'Enter') return;
+                event.preventDefault();
+                const currentVelocity = this.dragController?.inputState?.velocity || 1.0;
+                this.requestDraw(intentInput.value || '', currentVelocity);
+            });
+        }
+
+        if (resetBtn) resetBtn.addEventListener('click', () => this.resetAltar());
+        if (pastReadingsBtn) pastReadingsBtn.addEventListener('click', () => this.showJournal());
+        if (closeJournalBtn) closeJournalBtn.addEventListener('click', () => this.hideJournal());
+        if (clearJournalBtn) clearJournalBtn.addEventListener('click', () => this.clearJournal());
+
+        if (journalPanel) {
+            journalPanel.addEventListener('click', (event) => {
+                if (event.target === journalPanel) this.hideJournal();
+            });
+        }
+
         [cardElement, deckStack].forEach(el => {
-            if (el) {
-                el.addEventListener('mouseenter', () => {
-                    this.ambientEngine.playEffect('hover');
-                });
-            }
+            if (!el) return;
+            el.addEventListener('mouseenter', () => this.ambientEngine.playEffect('hover'));
         });
+    }
 
-        // Past Readings listener
-        const pastReadingsBtn = document.querySelector('.text-ethereal-teal.font-bold.bg-white/5');
-        if (pastReadingsBtn) {
-            pastReadingsBtn.addEventListener('click', () => this.showJournal());
-        }
+    setState(nextState) {
+        this.appState = nextState;
+        this.pendingDraw = nextState === APP_STATES.CHANNELING;
+        this.cardView.setUiState({ state: nextState });
+    }
+
+    setStatus(message) {
+        this.cardView.setStatus(message, { isError: false });
+    }
+
+    setError(message) {
+        console.error('[DivineInsightApp]', message);
+        this.setState(APP_STATES.ERROR);
+        this.cardView.setStatus(message, { isError: true });
     }
 
     resetAltar() {
-        // Clear UI
         this.cardView.resetCard();
         this.ambientEngine.transitionTo('passive');
         updateParticleTheme('balance');
-        
-        // Reset local state if needed
-        const intentInput = document.querySelector('.whisper-input');
+        const intentInput = document.getElementById('intent-input');
         if (intentInput) intentInput.value = '';
+        this.setState(APP_STATES.IDLE);
+        this.setStatus('Concentrate on your intent...');
+    }
+
+    readJournal() {
+        try {
+            const parsed = JSON.parse(localStorage.getItem(JOURNAL_KEY) || '[]');
+            if (!Array.isArray(parsed)) return [];
+            return parsed.filter(Boolean).slice(0, MAX_JOURNAL_ENTRIES);
+        } catch (error) {
+            console.warn('Failed to parse journal, resetting store:', error);
+            return [];
+        }
+    }
+
+    writeJournal(entries) {
+        try {
+            const normalized = Array.isArray(entries) ? entries.slice(0, MAX_JOURNAL_ENTRIES) : [];
+            localStorage.setItem(JOURNAL_KEY, JSON.stringify(normalized));
+        } catch (error) {
+            this.setStatus('Could not save reading history (storage unavailable).');
+        }
     }
 
     showJournal() {
-        const readings = JSON.parse(localStorage.getItem('divine_readings') || '[]');
-        console.log("📜 Arcana Journal:", readings);
-        alert(`You have ${readings.length} saved readings. (Check console for details)`);
+        const panel = document.getElementById('journal-panel');
+        const list = document.getElementById('journal-list');
+        if (!panel || !list) return;
+
+        const readings = this.readJournal();
+        list.innerHTML = '';
+
+        if (readings.length === 0) {
+            const empty = document.createElement('li');
+            empty.className = 'text-moon-silver/60 text-sm';
+            empty.innerText = 'No saved readings yet.';
+            list.appendChild(empty);
+        } else {
+            readings.forEach((entry) => {
+                const li = document.createElement('li');
+                li.className = 'rounded-lg border border-moon-silver/15 bg-white/5 p-3';
+                const date = new Date(entry.date || Date.now()).toLocaleString();
+                li.innerHTML = `<div class="font-semibold text-ethereal-teal">${entry.cardName || 'Unknown Card'} (${entry.orientation || 'upright'})</div>
+<div class="text-moon-silver/70 text-xs mt-1">${date}</div>
+<div class="text-moon-silver/60 text-xs mt-1">Axis: ${entry.dominantAxis || 'balance'}</div>`;
+                list.appendChild(li);
+            });
+        }
+
+        panel.classList.remove('hidden');
+        panel.setAttribute('aria-hidden', 'false');
+    }
+
+    hideJournal() {
+        const panel = document.getElementById('journal-panel');
+        if (!panel) return;
+        panel.classList.add('hidden');
+        panel.setAttribute('aria-hidden', 'true');
+    }
+
+    clearJournal() {
+        this.writeJournal([]);
+        this.showJournal();
+        this.setStatus('Arcana Journal cleared.');
     }
 
     saveToJournal(result) {
-        const readings = JSON.parse(localStorage.getItem('divine_readings') || '[]');
+        const readings = this.readJournal();
         const entry = {
             id: Date.now(),
             date: new Date().toISOString(),
@@ -133,76 +231,130 @@ export class DivineInsightApp {
             dominantAxis: this._getDominantAxis(result.localWeights)
         };
         readings.unshift(entry);
-        localStorage.setItem('divine_readings', JSON.stringify(readings.slice(0, 50)));
+        this.writeJournal(readings);
     }
 
     _getDominantAxis(weights) {
-        if (!weights) return 'balance';
-        return Object.keys(weights).reduce((a, b) => weights[a] > weights[b] ? a : b);
+        if (!weights || typeof weights !== 'object') return 'balance';
+        const keys = Object.keys(weights);
+        if (!keys.length) return 'balance';
+        return keys.reduce((a, b) => (weights[a] > weights[b] ? a : b));
     }
 
-    // --- Module Routing ---
-
     handleInteraction(event) {
+        if (!event || this.appState === APP_STATES.ERROR) return;
+
         if (event.type === 'HIGH_VELOCITY') {
-            // Tell the audio engine to swell the volume based on physical swipe speed
             this.ambientEngine.adjustHum(event.value);
-        } else if (event.type === 'MOUSE_MOVE') {
-            // Route coordinates to the card view for 3D tilt
+            return;
+        }
+
+        if (event.type === 'MOUSE_MOVE') {
             this.cardView.updateMousePos(event.x, event.y);
-        } else if (event.type === 'DRAG_START') {
+            return;
+        }
+
+        if (event.type === 'DRAG_START') {
             this.cardView.setDragging(true);
-        } else if (event.type === 'DRAG_END') {
+            return;
+        }
+
+        if (event.type === 'DRAG_END') {
             this.cardView.setDragging(false);
-            // If the card is already in a spread/result layout, resume dynamics
-            if (this.cardView._spreadLayout) {
-                this.cardView.startDynamicsLoop();
-            }
-        } else if (event.type === 'BURST') {
-            // Passive interaction bursts from DragController
+            if (this.cardView._spreadLayout) this.cardView.startDynamicsLoop();
+            return;
+        }
+
+        if (event.type === 'BURST') {
+            const now = performance.now();
+            if (now - this._lastBurstAt < 80) return;
+            this._lastBurstAt = now;
             createBurst(event.x, event.y);
         }
     }
 
-    requestDraw(intentText, physicalVelocity) {
-        // 1. Trigger UI and Audio
-        this.cardView.showChanneling();
-        this.ambientEngine.playDrawSound();
-        
-        // 2. Calculate entropy modifier based on the user's typed intent
-        const intentWeight = intentText.trim().length > 0 ? intentText.length : 1;
+    canRequestDraw() {
+        return this.workerReady
+            && this.audioReady
+            && this.logicWorker
+            && this.appState !== APP_STATES.CHANNELING
+            && this.appState !== APP_STATES.ERROR;
+    }
 
-        // 3. Package the seed data for the worker
+    requestDraw(intentText, physicalVelocity) {
+        if (!this.canRequestDraw()) {
+            if (!this.workerReady) this.setStatus('Logic engine is still preparing...');
+            else if (!this.audioReady) this.setStatus('Audio layer is still preparing...');
+            return;
+        }
+
+        this.setState(APP_STATES.CHANNELING);
+        this.cardView.showChanneling();
+        this.ambientEngine.swell();
+        this.ambientEngine.playDrawSound();
+
+        const intentWeight = intentText.trim().length > 0 ? intentText.length : 1;
         const seedData = {
-            timestamp: performance.now(),
+            timestamp: Date.now(),
             velocityMetric: physicalVelocity * intentWeight
         };
 
-        // 4. Send to the Logic Engine
         this.logicWorker.postMessage({ type: 'REQUEST_DRAW', payload: seedData });
     }
 
+    validateDrawResult(result) {
+        if (!result || typeof result !== 'object') return false;
+        if (result.schemaVersion !== DRAW_RESULT_SCHEMA_VERSION) return false;
+        if (!result.cardName || !result.cardKey) return false;
+        if (!result.vectorState || !result.positionVector) return false;
+        if (!['upright', 'reversed'].includes(result.orientation)) return false;
+        return true;
+    }
+
     handleWorkerResponse(event) {
-        if (event.data.type === 'DRAW_RESULT') {
-            const result = event.data.payload;
-            
-            // 1. Route the final result to the View and trigger the flip audio
-            this.cardView.showResult(result);
-            this.ambientEngine.playFlipSound();
+        const data = event?.data;
+        if (!data || typeof data !== 'object') return;
 
-            // 2. Synthesize Particle Theme based on Dominant Axis
-            const axis = this._getDominantAxis(result.localWeights);
-            updateParticleTheme(axis);
-            
-            // 3. Trigger a visual "bloom" burst at the card location
-            const rect = document.getElementById('tarot-card')?.getBoundingClientRect();
-            if (rect) {
-                createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
-            }
-
-            // 4. Persistence
-            this.saveToJournal(result);
-            this.ambientEngine.transitionTo('active');
+        if (data.type === 'INIT_DECK_OK') {
+            this.workerReady = true;
+            if (this.appState === APP_STATES.BOOTING) this.setState(APP_STATES.IDLE);
+            this.setStatus('Concentrate on your intent...');
+            return;
         }
+
+        if (data.type === 'INIT_DECK_ERROR') {
+            this.workerReady = false;
+            this.setError(data.payload?.message || 'Deck failed to initialize.');
+            return;
+        }
+
+        if (data.type === 'DRAW_ERROR') {
+            this.setState(APP_STATES.IDLE);
+            this.setError(data.payload?.message || 'Could not draw a card.');
+            return;
+        }
+
+        if (data.type !== 'DRAW_RESULT') return;
+
+        const result = data.payload;
+        if (!this.validateDrawResult(result)) {
+            this.setState(APP_STATES.IDLE);
+            this.setError('Draw result contract mismatch.');
+            return;
+        }
+
+        this.cardView.showResult(result);
+        this.ambientEngine.playFlipSound();
+
+        const axis = this._getDominantAxis(result.localWeights);
+        updateParticleTheme(axis);
+
+        const rect = document.getElementById('tarot-card')?.getBoundingClientRect();
+        if (rect) createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+        this.saveToJournal(result);
+        this.ambientEngine.transitionTo('active');
+        this.setState(APP_STATES.REVEALED);
+        this.setStatus(`${result.cardName} revealed (${result.orientation}).`);
     }
 }

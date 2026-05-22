@@ -1,5 +1,6 @@
 // --- Internal State ---
 let tarotDeck = []; // Normalized deck cache built once from the primary dictionary JSON
+const DRAW_RESULT_SCHEMA_VERSION = 1;
 let deckStats = {
     totalCards: 0,
     majorCount: 0,
@@ -201,9 +202,16 @@ function summarizeDeck(deck) {
 }
 
 function initializeDeck(deckSource) {
+    if (!deckSource) {
+        throw new Error('Deck payload missing.');
+    }
+
     const parsedDeck = typeof deckSource === 'string' ? JSON.parse(deckSource) : deckSource;
 
     tarotDeck = normalizeDeck(parsedDeck);
+    if (!tarotDeck.length) {
+        throw new Error('Deck is empty after normalization.');
+    }
     deckStats = summarizeDeck(tarotDeck);
 
     return tarotDeck.length;
@@ -306,6 +314,10 @@ function synthesizePositionVector(card, session) {
 }
 
 function calculateDraw(seedData) {
+    if (!tarotDeck.length) {
+        throw new Error('Deck not initialized.');
+    }
+
     const session = createSessionState(seedData);
 
     const scoredDeck = tarotDeck.map(card => scoreCard(card, session));
@@ -316,6 +328,7 @@ function calculateDraw(seedData) {
 
         return best;
     }, null);
+    if (!selected) throw new Error('No card could be selected.');
 
     const selectedPosition = synthesizePositionVector(selected, session);
     // Determine simple two-state orientation based on the horizontal component of the vector.
@@ -341,7 +354,7 @@ function calculateDraw(seedData) {
     const localWeights = { intellect: 0.1, emotion: 0.1, material: 0.1, volition: 0.1 };
     
     // Boost weight based on elements
-    const primaryAxis = weightMap[selected.elemental_weight];
+    const primaryAxis = weightMap[selected.element];
     if (primaryAxis) localWeights[primaryAxis] += 0.7;
 
     // Surface keywords at top level for UI binding
@@ -349,6 +362,7 @@ function calculateDraw(seedData) {
     const keywords = activeMeaning.keywords || [];
 
     return {
+        schemaVersion: DRAW_RESULT_SCHEMA_VERSION,
         cardId: selectedKey,
         cardKey: selectedKey,
         cardName: selected.name,
@@ -375,11 +389,18 @@ function calculateDraw(seedData) {
             spreadRadius: Number(session.spreadRadius.toFixed(6))
         },
         positionVector,
-        orientation,
         cardBasis: {
             x: Number(selected.vectorBasis.x.toFixed(6)),
             y: Number(selected.vectorBasis.y.toFixed(6))
-        }
+        },
+        nodes: [{
+            cardId: selectedKey,
+            cardKey: selectedKey,
+            cardName: selected.name,
+            orientation,
+            keywords,
+            localWeights
+        }]
     };
 }
 
@@ -389,20 +410,37 @@ self.onmessage = function(e) {
         try {
             const totalCards = initializeDeck(e.data.payload);
             console.log('[Worker] ✓ Deck initialized with', totalCards, 'cards');
+            self.postMessage({
+                type: 'INIT_DECK_OK',
+                payload: {
+                    totalCards,
+                    schemaVersion: DRAW_RESULT_SCHEMA_VERSION
+                }
+            });
         } catch (error) {
             console.error('[Worker] Failed to initialize deck:', error);
+            self.postMessage({
+                type: 'INIT_DECK_ERROR',
+                payload: {
+                    message: error?.message || 'Deck initialization failed.'
+                }
+            });
         }
     } else if (e.data.type === 'REQUEST_DRAW') {
-        if (tarotDeck.length === 0) {
-            console.error('[Worker] Deck not initialized');
-            return;
+        try {
+            const result = calculateDraw(e.data.payload);
+            self.postMessage({
+                type: 'DRAW_RESULT',
+                payload: result
+            });
+        } catch (error) {
+            console.error('[Worker] Draw failed:', error);
+            self.postMessage({
+                type: 'DRAW_ERROR',
+                payload: {
+                    message: error?.message || 'Draw request failed.'
+                }
+            });
         }
-
-        const result = calculateDraw(e.data.payload);
-
-        self.postMessage({
-            type: 'DRAW_RESULT',
-            payload: result
-        });
     }
 };

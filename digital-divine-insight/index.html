@@ -4,7 +4,8 @@
 <title>Divine Insight - Reading Table</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.webmanifest">
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -116,10 +117,11 @@
 <span class="material-symbols-outlined text-[18px]">psychology</span>
 </span>
 </div>
-<button id="btn-seek-insight" class="relative overflow-hidden group bg-transparent border border-astral-gold text-astral-gold font-headline-md text-label-md px-6 py-3 rounded-lg hover:text-ethereal-teal hover:border-ethereal-teal hover:shadow-[0_0_25px_rgba(0,255,204,0.5)] transition-all duration-300 uppercase tracking-widest active:scale-95 w-full">
+<button id="btn-seek-insight" aria-label="Seek insight" class="relative overflow-hidden group bg-transparent border border-astral-gold text-astral-gold font-headline-md text-label-md px-6 py-3 rounded-lg hover:text-ethereal-teal hover:border-ethereal-teal hover:shadow-[0_0_25px_rgba(0,255,204,0.5)] transition-all duration-300 uppercase tracking-widest active:scale-95 w-full">
 <span class="relative z-10 drop-shadow-md group-hover:drop-shadow-[0_0_8px_rgba(0,255,204,0.8)] transition-all duration-300">Seek Insight</span>
 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-ethereal-teal/20 to-transparent -translate-x-[100%] group-hover:animate-[shimmer_1.5s_infinite]"></div>
 </button>
+<p id="status-text" role="status" aria-live="polite" class="text-center text-ethereal-teal text-label-sm min-h-6">Concentrate on your intent...</p>
 <div class="flex justify-center gap-6 text-moon-silver/60 pt-2">
 <span class="material-symbols-outlined cursor-pointer hover:text-ethereal-teal transition-colors">auto_awesome</span>
 <span class="material-symbols-outlined cursor-pointer hover:text-ethereal-teal transition-colors">volume_up</span>
@@ -129,10 +131,10 @@
 <div class="pt-16"><h2 class="font-headline-lg text-astral-gold border-b border-astral-gold/30 pb-2">The Sanctum</h2>
 <p class="font-body-md text-body-md text-moon-silver/50 italic mt-2">Seeker of Arcane Truths</p></div>
 <nav class="flex flex-col space-y-4">
-<div class="text-ethereal-teal font-bold bg-white/5 rounded-lg p-3 flex items-center gap-3 cursor-pointer shadow-[0_0_15px_rgba(0,255,204,0.2)]">
+<button id="btn-past-readings" type="button" class="w-full text-left text-ethereal-teal font-bold bg-white/5 rounded-lg p-3 flex items-center gap-3 cursor-pointer shadow-[0_0_15px_rgba(0,255,204,0.2)]">
 <span class="material-symbols-outlined">book_2</span>
 <span class="font-label-md text-label-md">Past Readings</span>
-</div>
+</button>
 <div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
 <span class="material-symbols-outlined">edit_note</span>
 <span class="font-label-md text-label-md">Journal</span>
@@ -246,4 +248,16 @@
 </div>
 </footer>
 <script type="module" src="app.js"></script>
+<div id="journal-panel" class="hidden fixed inset-0 z-[80] bg-midnight-obsidian/80 backdrop-blur-sm p-6" aria-hidden="true">
+  <div class="max-w-2xl mx-auto mt-12 rounded-xl border border-aurora-border bg-glass-surface/80 backdrop-blur-2xl p-6">
+    <div class="flex items-center justify-between gap-4">
+      <h2 class="font-headline-lg text-ethereal-teal">Arcana Journal</h2>
+      <button id="btn-close-journal" type="button" class="text-moon-silver/70 hover:text-ethereal-teal">Close</button>
+    </div>
+    <ul id="journal-list" class="mt-4 max-h-[50vh] overflow-auto space-y-3"></ul>
+    <div class="mt-6 flex justify-end gap-3">
+      <button id="btn-clear-journal" type="button" class="px-4 py-2 rounded border border-moon-silver/20 text-moon-silver/70 hover:text-ethereal-teal hover:border-ethereal-teal">Clear History</button>
+    </div>
+  </div>
+</div>
 </body></html>

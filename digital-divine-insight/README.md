@@ -19,6 +19,57 @@ The worker now parses and normalizes `divine-insight-optimized.json` once during
 * `positionVector` describes the selected card's derived placement and spread index.
 * `CardView.showResult()` consumes this data additively, so the existing flip and reveal flow remains intact.
 
+### Draw Result Contract (schemaVersion: 1)
+
+`logic-worker.js` returns `DRAW_RESULT` payloads with:
+
+* `schemaVersion` (`1`)
+* card identity: `cardKey`, `cardId`, `cardName`
+* deterministic orientation: `orientation` (`upright` or `reversed`)
+* interpretation fields: `keywords`, `localWeights`, `meanings`
+* vector fields: `vectorState`, `positionVector`, `cardBasis`
+* compatibility projection: `nodes[0]` for UI bindings
+
+Invalid payloads are now treated as contract failures in the app orchestration layer.
+
+## App State Flow
+
+The app now uses explicit orchestration states:
+
+* `booting` → startup and dependency initialization
+* `idle` → ready for draw
+* `channeling` → draw in progress (duplicate draws blocked)
+* `revealed` → card resolved and rendered
+* `error` → recoverable user-visible error state
+
+## Run / Verify Workflow
+
+1. Start a static server from `digital-divine-insight`:
+
+   `python3 -m http.server 8000`
+
+2. Open `http://localhost:8000`.
+3. Verify:
+   * draw is blocked during channeling
+   * status updates are visible under the primary action
+   * Past Readings opens in-app Arcana Journal panel
+   * service worker registers and offline shell loads after first visit
+   * reduced-motion mode minimizes animation
+
+## Browser Smoke Checklist
+
+* Desktop Chrome latest
+* Desktop Firefox latest
+* Safari (macOS/iOS) basic interaction and audio fallback
+* Mobile Chrome (Android) touch drag + draw + journal
+
+## Troubleshooting
+
+* **No audio playback:** some browsers require user interaction before audio can play.
+* **Worker initialization failure:** confirm `divine-insight-optimized.json` is served by HTTP, not `file://`.
+* **Offline cache stale:** refresh once after deploy to activate new service worker cache version.
+* **Journal unavailable:** browser storage restrictions can prevent local persistence.
+
 ## 📁 Project Structure
 
 The application utilizes a small, module-based JavaScript structure for clear separation of concerns:
