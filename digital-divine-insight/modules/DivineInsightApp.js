@@ -1,7 +1,7 @@
 import { DragController } from './DragController.js';
 import { CardView } from './CardView.js';
 import { AmbientEngine } from './ambientEngine.js';
-import { updateParticleTheme, createBurst } from '../assets/fx/particles.js';
+import { updateParticleTheme, createBurst, initParticleSystem } from '../assets/fx/particles.js';
 
 export class DivineInsightApp {
     constructor() {
@@ -26,7 +26,16 @@ export class DivineInsightApp {
             const response = await fetch('divine-insight-optimized.json');
             this.deckDataText = await response.text();
             
-            // 2. Spin up the logic worker and wire up result/error handling
+            // 2. Initialize the Particle System
+            initParticleSystem('starfield');
+
+            // 3. Inject deck keys into View for channeling animation
+            const parsed = JSON.parse(this.deckDataText);
+            const cards = parsed.cards || (parsed.deck && parsed.deck.arcana ? [...parsed.deck.arcana.major, ...Object.values(parsed.deck.arcana.minor).flat()] : []);
+            const keys = cards.map(c => c.key || c.id);
+            this.cardView.setDeckImages(keys);
+
+            // 4. Spin up the logic worker and wire up result/error handling
             this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url));
             this.logicWorker.onmessage = this.handleWorkerResponse.bind(this);
             this.logicWorker.onerror = (error) => {
@@ -36,10 +45,10 @@ export class DivineInsightApp {
                 console.error('❌ Logic worker could not deserialize a message:', error);
             };
             
-            // 3. Initialize the deck in the worker
+            // 5. Initialize the deck in the worker
             this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
 
-            // 4. Initialize the Audio Engine with DOM elements
+            // 6. Initialize the Audio Engine with DOM elements
             await this.ambientEngine.init({
                 baseEl: document.getElementById('audio-base'),
                 swooshEl: document.getElementById('audio-swoosh'),
@@ -48,7 +57,7 @@ export class DivineInsightApp {
                 sfxFlip: document.getElementById('audio-flip')
             });
             
-            // 5. Bind UI listeners
+            // 7. Bind UI listeners
             this.bindEvents();
 
             console.log("✨ System Ready");
@@ -149,6 +158,9 @@ export class DivineInsightApp {
             if (this.cardView._spreadLayout) {
                 this.cardView.startDynamicsLoop();
             }
+        } else if (event.type === 'BURST') {
+            // Passive interaction bursts from DragController
+            createBurst(event.x, event.y);
         }
     }
 

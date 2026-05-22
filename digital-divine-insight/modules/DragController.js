@@ -140,12 +140,17 @@ export class DragController {
     }
 
     triggerVisualJuice() {
-        if (this.inputState.velocity > 2 && window.spawnParticles && this.cardEl) {
+        if (this.inputState.velocity > 2.5 && this.cardEl) {
             const cardRect = this.cardEl.getBoundingClientRect();
             const centerX = cardRect.left + cardRect.width / 2;
             const centerY = cardRect.top + cardRect.height / 2;
 
-            window.spawnParticles(centerX, centerY, this.inputState.velocity);
+            this.onInteraction?.({ 
+                type: 'BURST', 
+                x: centerX, 
+                y: centerY, 
+                velocity: this.inputState.velocity 
+            });
         }
     }
 }
