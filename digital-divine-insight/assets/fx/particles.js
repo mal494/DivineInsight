@@ -8,6 +8,9 @@ let ctx;
 let particles = [];
 let themeColor = '#00ffcc';
 let themeRgb = '0, 255, 204';
+let prefersReducedMotion = false;
+const MAX_PARTICLES = 360;
+const MAX_BURST_PARTICLES = 20;
 
 /**
  * Updates the global particle theme color.
@@ -43,12 +46,13 @@ export function initParticleSystem(canvasId) {
         return;
     }
     ctx = canvas.getContext('2d');
+    prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     
     // Seed initial starfield
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < (prefersReducedMotion ? 80 : 250); i++) {
         particles.push(new Particle());
     }
     
@@ -111,8 +115,10 @@ class Particle {
  * Creates a localized burst of particles at the specified coordinates.
  */
 export function createBurst(x, y) {
-    if (!canvas || !ctx) return;
-    for (let i = 0; i < 30; i++) {
+    if (!canvas || !ctx || prefersReducedMotion) return;
+    const availableSlots = Math.max(0, MAX_PARTICLES - particles.length);
+    const burstCount = Math.min(MAX_BURST_PARTICLES, availableSlots);
+    for (let i = 0; i < burstCount; i++) {
         const p = new Particle();
         p.x = x;
         p.y = y;
@@ -137,5 +143,8 @@ function animate() {
             particles.splice(index, 1);
         }
     });
+    if (particles.length > MAX_PARTICLES) {
+        particles = particles.slice(particles.length - MAX_PARTICLES);
+    }
     requestAnimationFrame(animate);
 }

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Divine Insight icon">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#0f1c24"/>
+      <stop offset="100%" stop-color="#050508"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="104" fill="url(#bg)"/>
+  <circle cx="256" cy="216" r="132" fill="none" stroke="#00ffcc" stroke-opacity="0.8" stroke-width="14"/>
+  <path d="M256 92l34 74 81 10-60 56 15 80-70-39-70 39 15-80-60-56 81-10z" fill="#d4af37" fill-opacity="0.9"/>
+  <text x="256" y="418" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="44" letter-spacing="6" fill="#00ffcc">DI</text>
+</svg>

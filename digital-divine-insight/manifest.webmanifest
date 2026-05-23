@@ -1,0 +1,17 @@
+{
+  "name": "Divine Insight",
+  "short_name": "DivineInsight",
+  "description": "A high-performance web tarot reading experience.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050508",
+  "theme_color": "#00ffcc",
+  "icons": [
+    {
+      "src": "assets/img/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

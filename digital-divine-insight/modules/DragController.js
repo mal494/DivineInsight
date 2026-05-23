@@ -11,6 +11,9 @@ export class DragController {
         this.inputState = { x: 0, y: 0, velocity: 0, lastTime: performance.now() };
         this.visualState = { x: 0, y: 0, rotation: 0, tiltX: 0, tiltY: 0 };
         this._rafId = null;
+        this._highVelocityThreshold = 1.6;
+        this._burstThreshold = 2.2;
+        this._lastBurstAt = 0;
 
         this._handlePointerDown = this._handlePointerDown.bind(this);
         this._handlePointerMove = this._handlePointerMove.bind(this);
@@ -69,6 +72,7 @@ export class DragController {
 
     _handlePointerDown(e) {
         if (e.target?.id === 'draw-btn' || e.target?.id === 'btn-seek-insight' || e.target?.id === 'intent-input') return;
+        if (typeof e.isPrimary === 'boolean' && !e.isPrimary) return;
 
         this.isPointerDown = true;
         this.dragStartPos.x = e.clientX;
@@ -100,7 +104,7 @@ export class DragController {
 
         if (!this.isPointerDown) return;
 
-        if (this.inputState.velocity > 2) {
+        if (this.inputState.velocity > this._highVelocityThreshold) {
             this.onInteraction?.({ type: 'HIGH_VELOCITY', value: this.inputState.velocity });
         }
     }
@@ -122,25 +126,13 @@ export class DragController {
 
         // Container handles layout translation and slight drag rotation
         this.cardEl.style.transform = `translate(${this.visualState.x}px, ${this.visualState.y}px) rotate(${this.visualState.rotation}deg) scale(1.05)`;
-
-        // Inner layer handles 3D tilt during drag to match the interactive feel
-        if (this.cardInner) {
-            const rect = this.cardEl.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const rotateX = -(this.inputState.y - centerY) / 25;
-            // Check for flip state by inspecting the matrix or string
-            const transform = this.cardInner.style.transform;
-            const isFlipped = transform.includes('rotateY(180') || transform.includes('180deg');
-            const rotateY = ((this.inputState.x - centerX) / 25) + (isFlipped ? 180 : 0);
-            
-            this.cardInner.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        }
     }
 
     triggerVisualJuice() {
-        if (this.inputState.velocity > 2.5 && this.cardEl) {
+        if (this.inputState.velocity > this._burstThreshold && this.cardEl) {
+            const now = performance.now();
+            if (now - this._lastBurstAt < 100) return;
+            this._lastBurstAt = now;
             const cardRect = this.cardEl.getBoundingClientRect();
             const centerX = cardRect.left + cardRect.width / 2;
             const centerY = cardRect.top + cardRect.height / 2;
