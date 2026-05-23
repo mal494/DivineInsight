@@ -78,7 +78,8 @@ The application utilizes a small, module-based JavaScript structure for clear se
 * `modules/app/DivineInsightApp.js` — Core application orchestration, managing state and connecting the UI components to the background worker.
 * `modules/components/DragController.js` — Handles precise pointer tracking and drives the render loop for physical card interactions.
 * `modules/components/CardView.js` — Manages DOM updates, flip animations, and visual status handling for the deck.
-* `ambientEngine.js` — The Web Audio API ambient controller responsible for the interactive soundscape.
+* `modules/audio/ambientEngine.js` — The Web Audio API ambient controller responsible for the interactive soundscape.
+* `modules/content/` — Static UI copy and synthesis text templates separated from runtime logic.
 
 ## 💻 Local Setup
 

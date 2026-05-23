@@ -1,6 +1,7 @@
-import { DragController } from './DragController.js';
-import { CardView } from './CardView.js';
-import { AmbientEngine } from './ambientEngine.js';
+import { DragController } from '../components/DragController.js';
+import { CardView } from '../components/CardView.js';
+import { AmbientEngine } from '../audio/ambientEngine.js';
+import { STATUS_MESSAGES, JOURNAL_MESSAGES } from '../content/messages.js';
 import { updateParticleTheme, createBurst, initParticleSystem } from '../assets/fx/particles.js';
 
 const APP_STATES = Object.freeze({
@@ -71,7 +72,7 @@ export class DivineInsightApp {
             this.audioReady = true;
 
             this.setState(APP_STATES.IDLE);
-            this.setStatus('Concentrate on your intent...');
+            this.setStatus(STATUS_MESSAGES.READY);
         } catch (error) {
             this.setError(error?.message || 'Failed to initialize system.');
         }
@@ -156,7 +157,7 @@ export class DivineInsightApp {
         const intentInput = document.getElementById('intent-input');
         if (intentInput) intentInput.value = '';
         this.setState(APP_STATES.IDLE);
-        this.setStatus('Concentrate on your intent...');
+        this.setStatus(STATUS_MESSAGES.READY);
     }
 
     readJournal() {
@@ -175,7 +176,7 @@ export class DivineInsightApp {
             const normalized = Array.isArray(entries) ? entries.slice(0, MAX_JOURNAL_ENTRIES) : [];
             localStorage.setItem(JOURNAL_KEY, JSON.stringify(normalized));
         } catch (error) {
-            this.setStatus('Could not save reading history (storage unavailable).');
+            this.setStatus(STATUS_MESSAGES.STORAGE_UNAVAILABLE);
         }
     }
 
@@ -190,16 +191,16 @@ export class DivineInsightApp {
         if (readings.length === 0) {
             const empty = document.createElement('li');
             empty.className = 'text-moon-silver/60 text-sm';
-            empty.innerText = 'No saved readings yet.';
+            empty.innerText = JOURNAL_MESSAGES.EMPTY;
             list.appendChild(empty);
         } else {
             readings.forEach((entry) => {
                 const li = document.createElement('li');
                 li.className = 'rounded-lg border border-moon-silver/15 bg-white/5 p-3';
-                const date = entry.date ? new Date(entry.date).toLocaleString() : 'Unknown date';
-                li.innerHTML = `<div class="font-semibold text-ethereal-teal">${entry.cardName || 'Unknown Card'} (${entry.orientation || 'upright'})</div>
+                const date = entry.date ? new Date(entry.date).toLocaleString() : JOURNAL_MESSAGES.UNKNOWN_DATE;
+                li.innerHTML = `<div class="font-semibold text-ethereal-teal">${entry.cardName || JOURNAL_MESSAGES.UNKNOWN_CARD} (${entry.orientation || 'upright'})</div>
 <div class="text-moon-silver/70 text-xs mt-1">${date}</div>
-<div class="text-moon-silver/60 text-xs mt-1">Axis: ${entry.dominantAxis || 'balance'}</div>`;
+<div class="text-moon-silver/60 text-xs mt-1">Axis: ${entry.dominantAxis || JOURNAL_MESSAGES.UNKNOWN_AXIS}</div>`;
                 list.appendChild(li);
             });
         }
@@ -218,7 +219,7 @@ export class DivineInsightApp {
     clearJournal() {
         this.writeJournal([]);
         this.showJournal();
-        this.setStatus('Arcana Journal cleared.');
+        this.setStatus(STATUS_MESSAGES.JOURNAL_CLEARED);
     }
 
     saveToJournal(result) {
@@ -283,8 +284,8 @@ export class DivineInsightApp {
 
     requestDraw(intentText, physicalVelocity) {
         if (!this.canRequestDraw()) {
-            if (!this.workerReady) this.setStatus('Logic engine is still preparing...');
-            else if (!this.audioReady) this.setStatus('Audio layer is still preparing...');
+            if (!this.workerReady) this.setStatus(STATUS_MESSAGES.LOGIC_PREPARING);
+            else if (!this.audioReady) this.setStatus(STATUS_MESSAGES.AUDIO_PREPARING);
             return;
         }
 
@@ -318,7 +319,7 @@ export class DivineInsightApp {
         if (data.type === 'INIT_DECK_OK') {
             this.workerReady = true;
             if (this.appState === APP_STATES.BOOTING) this.setState(APP_STATES.IDLE);
-            this.setStatus('Concentrate on your intent...');
+            this.setStatus(STATUS_MESSAGES.READY);
             return;
         }
 
@@ -330,7 +331,7 @@ export class DivineInsightApp {
 
         if (data.type === 'DRAW_ERROR') {
             this.setState(APP_STATES.IDLE);
-            this.setError(data.payload?.message || 'Could not draw a card.');
+            this.setError(data.payload?.message || STATUS_MESSAGES.DRAW_FAILED);
             return;
         }
 
@@ -339,7 +340,7 @@ export class DivineInsightApp {
         const result = data.payload;
         if (!this.validateDrawResult(result)) {
             this.setState(APP_STATES.IDLE);
-            this.setError('Draw result contract mismatch.');
+            this.setError(STATUS_MESSAGES.DRAW_CONTRACT_MISMATCH);
             return;
         }
 

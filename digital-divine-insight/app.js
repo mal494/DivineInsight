@@ -1,5 +1,6 @@
 // app.js - The Bootstrap Entrypoint
-import { DivineInsightApp } from './modules/DivineInsightApp.js';
+import { DivineInsightApp } from './modules/app/DivineInsightApp.js';
+import { STATUS_MESSAGES } from './modules/content/messages.js';
 
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) return null;
@@ -33,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     app.initialize().catch(err => {
         console.error('Failed to initialize Divine Insight:', err);
         window.dispatchEvent(new CustomEvent('app:error', {
-            detail: 'Initialization failed. Please refresh and try again.'
+            detail: STATUS_MESSAGES.INIT_FAILED
         }));
     });
 });

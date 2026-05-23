@@ -1,3 +1,6 @@
+import { STATUS_MESSAGES } from '../content/messages.js';
+import { buildInsightDescription } from '../content/insightContent.js';
+
 export class CardView {
     constructor({ options = {} } = {}) {
         // Map to the new premium UI elements
@@ -213,7 +216,7 @@ export class CardView {
     }
 
     showChanneling() {
-        this.setStatus('Channeling intent...');
+        this.setStatus(STATUS_MESSAGES.CHANNELING);
         if (this.drawBtn) {
             this.drawBtn.disabled = true;
             this.drawBtn.style.opacity = '0.5';
@@ -299,18 +302,11 @@ export class CardView {
             dominantAxis = Object.keys(weights).reduce((a, b) => weights[a] > weights[b] ? a : b);
         }
 
-        const axisInterpretations = {
-            intellect: "a surge of structural logic and mental clarity.",
-            emotion: "deep intuitive currents and emotional resonance.",
-            material: "a grounding force anchored in physical reality.",
-            volition: "high-velocity manifestation and fiery drive."
-        };
-
-        const orientationContext = nodeData.orientation === 'reversed' 
-            ? "However, its reversed position suggests this energy is currently internalized, blocked, or experiencing friction."
-            : "This energy is flowing freely, open to external manifestation.";
-
-        this.insightDescription.innerText = `The presence of ${nodeData.cardName || nodeData.name} at the threshold introduces ${axisInterpretations[dominantAxis] || "a shifting dynamic."} ${orientationContext}`;
+        this.insightDescription.innerText = buildInsightDescription({
+            cardName: nodeData.cardName || nodeData.name,
+            dominantAxis,
+            orientation: nodeData.orientation
+        });
     }
 
     // Overriding the flip to use the new premium transitions
@@ -389,7 +385,7 @@ export class CardView {
         this._spreadLayout = null;
         this.setTransform({ x: 0, y: 0, rotation: 0, scale: 1 });
         
-        this.setStatus('Concentrate on your intent...');
+        this.setStatus(STATUS_MESSAGES.READY);
         
         if (this.drawBtn) {
             this.drawBtn.disabled = false;
