@@ -15,10 +15,11 @@ This MVP focuses on processing speed and fluid interaction, utilizing modern web
 The application utilizes a small, module-based JavaScript structure for clear separation of concerns:
 
     digital-divine-insight/app.js — The bootstrap entrypoint that initializes the application.
-    digital-divine-insight/modules/DivineInsightApp.js — Core application orchestration/state management.
-    digital-divine-insight/modules/DragController.js — Pointer tracking and drag signal emission.
-    digital-divine-insight/modules/CardView.js — Card rendering, flip flow, and insight panel binding.
-    digital-divine-insight/modules/ambientEngine.js — Ambient audio orchestration.
+    digital-divine-insight/modules/app/DivineInsightApp.js — Core application orchestration/state management.
+    digital-divine-insight/modules/components/DragController.js — Pointer tracking and drag signal emission.
+    digital-divine-insight/modules/components/CardView.js — Card rendering, flip flow, and insight panel binding.
+    digital-divine-insight/modules/audio/ambientEngine.js — Ambient audio orchestration.
+    digital-divine-insight/modules/content/ — UI copy and synthesis content templates separated from runtime logic.
     digital-divine-insight/logic-worker.js — Deterministic draw engine + vector synthesis contract.
 
 💻 Local Setup
