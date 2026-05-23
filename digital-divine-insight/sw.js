@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_NAME = `divine-insight-${CACHE_VERSION}`;
 
 const CORE_ASSETS = [
@@ -7,6 +7,7 @@ const CORE_ASSETS = [
     './styles.css',
     './app.js',
     './logic-worker.js',
+    './karenn-worker.js',
     './divine-insight-optimized.json',
     './manifest.webmanifest',
     './assets/img/icon.svg',

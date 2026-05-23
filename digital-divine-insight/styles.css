@@ -519,3 +519,18 @@ input:focus-visible {
 #tarot-card {
     touch-action: none;
 }
+
+/* Karenn toast positioning + transitions */
+#karenn-toast {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 220ms var(--premium-bezier), transform 220ms var(--premium-bezier);
+    pointer-events: auto;
+}
+
+#karenn-toast[aria-hidden="true"] {
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+}

@@ -248,6 +248,23 @@
 </div>
 </footer>
 <script type="module" src="app.js"></script>
+<!-- Karenn: nagging background observer -->
+<div id="karenn-toast" class="fixed left-4 right-4 md:left-6 md:right-auto md:w-[420px] z-[90]" aria-hidden="true" aria-live="polite">
+  <div class="rounded-xl border border-aurora-border bg-glass-surface/80 backdrop-blur-2xl shadow-[0_10px_30px_rgba(5,5,8,0.8)] px-4 py-3 text-moon-silver">
+    <div class="flex items-start gap-3">
+      <div class="mt-0.5 text-ethereal-teal font-label-md uppercase tracking-widest text-[10px]">Karenn</div>
+      <div class="flex-1 min-w-0">
+        <div id="karenn-text" class="text-sm leading-snug text-moon-silver/90"></div>
+        <div class="mt-2 flex flex-wrap gap-2">
+          <button id="karenn-mute" type="button" class="px-2 py-1 rounded border border-moon-silver/20 text-xs text-moon-silver/70 hover:text-ethereal-teal hover:border-ethereal-teal" aria-pressed="false">Mute</button>
+          <button id="karenn-voice" type="button" class="px-2 py-1 rounded border border-moon-silver/20 text-xs text-moon-silver/70 hover:text-ethereal-teal hover:border-ethereal-teal" aria-pressed="true">Voice: On</button>
+          <button id="karenn-repeat" type="button" class="px-2 py-1 rounded border border-moon-silver/20 text-xs text-moon-silver/70 hover:text-ethereal-teal hover:border-ethereal-teal">Repeat</button>
+        </div>
+      </div>
+      <button id="karenn-close" type="button" class="text-moon-silver/50 hover:text-ethereal-teal px-2" aria-label="Close Karenn">×</button>
+    </div>
+  </div>
+</div>
 <div id="journal-panel" class="hidden fixed inset-0 z-[80] bg-midnight-obsidian/80 backdrop-blur-sm p-6" aria-hidden="true">
   <div class="max-w-2xl mx-auto mt-12 rounded-xl border border-aurora-border bg-glass-surface/80 backdrop-blur-2xl p-6">
     <div class="flex items-center justify-between gap-4">

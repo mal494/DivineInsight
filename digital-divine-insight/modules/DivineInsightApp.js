@@ -1,6 +1,7 @@
 import { DragController } from './DragController.js';
 import { CardView } from './CardView.js';
 import { AmbientEngine } from './ambientEngine.js';
+import { KarennAgent } from './KarennAgent.js';
 import { updateParticleTheme, createBurst, initParticleSystem } from '../assets/fx/particles.js';
 
 const APP_STATES = Object.freeze({
@@ -27,6 +28,7 @@ export class DivineInsightApp {
 
         this.cardView = new CardView();
         this.ambientEngine = new AmbientEngine();
+        this.karenn = new KarennAgent().initialize();
 
         const cardElement = document.getElementById('tarot-card');
         this.dragController = new DragController(cardElement, this.handleInteraction.bind(this));
@@ -36,6 +38,7 @@ export class DivineInsightApp {
         this.setState(APP_STATES.BOOTING);
         this.bindGlobalStatusEvents();
         this.bindEvents();
+        this.karenn?.notify('APP_BOOT', {});
 
         try {
             const response = await fetch('divine-insight-optimized.json');
@@ -60,6 +63,7 @@ export class DivineInsightApp {
                 this.setError('Logic engine sent an unreadable message.');
             };
             this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
+            this.karenn?.notify('WORKER_INIT_REQUESTED', {});
 
             await this.ambientEngine.init({
                 baseEl: document.getElementById('audio-base'),
@@ -134,9 +138,11 @@ export class DivineInsightApp {
     }
 
     setState(nextState) {
+        const prevState = this.appState;
         this.appState = nextState;
         this.pendingDraw = nextState === APP_STATES.CHANNELING;
         this.cardView.setUiState({ state: nextState });
+        this.karenn?.notify('STATE_CHANGED', { prevState, nextState });
     }
 
     setStatus(message) {
@@ -147,6 +153,7 @@ export class DivineInsightApp {
         console.error('[DivineInsightApp]', message);
         this.setState(APP_STATES.ERROR);
         this.cardView.setStatus(message, { isError: true });
+        this.karenn?.notify('APP_ERROR', { message: String(message || '') });
     }
 
     resetAltar() {
@@ -157,6 +164,7 @@ export class DivineInsightApp {
         if (intentInput) intentInput.value = '';
         this.setState(APP_STATES.IDLE);
         this.setStatus('Concentrate on your intent...');
+        this.karenn?.notify('RESET_ALTAR', {});
     }
 
     readJournal() {
@@ -183,6 +191,7 @@ export class DivineInsightApp {
         const panel = document.getElementById('journal-panel');
         const list = document.getElementById('journal-list');
         if (!panel || !list) return;
+        this.karenn?.notify('JOURNAL_OPEN', {});
 
         const readings = this.readJournal();
         list.innerHTML = '';
@@ -219,6 +228,7 @@ export class DivineInsightApp {
         this.writeJournal([]);
         this.showJournal();
         this.setStatus('Arcana Journal cleared.');
+        this.karenn?.notify('JOURNAL_CLEAR', {});
     }
 
     saveToJournal(result) {
@@ -292,6 +302,7 @@ export class DivineInsightApp {
         this.cardView.showChanneling();
         this.ambientEngine.swell();
         this.ambientEngine.playDrawSound();
+        this.karenn?.notify('DRAW_REQUESTED', { intentLength: String(intentText || '').trim().length, physicalVelocity });
 
         const intentWeight = intentText.trim().length > 0 ? intentText.length : 1;
         const seedData = {
@@ -319,17 +330,20 @@ export class DivineInsightApp {
             this.workerReady = true;
             if (this.appState === APP_STATES.BOOTING) this.setState(APP_STATES.IDLE);
             this.setStatus('Concentrate on your intent...');
+            this.karenn?.notify('WORKER_INIT_OK', data.payload || {});
             return;
         }
 
         if (data.type === 'INIT_DECK_ERROR') {
             this.workerReady = false;
+            this.karenn?.notify('WORKER_INIT_ERROR', data.payload || {});
             this.setError(data.payload?.message || 'Deck failed to initialize.');
             return;
         }
 
         if (data.type === 'DRAW_ERROR') {
             this.setState(APP_STATES.IDLE);
+            this.karenn?.notify('DRAW_ERROR', data.payload || {});
             this.setError(data.payload?.message || 'Could not draw a card.');
             return;
         }
@@ -345,6 +359,11 @@ export class DivineInsightApp {
 
         this.cardView.showResult(result);
         this.ambientEngine.playFlipSound();
+        this.karenn?.notify('DRAW_RESULT', {
+            cardName: result.cardName,
+            orientation: result.orientation,
+            localWeights: result.localWeights
+        });
 
         const axis = this._getDominantAxis(result.localWeights);
         updateParticleTheme(axis);
