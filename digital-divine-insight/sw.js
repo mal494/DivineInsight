@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_NAME = `divine-insight-${CACHE_VERSION}`;
 
 const CORE_ASSETS = [
@@ -7,6 +7,17 @@ const CORE_ASSETS = [
     './styles.css',
     './app.js',
     './logic-worker.js',
+    './karen-worker.js',
+    './mikey-worker.js',
+    './JournalView.js',
+    './GalleryView.js',
+    './SettingsView.js',
+    './KarenVault.js',
+    './ManagerView.js',
+    './modules/DivineInsightApp.js',
+    './modules/CardView.js',
+    './modules/DragController.js',
+    './modules/ambientEngine.js',
     './divine-insight-optimized.json',
     './manifest.webmanifest',
     './assets/img/icon.svg',

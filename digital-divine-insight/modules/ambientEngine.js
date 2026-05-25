@@ -30,6 +30,7 @@ export class AmbientEngine {
         this.isInitialized = false;
         this.currentState = 'passive';
         this._fadeToken = 0;
+        this.masterVolume = 1;
     }
 
     bindElements({
@@ -133,9 +134,35 @@ export class AmbientEngine {
     }
 
     _setInitialVolumes() {
-        if (this.bgmMagic) this.bgmMagic.volume = 0.2;
-        if (this.baseEl && this.baseEl !== this.bgmMagic) this.baseEl.volume = 0.15;
-        if (this.swooshEl) this.swooshEl.volume = 0.05;
+        if (this.bgmMagic) {
+            this.bgmMagic.dataset.baseVolume = '0.2';
+            this.bgmMagic.volume = 0.2 * this.masterVolume;
+        }
+        if (this.baseEl && this.baseEl !== this.bgmMagic) {
+            this.baseEl.dataset.baseVolume = '0.15';
+            this.baseEl.volume = 0.15 * this.masterVolume;
+        }
+        if (this.swooshEl) {
+            this.swooshEl.dataset.baseVolume = '0.05';
+            this.swooshEl.volume = 0.05 * this.masterVolume;
+        }
+
+        [this.sfxHover, this.sfxDraw, this.sfxFlip].filter(Boolean).forEach((el) => {
+            if (!el.dataset.baseVolume) el.dataset.baseVolume = '1';
+            el.volume = parseFloat(el.dataset.baseVolume) * this.masterVolume;
+        });
+    }
+
+    setMasterVolume(value) {
+        const next = Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : 1;
+        this.masterVolume = next;
+        [this.bgmMagic, this.baseEl, this.swooshEl, this.sfxHover, this.sfxDraw, this.sfxFlip]
+            .filter(Boolean)
+            .forEach((el) => {
+                const base = parseFloat(el.dataset.baseVolume || '1');
+                el.volume = Math.min(1, Math.max(0, base * this.masterVolume));
+            });
+        return this.masterVolume;
     }
 
     async start() {
@@ -242,7 +269,7 @@ export class AmbientEngine {
         if (!this.isAmbientPlaying || !ambientEl) return ambientEl?.volume ?? 0;
 
         const safeVelocity = Number.isFinite(velocity) ? Math.max(0, velocity) : 0;
-        const targetVolume = Math.min(0.2 + (safeVelocity * 0.04), 0.8);
+        const targetVolume = Math.min((0.2 + (safeVelocity * 0.04)) * this.masterVolume, 0.8);
         ambientEl.volume = this.lerp(ambientEl.volume, targetVolume, 0.1);
         return ambientEl.volume;
     }
@@ -251,8 +278,8 @@ export class AmbientEngine {
         if (!this.isInitialized) return;
 
         const target = state === 'active'
-            ? { base: 0.08, swoosh: 0.25 }
-            : { base: 0.15, swoosh: 0.05 };
+            ? { base: 0.08 * this.masterVolume, swoosh: 0.25 * this.masterVolume }
+            : { base: 0.15 * this.masterVolume, swoosh: 0.05 * this.masterVolume };
 
         if (this.baseEl && this.swooshEl) {
             await this._crossFade({
@@ -261,7 +288,7 @@ export class AmbientEngine {
                 durationMs: 2000,
             });
         } else if (this.bgmMagic) {
-            this.bgmMagic.volume = state === 'active' ? 0.35 : 0.2;
+            this.bgmMagic.volume = (state === 'active' ? 0.35 : 0.2) * this.masterVolume;
         }
 
         this.currentState = state;

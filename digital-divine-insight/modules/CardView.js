@@ -41,11 +41,19 @@ export class CardView {
         this._rafId = null;
         this._lastFrameTime = performance.now();
         this._prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this._visualIntensity = 1;
     }
 
     updateMousePos(x, y) {
         this._mousePos.x = x;
         this._mousePos.y = y;
+    }
+
+    setVisualIntensity(value) {
+        const next = Number.isFinite(value) ? Math.min(1.5, Math.max(0.25, value)) : 1;
+        this._visualIntensity = next;
+        document.documentElement.style.setProperty('--visual-intensity', String(next));
+        return this._visualIntensity;
     }
 
     // DYNAMICS / RENDERING
@@ -69,7 +77,7 @@ export class CardView {
         if (!this.cardEl || !this._spreadLayout || this._prefersReducedMotion) return;
 
         // Apply ambient drift based on vector profile
-        const sessionNoise = Math.sin(this._lastFrameTime * 0.001) * this._vectorDynamics.noise;
+        const sessionNoise = Math.sin(this._lastFrameTime * 0.001) * this._vectorDynamics.noise * this._visualIntensity;
         const driftX = Math.cos(this._lastFrameTime * 0.0007) * this._vectorDynamics.ambientDrift.x * 20;
         const driftY = Math.sin(this._lastFrameTime * 0.0009) * this._vectorDynamics.ambientDrift.y * 20;
 

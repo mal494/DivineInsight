@@ -114,6 +114,20 @@ export async function getReadings() {
 }
 
 /**
+ * Clears all stored journal readings.
+ */
+export async function clearReadings() {
+    const database = await init();
+    return new Promise((resolve, reject) => {
+        const transaction = database.transaction([READING_STORE], 'readwrite');
+        const store = transaction.objectStore(READING_STORE);
+        const request = store.clear();
+        request.onsuccess = () => resolve(true);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+/**
  * Retrieves all archived incident reports.
  */
 export async function getIncidents() {

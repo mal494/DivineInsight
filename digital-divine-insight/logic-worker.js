@@ -9,6 +9,7 @@ let deckStats = {
 };
 
 const ZERO_VECTOR = Object.freeze({ x: 0, y: 0 });
+const DRAW_RESULT_SCHEMA_VERSION = 1;
 
 const ELEMENT_VECTORS = Object.freeze({
     Air: { x: -1, y: 0 },
@@ -341,7 +342,7 @@ function calculateDraw(seedData) {
     const localWeights = { intellect: 0.1, emotion: 0.1, material: 0.1, volition: 0.1 };
     
     // Boost weight based on elements
-    const primaryAxis = weightMap[selected.elemental_weight];
+    const primaryAxis = weightMap[selected.element];
     if (primaryAxis) localWeights[primaryAxis] += 0.7;
 
     // Surface keywords at top level for UI binding
@@ -349,6 +350,7 @@ function calculateDraw(seedData) {
     const keywords = activeMeaning.keywords || [];
 
     return {
+        schemaVersion: DRAW_RESULT_SCHEMA_VERSION,
         cardId: selectedKey,
         cardKey: selectedKey,
         cardName: selected.name,
@@ -389,12 +391,24 @@ self.onmessage = function(e) {
         try {
             const totalCards = initializeDeck(e.data.payload);
             console.log('[Worker] ✓ Deck initialized with', totalCards, 'cards');
+            self.postMessage({
+                type: 'INIT_DECK_OK',
+                payload: { totalCards }
+            });
         } catch (error) {
             console.error('[Worker] Failed to initialize deck:', error);
+            self.postMessage({
+                type: 'INIT_DECK_ERROR',
+                payload: { message: error.message || 'Failed to initialize deck' }
+            });
         }
     } else if (e.data.type === 'REQUEST_DRAW') {
         if (tarotDeck.length === 0) {
             console.error('[Worker] Deck not initialized');
+            self.postMessage({
+                type: 'DRAW_ERROR',
+                payload: { message: 'Deck not initialized' }
+            });
             return;
         }
 

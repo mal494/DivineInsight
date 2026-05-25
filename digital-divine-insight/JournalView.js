@@ -1,6 +1,6 @@
 /**
  * JournalView - Manages the display and interaction of the Arcana Journal.
- * Displays a list of past readings stored in localStorage.
+ * Displays a list of past readings provided by the app layer.
  */
 export class JournalView {
     constructor() {
@@ -21,7 +21,9 @@ export class JournalView {
     }
 
     isVisible() {
-        return this.panel && !this.panel.classList.contains('translate-x-full');
+        return this.panel
+            && !this.panel.classList.contains('hidden')
+            && !this.panel.classList.contains('translate-x-full');
     }
 
     show(readings = [], renderedHtml = null) {
@@ -34,16 +36,20 @@ export class JournalView {
         }
         
         // Show panel
+        this.panel.classList.remove('hidden');
         this.panel.classList.remove('translate-x-full');
         this.panel.classList.add('translate-x-0');
+        this.panel.setAttribute('aria-hidden', 'false');
         
         // Optional: Trigger ambient sound or particle effect if passed from app
     }
 
     hide() {
         if (!this.panel) return;
+        this.panel.classList.add('hidden');
         this.panel.classList.add('translate-x-full');
         this.panel.classList.remove('translate-x-0');
+        this.panel.setAttribute('aria-hidden', 'true');
     }
 
     renderList(readings) {

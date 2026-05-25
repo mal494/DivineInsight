@@ -53,6 +53,8 @@ The app now uses explicit orchestration states:
    * draw is blocked during channeling
    * status updates are visible under the primary action
    * Past Readings opens in-app Arcana Journal panel
+   * Deck Gallery opens and renders all cards
+   * Altar Settings sliders affect audio/visual intensity
    * service worker registers and offline shell loads after first visit
    * reduced-motion mode minimizes animation
 
@@ -75,10 +77,12 @@ The app now uses explicit orchestration states:
 The application utilizes a small, module-based JavaScript structure for clear separation of concerns:
 
 * `app.js` — The bootstrap entrypoint that initializes the application.
-* `modules/app/DivineInsightApp.js` — Core application orchestration, managing state and connecting the UI components to the background worker.
-* `modules/components/DragController.js` — Handles precise pointer tracking and drives the render loop for physical card interactions.
-* `modules/components/CardView.js` — Manages DOM updates, flip animations, and visual status handling for the deck.
-* `ambientEngine.js` — The Web Audio API ambient controller responsible for the interactive soundscape.
+* `modules/DivineInsightApp.js` — Core orchestration, wiring UI controllers, KarenVault persistence, and workers.
+* `modules/DragController.js` — Handles precise pointer tracking and drives the render loop for physical card interactions.
+* `modules/CardView.js` — Manages DOM updates, flip animations, and visual status handling for the deck.
+* `modules/ambientEngine.js` — The Web Audio API ambient controller responsible for the interactive soundscape.
+* `JournalView.js`, `GalleryView.js`, `SettingsView.js` — Side-panel UI controllers for journal, gallery, and settings.
+* `KarenVault.js`, `ManagerView.js`, `karen-worker.js`, `mikey-worker.js` — IndexedDB vault, optional manager console view, and delegated rendering/incident pipeline.
 
 ## 💻 Local Setup
 
