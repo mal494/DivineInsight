@@ -19,7 +19,7 @@ const APP_STATES = Object.freeze({
 const DRAW_RESULT_SCHEMA_VERSION = 1;
 const JOURNAL_KEY = 'divine_readings';
 const MAX_JOURNAL_ENTRIES = 50;
-const KAREN_RENDER_TIMEOUT_MS = 1200;
+const KAREN_RENDER_TIMEOUT_MS = 2500;
 
 export class DivineInsightApp {
     constructor() {
@@ -77,7 +77,7 @@ export class DivineInsightApp {
                 void this.logIncident({
                     source: 'logic-worker',
                     error: error.message || 'unknown worker failure',
-                    stack: error.error?.stack || '',
+                    stack: error.stack || error.error?.stack || '',
                     timestamp: Date.now()
                 });
             };
@@ -269,7 +269,7 @@ export class DivineInsightApp {
         try {
             await clearReadings();
         } catch (error) {
-            this.setStatus('Could not clear reading history (vault unavailable).');
+            this.setStatus('Could not clear Arcana Journal. Please try again.');
             return;
         }
         await this.showJournal();
@@ -293,7 +293,7 @@ export class DivineInsightApp {
         try {
             deckData = JSON.parse(this.deckDataText || '{}');
         } catch (error) {
-            this.setStatus('Deck gallery is unavailable (deck data malformed).');
+            this.setStatus('Deck Gallery is temporarily unavailable. Please try again later.');
             return;
         }
 
@@ -317,7 +317,9 @@ export class DivineInsightApp {
 
     initManagerConsoleExposure() {
         const params = new URLSearchParams(window.location.search);
-        const enabled = params.has('manager') || localStorage.getItem('divine_manager_mode') === '1';
+        const isLocalHost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+        const enabled = (params.has('manager') && isLocalHost)
+            || localStorage.getItem('divine_manager_mode') === '1';
         if (enabled) this.managerView.expose();
 
         window.enableDivineManager = () => {
@@ -416,6 +418,12 @@ export class DivineInsightApp {
         return new Promise((resolve) => {
             const timeout = setTimeout(() => {
                 this._karenTasks.delete(taskId);
+                console.warn(`Karen render task ${taskId} (${type}) timed out after ${KAREN_RENDER_TIMEOUT_MS}ms.`);
+                void this.logIncident({
+                    source: 'karen-pipeline',
+                    error: `Render task timeout: ${type}`,
+                    timestamp: Date.now()
+                });
                 resolve(null);
             }, KAREN_RENDER_TIMEOUT_MS);
 
