@@ -321,6 +321,7 @@ function calculateDraw(seedData) {
     const selectedKey = selected.key || selected.id;
 
     // Build standardized axis weights from normalized card metadata.
+    // `selected.element` is the canonical normalized element resolved in normalizeDeck().
     const localWeights = buildLocalWeights(selected);
 
     // Surface keywords at top level for UI binding
@@ -328,6 +329,8 @@ function calculateDraw(seedData) {
     const keywords = activeMeaning.keywords || [];
 
     return {
+        // Contract version consumed by DivineInsightApp.validateDrawResult().
+        // Increment when DRAW_RESULT payload shape changes.
         schemaVersion: 1,
         cardId: selectedKey,
         cardKey: selectedKey,
