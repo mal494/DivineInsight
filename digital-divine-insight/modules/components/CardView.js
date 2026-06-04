@@ -1,5 +1,6 @@
 import { STATUS_MESSAGES } from '../content/messages.js';
 import { buildInsightDescription } from '../content/insightContent.js';
+import { getDominantAxis } from '../core/readingUtils.js';
 
 export class CardView {
     constructor({ options = {} } = {}) {
@@ -296,11 +297,7 @@ export class CardView {
 
         // 3. Generate Dynamic Synthesis Text from Vector Weights
         // This acts as your engine's voice until you hook up an external LLM agent
-        let dominantAxis = "balance";
-        if (nodeData.localWeights) {
-            const weights = nodeData.localWeights;
-            dominantAxis = Object.keys(weights).reduce((a, b) => weights[a] > weights[b] ? a : b);
-        }
+        const dominantAxis = getDominantAxis(nodeData.localWeights);
 
         this.insightDescription.innerText = buildInsightDescription({
             cardName: nodeData.cardName || nodeData.name,
