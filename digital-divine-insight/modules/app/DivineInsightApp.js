@@ -4,6 +4,11 @@ import { AmbientEngine } from '../audio/ambientEngine.js';
 import { STATUS_MESSAGES, JOURNAL_MESSAGES } from '../content/messages.js';
 import { updateParticleTheme, createBurst, initParticleSystem } from '../assets/fx/particles.js';
 
+/**
+ * Valid states for the DivineInsightApp.
+ * @readonly
+ * @enum {string}
+ */
 const APP_STATES = Object.freeze({
     BOOTING: 'booting',
     IDLE: 'idle',
@@ -12,10 +17,27 @@ const APP_STATES = Object.freeze({
     ERROR: 'error'
 });
 
+/**
+ * Valid state transitions to prevent illegal state changes.
+ * Defines which states can transition to which next states.
+ * @type {Record<string, string[]>}
+ */
+const VALID_TRANSITIONS = Object.freeze({
+    [APP_STATES.BOOTING]: [APP_STATES.IDLE, APP_STATES.ERROR],
+    [APP_STATES.IDLE]: [APP_STATES.CHANNELING, APP_STATES.ERROR],
+    [APP_STATES.CHANNELING]: [APP_STATES.REVEALED, APP_STATES.IDLE, APP_STATES.ERROR],
+    [APP_STATES.REVEALED]: [APP_STATES.IDLE, APP_STATES.CHANNELING, APP_STATES.ERROR],
+    [APP_STATES.ERROR]: [APP_STATES.IDLE] // Must reset to go back to IDLE
+});
+
 const DRAW_RESULT_SCHEMA_VERSION = 1;
 const JOURNAL_KEY = 'divine_readings';
 const MAX_JOURNAL_ENTRIES = 50;
 
+/**
+ * Main application orchestrator for Divine Insight.
+ * Handles state management, UI component coordination, worker communication, and audio integration.
+ */
 export class DivineInsightApp {
     constructor() {
         this.deckDataText = null;
@@ -33,6 +55,11 @@ export class DivineInsightApp {
         this.dragController = new DragController(cardElement, this.handleInteraction.bind(this));
     }
 
+    /**
+     * Bootstraps the application, loads the deck, sets up workers and audio.
+     * Transitions state from BOOTING to IDLE on success, or ERROR on failure.
+     * @returns {Promise<void>}
+     */
     async initialize() {
         this.setState(APP_STATES.BOOTING);
         this.bindGlobalStatusEvents();
@@ -41,6 +68,7 @@ export class DivineInsightApp {
         try {
             const response = await fetch('divine-insight-optimized.json');
             if (!response.ok) throw new Error(`Deck fetch failed with status ${response.status}`);
+            
             this.deckDataText = await response.text();
             const parsed = JSON.parse(this.deckDataText);
 
@@ -52,24 +80,8 @@ export class DivineInsightApp {
 
             initParticleSystem('starfield');
 
-            this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url));
-            this.logicWorker.onmessage = this.handleWorkerResponse.bind(this);
-            this.logicWorker.onerror = (error) => {
-                this.setError(`Logic engine error: ${error.message || 'unknown worker failure'}`);
-            };
-            this.logicWorker.onmessageerror = () => {
-                this.setError('Logic engine sent an unreadable message.');
-            };
-            this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
-
-            await this.ambientEngine.init({
-                baseEl: document.getElementById('audio-base'),
-                swooshEl: document.getElementById('audio-swoosh'),
-                sfxHover: document.getElementById('audio-hover'),
-                sfxDraw: document.getElementById('audio-draw'),
-                sfxFlip: document.getElementById('audio-flip')
-            });
-            this.audioReady = true;
+            this.setupLogicWorker();
+            await this.setupAudio();
 
             this.setState(APP_STATES.IDLE);
             this.setStatus(STATUS_MESSAGES.READY);
@@ -78,6 +90,44 @@ export class DivineInsightApp {
         }
     }
 
+    /**
+     * Initializes the background worker for draw logic calculation.
+     * @private
+     */
+    setupLogicWorker() {
+        this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url));
+        this.logicWorker.onmessage = this.handleWorkerResponse.bind(this);
+        this.logicWorker.onerror = (error) => {
+            this.setError(`Logic engine error: ${error.message || 'unknown worker failure'}`);
+        };
+        this.logicWorker.onmessageerror = () => {
+            this.setError('Logic engine sent an unreadable message.');
+        };
+        
+        // Kick off deck initialization in worker
+        this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
+    }
+
+    /**
+     * Sets up the ambient audio engine.
+     * @private
+     * @returns {Promise<void>}
+     */
+    async setupAudio() {
+        await this.ambientEngine.init({
+            baseEl: document.getElementById('audio-base'),
+            swooshEl: document.getElementById('audio-swoosh'),
+            sfxHover: document.getElementById('audio-hover'),
+            sfxDraw: document.getElementById('audio-draw'),
+            sfxFlip: document.getElementById('audio-flip')
+        });
+        this.audioReady = true;
+    }
+
+    /**
+     * Listens for globally dispatched app status and error events.
+     * @private
+     */
     bindGlobalStatusEvents() {
         window.addEventListener('app:error', (event) => {
             this.setError(event?.detail || 'An unexpected error occurred.');
@@ -89,6 +139,10 @@ export class DivineInsightApp {
         });
     }
 
+    /**
+     * Binds DOM event listeners for UI interaction.
+     * @private
+     */
     bindEvents() {
         const seekBtn = document.getElementById('btn-seek-insight');
         const intentInput = document.getElementById('intent-input');
@@ -134,32 +188,64 @@ export class DivineInsightApp {
         });
     }
 
+    /**
+     * Centralized state transition method. 
+     * Ensures we only perform valid state changes and updates dependents.
+     * @param {string} nextState - The state to transition to (must be from APP_STATES)
+     */
     setState(nextState) {
+        // Enforce valid transitions
+        const allowedTransitions = VALID_TRANSITIONS[this.appState];
+        if (!allowedTransitions.includes(nextState) && this.appState !== nextState) {
+            console.warn(`[StateEngine] Illegal transition attempt from ${this.appState} to ${nextState}.`);
+            return;
+        }
+
         this.appState = nextState;
         this.pendingDraw = nextState === APP_STATES.CHANNELING;
+        
+        // Notify UI layer of state changes
         this.cardView.setUiState({ state: nextState });
     }
 
+    /**
+     * Updates the status bar UI.
+     * @param {string} message - The status message to display.
+     */
     setStatus(message) {
         this.cardView.setStatus(message, { isError: false });
     }
 
+    /**
+     * Handles error reporting, transitioning to the ERROR state and notifying the user.
+     * @param {string} message - The error message.
+     */
     setError(message) {
-        console.error('[DivineInsightApp]', message);
+        console.error('[DivineInsightApp] Error:', message);
         this.setState(APP_STATES.ERROR);
         this.cardView.setStatus(message, { isError: true });
     }
 
+    /**
+     * Resets the application state to prepare for a new reading.
+     */
     resetAltar() {
         this.cardView.resetCard();
         this.ambientEngine.transitionTo('passive');
         updateParticleTheme('balance');
+        
         const intentInput = document.getElementById('intent-input');
         if (intentInput) intentInput.value = '';
+        
+        // If coming from error, reset allows returning to IDLE
         this.setState(APP_STATES.IDLE);
         this.setStatus(STATUS_MESSAGES.READY);
     }
 
+    /**
+     * Reads the reading history from local storage.
+     * @returns {Array<Object>} List of past readings.
+     */
     readJournal() {
         try {
             const parsed = JSON.parse(localStorage.getItem(JOURNAL_KEY) || '[]');
@@ -171,6 +257,10 @@ export class DivineInsightApp {
         }
     }
 
+    /**
+     * Writes the reading history to local storage.
+     * @param {Array<Object>} entries - List of entries to store.
+     */
     writeJournal(entries) {
         try {
             const normalized = Array.isArray(entries) ? entries.slice(0, MAX_JOURNAL_ENTRIES) : [];
@@ -180,6 +270,9 @@ export class DivineInsightApp {
         }
     }
 
+    /**
+     * Opens the journal UI panel and populates the reading list.
+     */
     showJournal() {
         const panel = document.getElementById('journal-panel');
         const list = document.getElementById('journal-list');
@@ -209,6 +302,9 @@ export class DivineInsightApp {
         panel.setAttribute('aria-hidden', 'false');
     }
 
+    /**
+     * Closes the journal UI panel.
+     */
     hideJournal() {
         const panel = document.getElementById('journal-panel');
         if (!panel) return;
@@ -216,12 +312,19 @@ export class DivineInsightApp {
         panel.setAttribute('aria-hidden', 'true');
     }
 
+    /**
+     * Clears all reading history from local storage.
+     */
     clearJournal() {
         this.writeJournal([]);
         this.showJournal();
         this.setStatus(STATUS_MESSAGES.JOURNAL_CLEARED);
     }
 
+    /**
+     * Appends a new reading result to the journal.
+     * @param {Object} result - The draw result from the logic worker.
+     */
     saveToJournal(result) {
         const readings = this.readJournal();
         const entry = {
@@ -235,6 +338,12 @@ export class DivineInsightApp {
         this.writeJournal(readings);
     }
 
+    /**
+     * Calculates the dominant elemental axis from the draw weights.
+     * @private
+     * @param {Object} weights - Map of elemental weights.
+     * @returns {string} The dominant elemental axis (e.g. 'fire', 'water')
+     */
     _getDominantAxis(weights) {
         if (!weights || typeof weights !== 'object') return 'balance';
         const keys = Object.keys(weights);
@@ -242,50 +351,57 @@ export class DivineInsightApp {
         return keys.reduce((a, b) => (weights[a] > weights[b] ? a : b));
     }
 
+    /**
+     * Handles pointer interaction events passed up from DragController.
+     * @param {Object} event - Interaction event payload.
+     */
     handleInteraction(event) {
         if (!event || this.appState === APP_STATES.ERROR) return;
 
-        if (event.type === 'HIGH_VELOCITY') {
-            this.ambientEngine.adjustHum(event.value);
-            return;
-        }
-
-        if (event.type === 'MOUSE_MOVE') {
-            this.cardView.updateMousePos(event.x, event.y);
-            return;
-        }
-
-        if (event.type === 'DRAG_START') {
-            this.cardView.setDragging(true);
-            return;
-        }
-
-        if (event.type === 'DRAG_END') {
-            this.cardView.setDragging(false);
-            if (this.cardView._spreadLayout) this.cardView.startDynamicsLoop();
-            return;
-        }
-
-        if (event.type === 'BURST') {
-            const now = performance.now();
-            if (now - this._lastBurstAt < 80) return;
-            this._lastBurstAt = now;
-            createBurst(event.x, event.y);
+        switch (event.type) {
+            case 'HIGH_VELOCITY':
+                this.ambientEngine.adjustHum(event.value);
+                break;
+            case 'MOUSE_MOVE':
+                this.cardView.updateMousePos(event.x, event.y);
+                break;
+            case 'DRAG_START':
+                this.cardView.setDragging(true);
+                break;
+            case 'DRAG_END':
+                this.cardView.setDragging(false);
+                if (this.cardView._spreadLayout) this.cardView.startDynamicsLoop();
+                break;
+            case 'BURST':
+                const now = performance.now();
+                if (now - this._lastBurstAt < 80) return; // Rate limiting bursts
+                this._lastBurstAt = now;
+                createBurst(event.x, event.y);
+                break;
         }
     }
 
+    /**
+     * Verifies if the application is ready to perform a card draw.
+     * @returns {boolean} True if a draw can be requested.
+     */
     canRequestDraw() {
         return this.workerReady
             && this.audioReady
-            && this.logicWorker
-            && this.appState !== APP_STATES.CHANNELING
-            && this.appState !== APP_STATES.ERROR;
+            && !!this.logicWorker
+            && this.appState === APP_STATES.IDLE;
     }
 
+    /**
+     * Initiates a card draw request to the logic worker.
+     * @param {string} intentText - The user's focus/intent text.
+     * @param {number} physicalVelocity - Swipe velocity metric for entropy seeding.
+     */
     requestDraw(intentText, physicalVelocity) {
         if (!this.canRequestDraw()) {
             if (!this.workerReady) this.setStatus(STATUS_MESSAGES.LOGIC_PREPARING);
             else if (!this.audioReady) this.setStatus(STATUS_MESSAGES.AUDIO_PREPARING);
+            else if (this.appState === APP_STATES.ERROR) this.setStatus(STATUS_MESSAGES.ERROR_STATE);
             return;
         }
 
@@ -294,6 +410,7 @@ export class DivineInsightApp {
         this.ambientEngine.swell();
         this.ambientEngine.playDrawSound();
 
+        // Feed entropy into worker
         const intentWeight = intentText.trim().length > 0 ? intentText.length : 1;
         const seedData = {
             timestamp: performance.now(),
@@ -303,6 +420,12 @@ export class DivineInsightApp {
         this.logicWorker.postMessage({ type: 'REQUEST_DRAW', payload: seedData });
     }
 
+    /**
+     * Validates the schema of a draw result returned by the worker.
+     * @private
+     * @param {Object} result - The message payload from the worker.
+     * @returns {boolean} True if the schema is valid.
+     */
     validateDrawResult(result) {
         if (!result || typeof result !== 'object') return false;
         if (result.schemaVersion !== DRAW_RESULT_SCHEMA_VERSION) return false;
@@ -312,50 +435,55 @@ export class DivineInsightApp {
         return true;
     }
 
+    /**
+     * Router for handling asynchronous messages from the logic worker.
+     * @param {MessageEvent} event - The message event.
+     */
     handleWorkerResponse(event) {
         const data = event?.data;
         if (!data || typeof data !== 'object') return;
 
-        if (data.type === 'INIT_DECK_OK') {
-            this.workerReady = true;
-            if (this.appState === APP_STATES.BOOTING) this.setState(APP_STATES.IDLE);
-            this.setStatus(STATUS_MESSAGES.READY);
-            return;
+        switch (data.type) {
+            case 'INIT_DECK_OK':
+                this.workerReady = true;
+                if (this.appState === APP_STATES.BOOTING) this.setState(APP_STATES.IDLE);
+                this.setStatus(STATUS_MESSAGES.READY);
+                break;
+
+            case 'INIT_DECK_ERROR':
+                this.workerReady = false;
+                this.setError(data.payload?.message || 'Deck failed to initialize.');
+                break;
+
+            case 'DRAW_ERROR':
+                this.setState(APP_STATES.IDLE); // Revert to IDLE on draw error
+                this.setError(data.payload?.message || STATUS_MESSAGES.DRAW_FAILED);
+                break;
+
+            case 'DRAW_RESULT':
+                const result = data.payload;
+                if (!this.validateDrawResult(result)) {
+                    this.setState(APP_STATES.IDLE);
+                    this.setError(STATUS_MESSAGES.DRAW_CONTRACT_MISMATCH);
+                    return;
+                }
+
+                // Process the successful draw
+                this.cardView.showResult(result);
+                this.ambientEngine.playFlipSound();
+
+                const axis = this._getDominantAxis(result.localWeights);
+                updateParticleTheme(axis);
+
+                const rect = document.getElementById('tarot-card')?.getBoundingClientRect();
+                if (rect) createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+                this.saveToJournal(result);
+                this.ambientEngine.transitionTo('active');
+                
+                this.setState(APP_STATES.REVEALED);
+                this.setStatus(`${result.cardName} revealed (${result.orientation}).`);
+                break;
         }
-
-        if (data.type === 'INIT_DECK_ERROR') {
-            this.workerReady = false;
-            this.setError(data.payload?.message || 'Deck failed to initialize.');
-            return;
-        }
-
-        if (data.type === 'DRAW_ERROR') {
-            this.setState(APP_STATES.IDLE);
-            this.setError(data.payload?.message || STATUS_MESSAGES.DRAW_FAILED);
-            return;
-        }
-
-        if (data.type !== 'DRAW_RESULT') return;
-
-        const result = data.payload;
-        if (!this.validateDrawResult(result)) {
-            this.setState(APP_STATES.IDLE);
-            this.setError(STATUS_MESSAGES.DRAW_CONTRACT_MISMATCH);
-            return;
-        }
-
-        this.cardView.showResult(result);
-        this.ambientEngine.playFlipSound();
-
-        const axis = this._getDominantAxis(result.localWeights);
-        updateParticleTheme(axis);
-
-        const rect = document.getElementById('tarot-card')?.getBoundingClientRect();
-        if (rect) createBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
-
-        this.saveToJournal(result);
-        this.ambientEngine.transitionTo('active');
-        this.setState(APP_STATES.REVEALED);
-        this.setStatus(`${result.cardName} revealed (${result.orientation}).`);
     }
 }
