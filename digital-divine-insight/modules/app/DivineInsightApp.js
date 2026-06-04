@@ -2,6 +2,8 @@ import { DragController } from '../components/DragController.js';
 import { CardView } from '../components/CardView.js';
 import { AmbientEngine } from '../audio/ambientEngine.js';
 import { STATUS_MESSAGES, JOURNAL_MESSAGES } from '../content/messages.js';
+import { extractCardImageKeys, parseDeckPayload } from '../core/deckUtils.js';
+import { getDominantAxis } from '../core/readingUtils.js';
 import { updateParticleTheme, createBurst, initParticleSystem } from '../assets/fx/particles.js';
 
 /**
@@ -70,13 +72,9 @@ export class DivineInsightApp {
             if (!response.ok) throw new Error(`Deck fetch failed with status ${response.status}`);
             
             this.deckDataText = await response.text();
-            const parsed = JSON.parse(this.deckDataText);
-
-            const cards = parsed.cards || (parsed.deck && parsed.deck.arcana
-                ? [...parsed.deck.arcana.major, ...Object.values(parsed.deck.arcana.minor).flat()]
-                : []);
-            const keys = cards.map(c => c.key || c.id).filter(Boolean);
-            this.cardView.setDeckImages(keys);
+            const parsedDeck = parseDeckPayload(this.deckDataText);
+            const deckImageKeys = extractCardImageKeys(parsedDeck);
+            this.cardView.setDeckImages(deckImageKeys);
 
             initParticleSystem('starfield');
 
@@ -95,7 +93,7 @@ export class DivineInsightApp {
      * @private
      */
     setupLogicWorker() {
-        this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url));
+        this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url), { type: 'module' });
         this.logicWorker.onmessage = this.handleWorkerResponse.bind(this);
         this.logicWorker.onerror = (error) => {
             this.setError(`Logic engine error: ${error.message || 'unknown worker failure'}`);
@@ -345,10 +343,7 @@ export class DivineInsightApp {
      * @returns {string} The dominant elemental axis (e.g. 'fire', 'water')
      */
     _getDominantAxis(weights) {
-        if (!weights || typeof weights !== 'object') return 'balance';
-        const keys = Object.keys(weights);
-        if (!keys.length) return 'balance';
-        return keys.reduce((a, b) => (weights[a] > weights[b] ? a : b));
+        return getDominantAxis(weights);
     }
 
     /**

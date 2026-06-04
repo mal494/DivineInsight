@@ -1,3 +1,6 @@
+import { extractCards, parseDeckPayload } from './modules/core/deckUtils.js';
+import { buildLocalWeights } from './modules/core/readingUtils.js';
+
 // --- Internal State ---
 let tarotDeck = []; // Normalized deck cache built once from the primary dictionary JSON
 let deckStats = {
@@ -80,21 +83,6 @@ function normalizeElement(value) {
 function normalizeSuit(value) {
     const raw = String(value || '').trim();
     return SUIT_VECTORS[raw] ? raw : 'None';
-}
-
-function extractCards(deckData) {
-    if (Array.isArray(deckData?.cards)) {
-        return deckData.cards;
-    }
-
-    const arcana = deckData?.deck?.arcana || {};
-    const majorCards = Array.isArray(arcana.major) ? arcana.major : [];
-    const minorGroups = arcana.minor && typeof arcana.minor === 'object' ? Object.values(arcana.minor) : [];
-
-    return [
-        ...majorCards,
-        ...minorGroups.flatMap(group => (Array.isArray(group) ? group : []))
-    ];
 }
 
 function normalizeMeaningBlock(card, blockName) {
@@ -201,7 +189,7 @@ function summarizeDeck(deck) {
 }
 
 function initializeDeck(deckSource) {
-    const parsedDeck = typeof deckSource === 'string' ? JSON.parse(deckSource) : deckSource;
+    const parsedDeck = parseDeckPayload(deckSource);
 
     tarotDeck = normalizeDeck(parsedDeck);
     deckStats = summarizeDeck(tarotDeck);
@@ -317,6 +305,10 @@ function calculateDraw(seedData) {
         return best;
     }, null);
 
+    if (!selected) {
+        throw new Error('No card could be selected from the normalized deck.');
+    }
+
     const selectedPosition = synthesizePositionVector(selected, session);
     // Determine simple two-state orientation based on the horizontal component of the vector.
     // If the computed angle points within +/-90deg of 0 (cos >= 0) we treat as 'upright', otherwise 'reversed'.
@@ -328,27 +320,18 @@ function calculateDraw(seedData) {
     const positionVector = { ...selectedPosition, angle: Number(normalizedAngle.toFixed(6)), orientation };
     const selectedKey = selected.key || selected.id;
 
-    // --- NEW: Dynamic Synthesis Calculation ---
-    // Map card metadata to the four logic axes used by the CardView
-    const weightMap = {
-        'Air': 'intellect',
-        'Water': 'emotion',
-        'Earth': 'material',
-        'Fire': 'volition'
-    };
-    
-    // Default weights
-    const localWeights = { intellect: 0.1, emotion: 0.1, material: 0.1, volition: 0.1 };
-    
-    // Boost weight based on elements
-    const primaryAxis = weightMap[selected.elemental_weight];
-    if (primaryAxis) localWeights[primaryAxis] += 0.7;
+    // Build standardized axis weights from normalized card metadata.
+    // `selected.element` is the canonical normalized element resolved in normalizeDeck().
+    const localWeights = buildLocalWeights(selected);
 
     // Surface keywords at top level for UI binding
     const activeMeaning = selected.meanings?.[orientation] || {};
     const keywords = activeMeaning.keywords || [];
 
     return {
+        // Contract version consumed by DivineInsightApp.validateDrawResult().
+        // Increment when DRAW_RESULT payload shape changes.
+        schemaVersion: 1,
         cardId: selectedKey,
         cardKey: selectedKey,
         cardName: selected.name,
@@ -375,7 +358,6 @@ function calculateDraw(seedData) {
             spreadRadius: Number(session.spreadRadius.toFixed(6))
         },
         positionVector,
-        orientation,
         cardBasis: {
             x: Number(selected.vectorBasis.x.toFixed(6)),
             y: Number(selected.vectorBasis.y.toFixed(6))
@@ -389,20 +371,38 @@ self.onmessage = function(e) {
         try {
             const totalCards = initializeDeck(e.data.payload);
             console.log('[Worker] ✓ Deck initialized with', totalCards, 'cards');
+            self.postMessage({
+                type: 'INIT_DECK_OK',
+                payload: { totalCards }
+            });
         } catch (error) {
             console.error('[Worker] Failed to initialize deck:', error);
+            self.postMessage({
+                type: 'INIT_DECK_ERROR',
+                payload: { message: error?.message || 'Deck initialization failed.' }
+            });
         }
     } else if (e.data.type === 'REQUEST_DRAW') {
         if (tarotDeck.length === 0) {
             console.error('[Worker] Deck not initialized');
+            self.postMessage({
+                type: 'DRAW_ERROR',
+                payload: { message: 'Deck is not initialized yet.' }
+            });
             return;
         }
 
-        const result = calculateDraw(e.data.payload);
-
-        self.postMessage({
-            type: 'DRAW_RESULT',
-            payload: result
-        });
+        try {
+            const result = calculateDraw(e.data.payload);
+            self.postMessage({
+                type: 'DRAW_RESULT',
+                payload: result
+            });
+        } catch (error) {
+            self.postMessage({
+                type: 'DRAW_ERROR',
+                payload: { message: error?.message || 'Unable to produce draw result.' }
+            });
+        }
     }
 };
