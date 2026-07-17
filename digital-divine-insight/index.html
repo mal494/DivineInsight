@@ -135,18 +135,18 @@
 <span class="material-symbols-outlined">book_2</span>
 <span class="font-label-md text-label-md">Past Readings</span>
 </button>
-<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+<button id="btn-journal" type="button" class="w-full text-left text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
 <span class="material-symbols-outlined">edit_note</span>
 <span class="font-label-md text-label-md">Journal</span>
-</div>
-<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+</button>
+<button id="btn-deck-gallery" type="button" class="w-full text-left text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
 <span class="material-symbols-outlined">collections_bookmark</span>
 <span class="font-label-md text-label-md">Deck Gallery</span>
-</div>
-<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+</button>
+<button id="btn-altar-settings" type="button" class="w-full text-left text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
 <span class="material-symbols-outlined">settings_input_component</span>
 <span class="font-label-md text-label-md">Altar Settings</span>
-</div>
+</button>
 </nav>
 </aside>
 <!-- Audio Assets -->
@@ -218,7 +218,7 @@
 <span class="material-symbols-outlined">restart_altar</span>
                             Return to Altar
 </button>
-<button class="flex items-center gap-2 text-astral-gold font-label-md text-label-md hover:text-ethereal-teal transition-premium">
+<button id="btn-open-full-journal" type="button" class="flex items-center gap-2 text-astral-gold font-label-md text-label-md hover:text-ethereal-teal transition-premium">
 <span class="material-symbols-outlined">auto_stories</span>
                             Read Full Arcana Journal
 </button>
@@ -260,4 +260,27 @@
     </div>
   </div>
 </div>
+<aside id="gallery-panel" class="fixed inset-y-0 right-0 z-[85] w-full max-w-5xl translate-x-full transition-transform duration-300 bg-midnight-obsidian/95 backdrop-blur-xl border-l border-aurora-border p-6 overflow-y-auto">
+  <div class="flex items-center justify-between gap-4 mb-6">
+    <h2 class="font-headline-lg text-ethereal-teal">Deck Gallery</h2>
+    <button id="btn-close-gallery" type="button" class="text-moon-silver/70 hover:text-ethereal-teal">Close</button>
+  </div>
+  <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+</aside>
+<aside id="settings-panel" class="fixed inset-y-0 right-0 z-[86] w-full max-w-md translate-x-full transition-transform duration-300 bg-midnight-obsidian/95 backdrop-blur-xl border-l border-aurora-border p-6">
+  <div class="flex items-center justify-between gap-4 mb-6">
+    <h2 class="font-headline-lg text-ethereal-teal">Altar Settings</h2>
+    <button id="btn-close-settings" type="button" class="text-moon-silver/70 hover:text-ethereal-teal">Close</button>
+  </div>
+  <div class="space-y-6">
+    <label class="block">
+      <span class="text-moon-silver/70 text-sm">Master Volume</span>
+      <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.3" class="w-full mt-2">
+    </label>
+    <label class="block">
+      <span class="text-moon-silver/70 text-sm">Visual Intensity</span>
+      <input id="intensity-slider" type="range" min="0.3" max="1.4" step="0.05" value="1" class="w-full mt-2">
+    </label>
+  </div>
+</aside>
 </body></html>
