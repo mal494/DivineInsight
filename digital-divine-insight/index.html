@@ -106,47 +106,50 @@
     </script>
 </head>
 <body class="bg-midnight-obsidian text-on-surface">
+<a href="#main-content" class="skip-link">Skip to main content</a>
 <canvas height="1024" id="starfield" width="1280"></canvas>
 <!-- SideNavBar -->
-<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col p-8 space-y-8 bg-glass-surface/60 backdrop-blur-3xl border-r border-aurora-border shadow-[20px_0_50px_rgba(0,0,0,0.9)] w-80 transition-all duration-500" id="sideNav"><div class="flex flex-col gap-10 mb-8">
+<aside class="fixed inset-y-0 left-0 z-[60] flex flex-col p-8 space-y-8 bg-glass-surface/60 backdrop-blur-3xl border-r border-aurora-border shadow-[20px_0_50px_rgba(0,0,0,0.9)] w-80 transition-all duration-500" id="sideNav" aria-label="Primary navigation"><div class="flex flex-col gap-10 mb-8">
 <div class="flex justify-center w-full mb-8"><img alt="Divine Insight Logo" class="max-w-full h-auto max-h-32 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBghyeWHLkdHYCWgq1y4CyJ0kLARLIO93il0bYzLCycVQN0NdPoiMwoT3jcoznuKKl9SIJ3BTD4XQs0Sr0ZznIJeakaqlXN_BtZyKjJ2-iycio2IBwuXRmg5MYceGsMZEYNd2GpM083AZ4DS1BuTvsxutbuqz7Xf8HHnc4QSdzmgQJA0ZYng6A0eQxkEvwNx4ypfd8n-SWK_nmQwZCqnymyj-HSZDR_nXQhKoJWvgTH_VVc2fgTbw0toU5eo-g_N3Yx2e8YxXSpZJ3s"></div>
 <div class="flex flex-col gap-4">
 <div class="relative group intent-focus-glow transition-all duration-500 rounded-sm">
-<input id="intent-input" class="whisper-input bg-transparent border-b border-moon-silver/20 focus:border-ethereal-teal outline-none text-moon-silver font-label-md text-label-md py-2 px-2 w-full transition-all duration-500 shadow-sm" placeholder="Whisper your intent..." type="text">
+<label for="intent-input" class="sr-only">Your intent for this reading</label>
+<input id="intent-input" class="whisper-input bg-transparent border-b border-moon-silver/20 focus:border-ethereal-teal outline-none text-moon-silver font-label-md text-label-md py-2 px-2 w-full transition-all duration-500 shadow-sm" placeholder="Whisper your intent..." type="text" aria-describedby="intent-help">
 <span class="absolute right-2 bottom-2 text-ethereal-teal/40 group-focus-within:text-ethereal-teal transition-colors">
 <span class="material-symbols-outlined text-[18px]">psychology</span>
 </span>
 </div>
-<button id="btn-seek-insight" aria-label="Seek insight" class="relative overflow-hidden group bg-transparent border border-astral-gold text-astral-gold font-headline-md text-label-md px-6 py-3 rounded-lg hover:text-ethereal-teal hover:border-ethereal-teal hover:shadow-[0_0_25px_rgba(0,255,204,0.5)] transition-all duration-300 uppercase tracking-widest active:scale-95 w-full">
+<p id="intent-help" class="text-moon-silver/70 text-sm">Type a focus phrase and press Enter or use Seek Insight.</p>
+<button id="btn-seek-insight" type="button" aria-label="Seek insight" class="relative overflow-hidden group bg-transparent border border-astral-gold text-astral-gold font-headline-md text-label-md px-6 py-3.5 min-h-[48px] rounded-lg hover:text-ethereal-teal hover:border-ethereal-teal hover:shadow-[0_0_25px_rgba(0,255,204,0.5)] transition-all duration-300 uppercase tracking-widest active:scale-95 w-full">
 <span class="relative z-10 drop-shadow-md group-hover:drop-shadow-[0_0_8px_rgba(0,255,204,0.8)] transition-all duration-300">Seek Insight</span>
 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-ethereal-teal/20 to-transparent -translate-x-[100%] group-hover:animate-[shimmer_1.5s_infinite]"></div>
 </button>
-<p id="status-text" role="status" aria-live="polite" class="text-center text-ethereal-teal text-label-sm min-h-6">Concentrate on your intent...</p>
+<p id="status-text" role="status" aria-live="polite" class="text-center text-ethereal-teal text-body-md min-h-6">Type your intent, then choose Seek Insight.</p>
 <div class="flex justify-center gap-6 text-moon-silver/60 pt-2">
-<span class="material-symbols-outlined cursor-pointer hover:text-ethereal-teal transition-colors">auto_awesome</span>
-<span class="material-symbols-outlined cursor-pointer hover:text-ethereal-teal transition-colors">volume_up</span>
+<button id="btn-focus-intent" type="button" class="min-h-[44px] min-w-[44px] rounded-md p-2 text-moon-silver/70 hover:text-ethereal-teal transition-colors" aria-label="Focus intent input"><span class="material-symbols-outlined">auto_awesome</span></button>
+<button id="btn-toggle-audio" type="button" class="min-h-[44px] min-w-[44px] rounded-md p-2 text-moon-silver/70 hover:text-ethereal-teal transition-colors" aria-label="Toggle audio"><span class="material-symbols-outlined">volume_up</span></button>
 </div>
 </div>
 </div>
 <div class="pt-16"><h2 class="font-headline-lg text-astral-gold border-b border-astral-gold/30 pb-2">The Sanctum</h2>
-<p class="font-body-md text-body-md text-moon-silver/50 italic mt-2">Seeker of Arcane Truths</p></div>
+<p class="font-body-md text-body-md text-moon-silver/70 italic mt-2">Seeker of Arcane Truths</p></div>
 <nav class="flex flex-col space-y-4">
-<button id="btn-past-readings" type="button" class="w-full text-left text-ethereal-teal font-bold bg-white/5 rounded-lg p-3 flex items-center gap-3 cursor-pointer shadow-[0_0_15px_rgba(0,255,204,0.2)]">
+<button id="btn-past-readings" type="button" class="w-full text-left text-ethereal-teal font-bold bg-white/5 rounded-lg px-4 py-3.5 min-h-[48px] flex items-center gap-3 cursor-pointer shadow-[0_0_15px_rgba(0,255,204,0.2)]">
 <span class="material-symbols-outlined">book_2</span>
 <span class="font-label-md text-label-md">Past Readings</span>
 </button>
-<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+<button id="btn-journal" type="button" class="w-full text-left text-moon-silver/85 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 px-4 py-3.5 min-h-[48px] rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
 <span class="material-symbols-outlined">edit_note</span>
 <span class="font-label-md text-label-md">Journal</span>
-</div>
-<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+</button>
+<button id="btn-deck-gallery" type="button" class="w-full text-left text-moon-silver/85 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 px-4 py-3.5 min-h-[48px] rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
 <span class="material-symbols-outlined">collections_bookmark</span>
 <span class="font-label-md text-label-md">Deck Gallery</span>
-</div>
-<div class="text-moon-silver/70 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 p-3 rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
+</button>
+<button id="btn-altar-settings" type="button" class="w-full text-left text-moon-silver/85 hover:text-ethereal-teal hover:bg-white/5 hover:shadow-[0_0_15px_rgba(0,255,204,0.2)] transition-all duration-300 px-4 py-3.5 min-h-[48px] rounded-lg flex items-center gap-3 cursor-pointer translate-x-0 hover:translate-x-2">
 <span class="material-symbols-outlined">settings_input_component</span>
 <span class="font-label-md text-label-md">Altar Settings</span>
-</div>
+</button>
 </nav>
 </aside>
 <!-- Audio Assets -->
@@ -158,7 +161,7 @@
     <audio id="audio-flip" src="assets/audio/card-flip.mp3"></audio>
 </div>
 <!-- Main Divination Table -->
-<main class="relative h-screen w-full flex items-center justify-center overflow-hidden ml-80 w-[calc(100%-320px)]">
+<main id="main-content" tabindex="-1" class="relative h-screen w-full flex items-center justify-center overflow-hidden ml-80 w-[calc(100%-320px)]">
 <div class="relative z-10 w-full max-w-6xl h-full flex items-center justify-center gap-32">
 <!-- Deck Stack -->
 <div class="relative hidden lg:block group float-animation w-[var(--card-width)] h-[var(--card-height)]">
@@ -188,7 +191,7 @@
 <img class="w-full h-full object-cover" alt="Tarot card illustration of The Fool" data-alt="Tarot card illustration of The Fool" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Cshj3NvsAjuI9RYoun4aiN33LJ4_2ED_GubAJjgJXc_0rHgctEeU-1AjyAaFbu3N627167RjW68rTIiX0sYLuYrpXQYqXtBJ_5nc85DBjxhKMMo7eSSzLRr8l2T_3j0vVxB0tAHMqMQkvx_fGdcCVLHHcXh-HXLfqEgZbHBQCcKbWGDTahnCRDw_02Y5-7944Z2kBidZ9zKNFWeaZG0E80Cmhjw8pY9cgZxg1ns818TbSosIpXeBlruOeMY0-NrvlcCZJZsWgtpu">
 <div class="absolute bottom-0 left-0 w-full p-4 text-center bg-gradient-to-t from-white to-transparent pt-12">
 <h3 class="font-headline-md text-headline-md text-midnight-obsidian tracking-tighter">The Fool</h3>
-<p class="text-[10px] font-label-sm uppercase tracking-widest text-midnight-obsidian/60">Arcana 0</p>
+<p class="text-xs font-label-sm uppercase tracking-widest text-midnight-obsidian/70">Arcana 0</p>
 </div>
 </div>
 </div>
@@ -214,11 +217,11 @@
                         A soul stands at the threshold of the infinite, unbound by the weight of the past. The Fool represents the pure potential of the subconscious—the leap of faith into the digital unknown. Your whisper has summoned a path of unscripted evolution. Embrace the chaos, for in the void of the abyss, all things are possible.
                     </p>
 <div class="mt-6 flex justify-end gap-6">
-<button id="btn-reset-altar" class="flex items-center gap-2 text-moon-silver/40 font-label-md text-label-md hover:text-ethereal-teal transition-premium">
+<button id="btn-reset-altar" type="button" class="min-h-[44px] px-3 py-2 rounded-md flex items-center gap-2 text-moon-silver/70 font-label-md text-label-md hover:text-ethereal-teal transition-premium">
 <span class="material-symbols-outlined">restart_altar</span>
                             Return to Altar
 </button>
-<button class="flex items-center gap-2 text-astral-gold font-label-md text-label-md hover:text-ethereal-teal transition-premium">
+<button id="btn-open-full-journal" type="button" class="min-h-[44px] px-3 py-2 rounded-md flex items-center gap-2 text-astral-gold font-label-md text-label-md hover:text-ethereal-teal transition-premium">
 <span class="material-symbols-outlined">auto_stories</span>
                             Read Full Arcana Journal
 </button>
@@ -229,35 +232,58 @@
 </div>
 </main>
 <!-- BottomNavBar -->
-<footer class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-glass-surface/60 backdrop-blur-2xl border-t border-aurora-border shadow-[0_-10px_30px_rgba(5,5,8,0.8)]">
-<div class="flex flex-col items-center justify-center text-ethereal-teal drop-shadow-[0_0_8px_rgba(0,255,204,0.6)] translate-y-[-4px] transition-transform duration-500">
+<footer id="mobile-nav" class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-4 pb-safe bg-glass-surface/60 backdrop-blur-2xl border-t border-aurora-border shadow-[0_-10px_30px_rgba(5,5,8,0.8)]" aria-label="Mobile navigation">
+<button id="btn-mobile-oracle" type="button" class="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center text-ethereal-teal drop-shadow-[0_0_8px_rgba(0,255,204,0.6)] translate-y-[-4px] transition-transform duration-500" aria-label="Go to Oracle">
 <span class="material-symbols-outlined">auto_stories</span>
 <span class="font-label-sm text-label-sm uppercase tracking-tighter">Oracle</span>
-</div>
-<div class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-moon-silver transition-all duration-300">
+</button>
+<button id="btn-mobile-history" type="button" class="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-moon-silver transition-all duration-300" aria-label="Open history">
 <span class="material-symbols-outlined">history_edu</span>
 <span class="font-label-sm text-label-sm uppercase tracking-tighter">History</span>
-</div>
-<div class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-moon-silver transition-all duration-300">
+</button>
+<button id="btn-mobile-arcana" type="button" class="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-moon-silver transition-all duration-300" aria-label="Open deck gallery">
 <span class="material-symbols-outlined">style</span>
 <span class="font-label-sm text-label-sm uppercase tracking-tighter">Arcana</span>
-</div>
-<div class="flex flex-col items-center justify-center text-on-surface-variant/50 hover:text-moon-silver transition-all duration-300">
+</button>
+<button id="btn-mobile-ritual" type="button" class="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-moon-silver transition-all duration-300" aria-label="Open ritual settings">
 <span class="material-symbols-outlined">brightness_3</span>
 <span class="font-label-sm text-label-sm uppercase tracking-tighter">Ritual</span>
-</div>
+</button>
 </footer>
 <script type="module" src="app.js"></script>
-<div id="journal-panel" class="hidden fixed inset-0 z-[80] bg-midnight-obsidian/80 backdrop-blur-sm p-6" aria-hidden="true">
+<div id="journal-panel" class="hidden fixed inset-0 z-[80] bg-midnight-obsidian/80 backdrop-blur-sm p-6" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="journal-heading" tabindex="-1" inert>
   <div class="max-w-2xl mx-auto mt-12 rounded-xl border border-aurora-border bg-glass-surface/80 backdrop-blur-2xl p-6">
     <div class="flex items-center justify-between gap-4">
-      <h2 class="font-headline-lg text-ethereal-teal">Arcana Journal</h2>
-      <button id="btn-close-journal" type="button" class="text-moon-silver/70 hover:text-ethereal-teal">Close</button>
+      <h2 id="journal-heading" class="font-headline-lg text-ethereal-teal">Arcana Journal</h2>
+      <button id="btn-close-journal" type="button" class="min-h-[44px] px-3 py-2 rounded-md text-moon-silver/85 hover:text-ethereal-teal" aria-label="Close journal">Close</button>
     </div>
     <ul id="journal-list" class="mt-4 max-h-[50vh] overflow-auto space-y-3"></ul>
     <div class="mt-6 flex justify-end gap-3">
-      <button id="btn-clear-journal" type="button" class="px-4 py-2 rounded border border-moon-silver/20 text-moon-silver/70 hover:text-ethereal-teal hover:border-ethereal-teal">Clear History</button>
+      <button id="btn-clear-journal" type="button" class="min-h-[44px] px-4 py-2 rounded border border-moon-silver/20 text-moon-silver/85 hover:text-ethereal-teal hover:border-ethereal-teal">Clear History</button>
     </div>
   </div>
 </div>
+<aside id="gallery-panel" class="fixed inset-y-0 right-0 z-[85] w-full max-w-5xl translate-x-full transition-transform duration-300 bg-midnight-obsidian/95 backdrop-blur-xl border-l border-aurora-border p-6 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="gallery-heading" aria-hidden="true" tabindex="-1" inert>
+  <div class="flex items-center justify-between gap-4 mb-6">
+    <h2 id="gallery-heading" class="font-headline-lg text-ethereal-teal">Deck Gallery</h2>
+    <button id="btn-close-gallery" type="button" class="min-h-[44px] px-3 py-2 rounded-md text-moon-silver/85 hover:text-ethereal-teal" aria-label="Close deck gallery">Close</button>
+  </div>
+  <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+</aside>
+<aside id="settings-panel" class="fixed inset-y-0 right-0 z-[86] w-full max-w-md translate-x-full transition-transform duration-300 bg-midnight-obsidian/95 backdrop-blur-xl border-l border-aurora-border p-6" role="dialog" aria-modal="true" aria-labelledby="settings-heading" aria-hidden="true" tabindex="-1" inert>
+  <div class="flex items-center justify-between gap-4 mb-6">
+    <h2 id="settings-heading" class="font-headline-lg text-ethereal-teal">Altar Settings</h2>
+    <button id="btn-close-settings" type="button" class="min-h-[44px] px-3 py-2 rounded-md text-moon-silver/85 hover:text-ethereal-teal" aria-label="Close altar settings">Close</button>
+  </div>
+  <div class="space-y-6">
+    <label class="block">
+      <span id="volume-slider-label" class="text-moon-silver/85 text-sm">Master Volume</span>
+      <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.3" class="w-full mt-2" aria-labelledby="volume-slider-label">
+    </label>
+    <label class="block">
+      <span id="intensity-slider-label" class="text-moon-silver/85 text-sm">Visual Intensity</span>
+      <input id="intensity-slider" type="range" min="0.3" max="1.4" step="0.05" value="1" class="w-full mt-2" aria-labelledby="intensity-slider-label">
+    </label>
+  </div>
+</aside>
 </body></html>

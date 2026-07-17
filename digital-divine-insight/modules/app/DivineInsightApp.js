@@ -2,9 +2,13 @@ import { DragController } from '../components/DragController.js';
 import { CardView } from '../components/CardView.js';
 import { AmbientEngine } from '../audio/ambientEngine.js';
 import { STATUS_MESSAGES, JOURNAL_MESSAGES } from '../content/messages.js';
-import { extractCardImageKeys, parseDeckPayload } from '../core/deckUtils.js';
+import { extractCards, extractCardImageKeys, parseDeckPayload } from '../core/deckUtils.js';
 import { getDominantAxis } from '../core/readingUtils.js';
 import { updateParticleTheme, createBurst, initParticleSystem } from '../assets/fx/particles.js';
+import { GalleryView } from '../../GalleryView.js';
+import { SettingsView } from '../../SettingsView.js';
+import { ManagerView } from '../../ManagerView.js';
+import { saveReading, getReadings } from '../../KarenVault.js';
 
 /**
  * Valid states for the DivineInsightApp.
@@ -43,15 +47,34 @@ const MAX_JOURNAL_ENTRIES = 50;
 export class DivineInsightApp {
     constructor() {
         this.deckDataText = null;
+        this.deckData = null;
         this.logicWorker = null;
+        this.karenWorker = null;
+        this.mikeyWorker = null;
         this.workerReady = false;
         this.audioReady = false;
         this.pendingDraw = false;
         this.appState = APP_STATES.BOOTING;
         this._lastBurstAt = 0;
+        this._journalRenderTaskId = 0;
+        this._galleryRenderTaskId = 0;
+        this.lastPanelTrigger = null;
+        this.audioMuted = false;
+        this.lastNonMutedVolume = 0.3;
 
         this.cardView = new CardView();
         this.ambientEngine = new AmbientEngine();
+        this.galleryView = new GalleryView({
+            onShow: () => this.handlePanelShown(),
+            onHide: () => this.handlePanelHidden()
+        });
+        this.managerView = new ManagerView();
+        this.settingsView = new SettingsView({
+            onVolumeChange: (value) => this.setMasterVolume(value),
+            onIntensityChange: (value) => this.setVisualIntensity(value),
+            onShow: () => this.handlePanelShown(),
+            onHide: () => this.handlePanelHidden()
+        });
 
         const cardElement = document.getElementById('tarot-card');
         this.dragController = new DragController(cardElement, this.handleInteraction.bind(this));
@@ -73,17 +96,21 @@ export class DivineInsightApp {
             
             this.deckDataText = await response.text();
             const parsedDeck = parseDeckPayload(this.deckDataText);
+            this.deckData = parsedDeck;
             const deckImageKeys = extractCardImageKeys(parsedDeck);
             this.cardView.setDeckImages(deckImageKeys);
 
             initParticleSystem('starfield');
 
             this.setupLogicWorker();
+            this.setupAssistantWorkers();
             await this.setupAudio();
+            this.managerView.expose();
 
             this.setState(APP_STATES.IDLE);
             this.setStatus(STATUS_MESSAGES.READY);
         } catch (error) {
+            this.reportErrorToKaren(error, 'initialize');
             this.setError(error?.message || 'Failed to initialize system.');
         }
     }
@@ -96,14 +123,45 @@ export class DivineInsightApp {
         this.logicWorker = new Worker(new URL('../logic-worker.js', import.meta.url), { type: 'module' });
         this.logicWorker.onmessage = this.handleWorkerResponse.bind(this);
         this.logicWorker.onerror = (error) => {
+            this.reportErrorToKaren(error, 'logic-worker');
             this.setError(`Logic engine error: ${error.message || 'unknown worker failure'}`);
         };
         this.logicWorker.onmessageerror = () => {
+            this.reportErrorToKaren({ message: 'Logic engine sent an unreadable message.' }, 'logic-worker');
             this.setError('Logic engine sent an unreadable message.');
         };
         
         // Kick off deck initialization in worker
         this.logicWorker.postMessage({ type: 'INIT_DECK', payload: this.deckDataText });
+    }
+
+    /**
+     * Initializes Karen + Mikey assistant workers and links their message channel.
+     * @private
+     */
+    setupAssistantWorkers() {
+        if (typeof Worker !== 'function' || typeof MessageChannel !== 'function') return;
+
+        try {
+            this.karenWorker = new Worker(new URL('../../karen-worker.js', import.meta.url));
+            this.mikeyWorker = new Worker(new URL('../../mikey-worker.js', import.meta.url));
+
+            this.karenWorker.onmessage = this.handleKarenWorkerMessage.bind(this);
+            this.karenWorker.onerror = (error) => {
+                console.warn('[KarenWorker] Failed:', error);
+            };
+            this.mikeyWorker.onerror = (error) => {
+                console.warn('[MikeyWorker] Failed:', error);
+            };
+
+            const channel = new MessageChannel();
+            this.karenWorker.postMessage({ type: 'LINK_ASSISTANT' }, [channel.port1]);
+            this.mikeyWorker.postMessage({ type: 'LINK_KAREN' }, [channel.port2]);
+        } catch (error) {
+            console.warn('Assistant workers unavailable:', error);
+            this.karenWorker = null;
+            this.mikeyWorker = null;
+        }
     }
 
     /**
@@ -135,6 +193,10 @@ export class DivineInsightApp {
             const message = event?.detail;
             if (message) this.setStatus(message);
         });
+
+        window.handleGalleryAssetError = (assetKey) => {
+            this.reportErrorToKaren({ message: `Missing gallery asset: ${assetKey}` }, 'gallery-assets');
+        };
     }
 
     /**
@@ -151,6 +213,16 @@ export class DivineInsightApp {
         const journalPanel = document.getElementById('journal-panel');
         const closeJournalBtn = document.getElementById('btn-close-journal');
         const clearJournalBtn = document.getElementById('btn-clear-journal');
+        const journalBtn = document.getElementById('btn-journal');
+        const openFullJournalBtn = document.getElementById('btn-open-full-journal');
+        const galleryBtn = document.getElementById('btn-deck-gallery');
+        const settingsBtn = document.getElementById('btn-altar-settings');
+        const focusIntentBtn = document.getElementById('btn-focus-intent');
+        const toggleAudioBtn = document.getElementById('btn-toggle-audio');
+        const mobileOracleBtn = document.getElementById('btn-mobile-oracle');
+        const mobileHistoryBtn = document.getElementById('btn-mobile-history');
+        const mobileArcanaBtn = document.getElementById('btn-mobile-arcana');
+        const mobileRitualBtn = document.getElementById('btn-mobile-ritual');
 
         if (seekBtn) {
             seekBtn.addEventListener('click', () => {
@@ -170,15 +242,42 @@ export class DivineInsightApp {
         }
 
         if (resetBtn) resetBtn.addEventListener('click', () => this.resetAltar());
-        if (pastReadingsBtn) pastReadingsBtn.addEventListener('click', () => this.showJournal());
-        if (closeJournalBtn) closeJournalBtn.addEventListener('click', () => this.hideJournal());
+        if (pastReadingsBtn) pastReadingsBtn.addEventListener('click', () => this.showJournal(pastReadingsBtn));
+        if (journalBtn) journalBtn.addEventListener('click', () => this.showJournal(journalBtn));
+        if (openFullJournalBtn) openFullJournalBtn.addEventListener('click', () => this.showJournal(openFullJournalBtn));
+        if (galleryBtn) galleryBtn.addEventListener('click', () => this.showGallery(galleryBtn));
+        if (settingsBtn) settingsBtn.addEventListener('click', () => this.showSettings(settingsBtn));
+        if (closeJournalBtn) closeJournalBtn.addEventListener('click', () => this.hideJournal(true));
         if (clearJournalBtn) clearJournalBtn.addEventListener('click', () => this.clearJournal());
+        if (focusIntentBtn && intentInput) {
+            focusIntentBtn.addEventListener('click', () => {
+                intentInput.focus();
+                this.setStatus('Intent input focused. Type your question to begin.');
+            });
+        }
+        if (toggleAudioBtn) toggleAudioBtn.addEventListener('click', () => this.toggleAudioMute(toggleAudioBtn));
+        if (mobileOracleBtn && intentInput) {
+            mobileOracleBtn.addEventListener('click', () => {
+                intentInput.focus();
+                document.getElementById('main-content')?.focus();
+            });
+        }
+        if (mobileHistoryBtn) mobileHistoryBtn.addEventListener('click', () => this.showJournal(mobileHistoryBtn));
+        if (mobileArcanaBtn) mobileArcanaBtn.addEventListener('click', () => this.showGallery(mobileArcanaBtn));
+        if (mobileRitualBtn) mobileRitualBtn.addEventListener('click', () => this.showSettings(mobileRitualBtn));
 
         if (journalPanel) {
             journalPanel.addEventListener('click', (event) => {
-                if (event.target === journalPanel) this.hideJournal();
+                if (event.target === journalPanel) this.hideJournal(true);
             });
         }
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            if (this.isJournalVisible()) {
+                this.hideJournal(true);
+            }
+        });
 
         [cardElement, deckStack].forEach(el => {
             if (!el) return;
@@ -269,45 +368,57 @@ export class DivineInsightApp {
     }
 
     /**
+     * Retrieves journal entries from local storage with vault fallback.
+     * @returns {Promise<Array<Object>>}
+     */
+    async readJournalEntries() {
+        const localEntries = this.readJournal();
+        if (localEntries.length > 0) return localEntries;
+
+        try {
+            const vaultReadings = await getReadings();
+            if (!Array.isArray(vaultReadings)) return localEntries;
+            return vaultReadings.filter(Boolean).slice(0, MAX_JOURNAL_ENTRIES);
+        } catch (error) {
+            return localEntries;
+        }
+    }
+
+    /**
      * Opens the journal UI panel and populates the reading list.
      */
-    showJournal() {
+    async showJournal(triggerEl = null) {
         const panel = document.getElementById('journal-panel');
         const list = document.getElementById('journal-list');
         if (!panel || !list) return;
+        if (triggerEl) this.lastPanelTrigger = triggerEl;
+        this.galleryView.hide();
+        this.settingsView.hide();
 
-        const readings = this.readJournal();
-        list.innerHTML = '';
-
-        if (readings.length === 0) {
-            const empty = document.createElement('li');
-            empty.className = 'text-moon-silver/60 text-sm';
-            empty.innerText = JOURNAL_MESSAGES.EMPTY;
-            list.appendChild(empty);
-        } else {
-            readings.forEach((entry) => {
-                const li = document.createElement('li');
-                li.className = 'rounded-lg border border-moon-silver/15 bg-white/5 p-3';
-                const date = entry.date ? new Date(entry.date).toLocaleString() : JOURNAL_MESSAGES.UNKNOWN_DATE;
-                li.innerHTML = `<div class="font-semibold text-ethereal-teal">${entry.cardName || JOURNAL_MESSAGES.UNKNOWN_CARD} (${entry.orientation || 'upright'})</div>
-<div class="text-moon-silver/70 text-xs mt-1">${date}</div>
-<div class="text-moon-silver/60 text-xs mt-1">Axis: ${entry.dominantAxis || JOURNAL_MESSAGES.UNKNOWN_AXIS}</div>`;
-                list.appendChild(li);
-            });
-        }
+        const readings = await this.readJournalEntries();
+        this.renderJournal(readings);
+        this.requestJournalRender(readings);
 
         panel.classList.remove('hidden');
         panel.setAttribute('aria-hidden', 'false');
+        panel.removeAttribute('inert');
+        this.handlePanelShown();
+        document.getElementById('btn-close-journal')?.focus();
     }
 
     /**
      * Closes the journal UI panel.
      */
-    hideJournal() {
+    hideJournal(restoreFocus = false) {
         const panel = document.getElementById('journal-panel');
         if (!panel) return;
         panel.classList.add('hidden');
         panel.setAttribute('aria-hidden', 'true');
+        panel.setAttribute('inert', '');
+        this.handlePanelHidden();
+        if (restoreFocus && this.lastPanelTrigger instanceof HTMLElement) {
+            this.lastPanelTrigger.focus();
+        }
     }
 
     /**
@@ -334,6 +445,215 @@ export class DivineInsightApp {
         };
         readings.unshift(entry);
         this.writeJournal(readings);
+        void saveReading(entry);
+    }
+
+    /**
+     * Renders journal entries using in-thread fallback templates.
+     * @param {Array<Object>} readings
+     */
+    renderJournal(readings) {
+        const list = document.getElementById('journal-list');
+        if (!list) return;
+
+        list.innerHTML = '';
+        if (!Array.isArray(readings) || readings.length === 0) {
+            const empty = document.createElement('li');
+            empty.className = 'text-moon-silver/60 text-sm';
+            empty.innerText = JOURNAL_MESSAGES.EMPTY;
+            list.appendChild(empty);
+            return;
+        }
+
+        readings.forEach((entry) => {
+            const li = document.createElement('li');
+            li.className = 'rounded-lg border border-moon-silver/15 bg-white/5 p-3';
+            const date = entry.date ? new Date(entry.date).toLocaleString() : JOURNAL_MESSAGES.UNKNOWN_DATE;
+            li.innerHTML = `<div class="font-semibold text-ethereal-teal">${entry.cardName || JOURNAL_MESSAGES.UNKNOWN_CARD} (${entry.orientation || 'upright'})</div>
+<div class="text-moon-silver/70 text-xs mt-1">${date}</div>
+<div class="text-moon-silver/60 text-xs mt-1">Axis: ${entry.dominantAxis || JOURNAL_MESSAGES.UNKNOWN_AXIS}</div>`;
+            list.appendChild(li);
+        });
+    }
+
+    /**
+     * Displays the deck gallery and requests worker rendering.
+     */
+    showGallery(triggerEl = null) {
+        if (!this.deckData) return;
+        if (triggerEl) this.lastPanelTrigger = triggerEl;
+        this.hideJournal();
+        this.settingsView.hide();
+
+        this.galleryView.show({ cards: extractCards(this.deckData) });
+        this.requestGalleryRender();
+    }
+
+    showSettings(triggerEl = null) {
+        if (triggerEl) this.lastPanelTrigger = triggerEl;
+        this.hideJournal();
+        this.galleryView.hide();
+        this.settingsView.show();
+        document.getElementById('btn-close-settings')?.focus();
+    }
+
+    /**
+     * Requests Mikey-rendered journal HTML via Karen worker.
+     * @param {Array<Object>} readings
+     */
+    requestJournalRender(readings) {
+        if (!this.karenWorker || !Array.isArray(readings) || readings.length === 0) return;
+
+        this._journalRenderTaskId += 1;
+        this.karenWorker.postMessage({
+            type: 'RENDER_JOURNAL',
+            taskId: this._journalRenderTaskId,
+            payload: readings
+        });
+    }
+
+    /**
+     * Requests Mikey-rendered gallery HTML via Karen worker.
+     */
+    requestGalleryRender() {
+        if (!this.karenWorker || !this.deckData) return;
+
+        this._galleryRenderTaskId += 1;
+        this.karenWorker.postMessage({
+            type: 'RENDER_GALLERY',
+            taskId: this._galleryRenderTaskId,
+            payload: { cards: extractCards(this.deckData) }
+        });
+    }
+
+    /**
+     * Handles Karen worker messages.
+     * @param {MessageEvent} event
+     */
+    handleKarenWorkerMessage(event) {
+        const data = event?.data;
+        if (!data || typeof data !== 'object') return;
+
+        switch (data.type) {
+            case 'JOURNAL_READY':
+                if (data.taskId !== this._journalRenderTaskId) return;
+                this.applyRenderedJournal(data.payload);
+                break;
+            case 'GALLERY_READY':
+                if (data.taskId !== this._galleryRenderTaskId) return;
+                this.galleryView.show(null, data.payload);
+                break;
+            case 'KAREN_THOUGHT':
+                if (data.payload?.message) console.debug('[Karen]', data.payload.message);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Applies worker-rendered journal HTML.
+     * @param {Array<string>} renderedEntries
+     */
+    applyRenderedJournal(renderedEntries) {
+        const list = document.getElementById('journal-list');
+        if (!list || !Array.isArray(renderedEntries) || renderedEntries.length === 0) return;
+        list.innerHTML = renderedEntries.join('');
+    }
+
+    /**
+     * Handles volume slider updates.
+     * @param {number} value
+     */
+    setMasterVolume(value) {
+        const normalized = Math.max(0, Math.min(1, Number(value)));
+        if (normalized > 0) {
+            this.lastNonMutedVolume = normalized;
+            this.audioMuted = false;
+        }
+        ['audio-base', 'audio-swoosh', 'audio-hover', 'audio-draw', 'audio-flip']
+            .map(id => document.getElementById(id))
+            .filter(Boolean)
+            .forEach((el) => {
+                el.volume = normalized;
+            });
+    }
+
+    /**
+     * Handles visual intensity slider updates.
+     * @param {number} value
+     */
+    setVisualIntensity(value) {
+        const normalized = Math.max(0.3, Math.min(1.4, Number(value)));
+        const starfield = document.getElementById('starfield');
+        if (starfield) starfield.style.opacity = String(Math.min(1, normalized));
+        const panel = document.getElementById('insight-panel');
+        if (panel) panel.style.filter = `saturate(${normalized})`;
+    }
+
+    isJournalVisible() {
+        const panel = document.getElementById('journal-panel');
+        return !!panel && !panel.classList.contains('hidden');
+    }
+
+    isAnyPanelVisible() {
+        return this.isJournalVisible() || this.galleryView.isVisible() || this.settingsView.isVisible();
+    }
+
+    setBackgroundInteractionDisabled(isDisabled) {
+        const sideNav = document.getElementById('sideNav');
+        const mainContent = document.getElementById('main-content');
+        const mobileNav = document.getElementById('mobile-nav');
+        const targets = [sideNav, mainContent, mobileNav].filter(Boolean);
+        targets.forEach((node) => {
+            if (isDisabled) node.setAttribute('inert', '');
+            else node.removeAttribute('inert');
+        });
+    }
+
+    handlePanelShown() {
+        this.setBackgroundInteractionDisabled(true);
+    }
+
+    handlePanelHidden() {
+        this.setBackgroundInteractionDisabled(this.isAnyPanelVisible());
+        if (!this.isAnyPanelVisible() && this.lastPanelTrigger instanceof HTMLElement) {
+            this.lastPanelTrigger.focus();
+        }
+    }
+
+    toggleAudioMute(toggleBtn) {
+        if (!this.audioMuted) {
+            this.audioMuted = true;
+            this.setMasterVolume(0);
+            this.setStatus('Audio muted. Use the speaker button to unmute.');
+        } else {
+            this.audioMuted = false;
+            this.setMasterVolume(this.lastNonMutedVolume || 0.3);
+            this.setStatus('Audio restored.');
+        }
+
+        const icon = toggleBtn?.querySelector('.material-symbols-outlined');
+        if (icon) icon.textContent = this.audioMuted ? 'volume_off' : 'volume_up';
+        if (toggleBtn) toggleBtn.setAttribute('aria-label', this.audioMuted ? 'Unmute audio' : 'Mute audio');
+    }
+
+    /**
+     * Reports runtime errors to Karen's incident worker.
+     * @param {any} error
+     * @param {string} source
+     */
+    reportErrorToKaren(error, source = 'runtime') {
+        if (!this.karenWorker) return;
+
+        this.karenWorker.postMessage({
+            type: 'REPORT_ERROR',
+            payload: {
+                source,
+                message: error?.message || String(error || 'Unknown error'),
+                stack: error?.stack || null
+            }
+        });
     }
 
     /**

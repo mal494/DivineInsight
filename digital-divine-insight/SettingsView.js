@@ -11,6 +11,8 @@ export class SettingsView {
         
         this.onVolumeChange = callbacks.onVolumeChange;
         this.onIntensityChange = callbacks.onIntensityChange;
+        this.onShow = callbacks.onShow;
+        this.onHide = callbacks.onHide;
 
         if (this.closeBtn) {
             this.closeBtn.addEventListener('click', () => this.hide());
@@ -46,11 +48,17 @@ export class SettingsView {
         if (!this.panel) return;
         this.panel.classList.remove('translate-x-full');
         this.panel.classList.add('translate-x-0');
+        this.panel.setAttribute('aria-hidden', 'false');
+        this.panel.removeAttribute('inert');
+        this.onShow?.();
     }
 
     hide() {
         if (!this.panel) return;
         this.panel.classList.add('translate-x-full');
         this.panel.classList.remove('translate-x-0');
+        this.panel.setAttribute('aria-hidden', 'true');
+        this.panel.setAttribute('inert', '');
+        this.onHide?.();
     }
 }

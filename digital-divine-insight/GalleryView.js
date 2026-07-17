@@ -3,11 +3,13 @@
  * Renders a grid of cards and allows users to view their basic meanings.
  */
 export class GalleryView {
-    constructor() {
+    constructor(callbacks = {}) {
         this.panel = document.getElementById('gallery-panel');
         this.gridContainer = document.getElementById('gallery-grid');
         this.closeBtn = document.getElementById('btn-close-gallery');
         this.deckData = null;
+        this.onShow = callbacks.onShow;
+        this.onHide = callbacks.onHide;
         
         if (this.closeBtn) {
             this.closeBtn.addEventListener('click', () => this.hide());
@@ -38,12 +40,18 @@ export class GalleryView {
         // Show panel
         this.panel.classList.remove('translate-x-full');
         this.panel.classList.add('translate-x-0');
+        this.panel.setAttribute('aria-hidden', 'false');
+        this.panel.removeAttribute('inert');
+        this.onShow?.();
     }
 
     hide() {
         if (!this.panel) return;
         this.panel.classList.add('translate-x-full');
         this.panel.classList.remove('translate-x-0');
+        this.panel.setAttribute('aria-hidden', 'true');
+        this.panel.setAttribute('inert', '');
+        this.onHide?.();
     }
 
     renderGrid() {
