@@ -58,14 +58,22 @@ export class DivineInsightApp {
         this._lastBurstAt = 0;
         this._journalRenderTaskId = 0;
         this._galleryRenderTaskId = 0;
+        this.lastPanelTrigger = null;
+        this.audioMuted = false;
+        this.lastNonMutedVolume = 0.3;
 
         this.cardView = new CardView();
         this.ambientEngine = new AmbientEngine();
-        this.galleryView = new GalleryView();
+        this.galleryView = new GalleryView({
+            onShow: () => this.handlePanelShown(),
+            onHide: () => this.handlePanelHidden()
+        });
         this.managerView = new ManagerView();
         this.settingsView = new SettingsView({
             onVolumeChange: (value) => this.setMasterVolume(value),
-            onIntensityChange: (value) => this.setVisualIntensity(value)
+            onIntensityChange: (value) => this.setVisualIntensity(value),
+            onShow: () => this.handlePanelShown(),
+            onHide: () => this.handlePanelHidden()
         });
 
         const cardElement = document.getElementById('tarot-card');
@@ -209,6 +217,12 @@ export class DivineInsightApp {
         const openFullJournalBtn = document.getElementById('btn-open-full-journal');
         const galleryBtn = document.getElementById('btn-deck-gallery');
         const settingsBtn = document.getElementById('btn-altar-settings');
+        const focusIntentBtn = document.getElementById('btn-focus-intent');
+        const toggleAudioBtn = document.getElementById('btn-toggle-audio');
+        const mobileOracleBtn = document.getElementById('btn-mobile-oracle');
+        const mobileHistoryBtn = document.getElementById('btn-mobile-history');
+        const mobileArcanaBtn = document.getElementById('btn-mobile-arcana');
+        const mobileRitualBtn = document.getElementById('btn-mobile-ritual');
 
         if (seekBtn) {
             seekBtn.addEventListener('click', () => {
@@ -228,19 +242,42 @@ export class DivineInsightApp {
         }
 
         if (resetBtn) resetBtn.addEventListener('click', () => this.resetAltar());
-        if (pastReadingsBtn) pastReadingsBtn.addEventListener('click', () => this.showJournal());
-        if (journalBtn) journalBtn.addEventListener('click', () => this.showJournal());
-        if (openFullJournalBtn) openFullJournalBtn.addEventListener('click', () => this.showJournal());
-        if (galleryBtn) galleryBtn.addEventListener('click', () => this.showGallery());
-        if (settingsBtn) settingsBtn.addEventListener('click', () => this.settingsView.show());
-        if (closeJournalBtn) closeJournalBtn.addEventListener('click', () => this.hideJournal());
+        if (pastReadingsBtn) pastReadingsBtn.addEventListener('click', () => this.showJournal(pastReadingsBtn));
+        if (journalBtn) journalBtn.addEventListener('click', () => this.showJournal(journalBtn));
+        if (openFullJournalBtn) openFullJournalBtn.addEventListener('click', () => this.showJournal(openFullJournalBtn));
+        if (galleryBtn) galleryBtn.addEventListener('click', () => this.showGallery(galleryBtn));
+        if (settingsBtn) settingsBtn.addEventListener('click', () => this.showSettings(settingsBtn));
+        if (closeJournalBtn) closeJournalBtn.addEventListener('click', () => this.hideJournal(true));
         if (clearJournalBtn) clearJournalBtn.addEventListener('click', () => this.clearJournal());
+        if (focusIntentBtn && intentInput) {
+            focusIntentBtn.addEventListener('click', () => {
+                intentInput.focus();
+                this.setStatus('Intent input focused. Type your question to begin.');
+            });
+        }
+        if (toggleAudioBtn) toggleAudioBtn.addEventListener('click', () => this.toggleAudioMute(toggleAudioBtn));
+        if (mobileOracleBtn && intentInput) {
+            mobileOracleBtn.addEventListener('click', () => {
+                intentInput.focus();
+                document.getElementById('main-content')?.focus();
+            });
+        }
+        if (mobileHistoryBtn) mobileHistoryBtn.addEventListener('click', () => this.showJournal(mobileHistoryBtn));
+        if (mobileArcanaBtn) mobileArcanaBtn.addEventListener('click', () => this.showGallery(mobileArcanaBtn));
+        if (mobileRitualBtn) mobileRitualBtn.addEventListener('click', () => this.showSettings(mobileRitualBtn));
 
         if (journalPanel) {
             journalPanel.addEventListener('click', (event) => {
-                if (event.target === journalPanel) this.hideJournal();
+                if (event.target === journalPanel) this.hideJournal(true);
             });
         }
+
+        window.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape') return;
+            if (this.isJournalVisible()) {
+                this.hideJournal(true);
+            }
+        });
 
         [cardElement, deckStack].forEach(el => {
             if (!el) return;
@@ -350,10 +387,13 @@ export class DivineInsightApp {
     /**
      * Opens the journal UI panel and populates the reading list.
      */
-    async showJournal() {
+    async showJournal(triggerEl = null) {
         const panel = document.getElementById('journal-panel');
         const list = document.getElementById('journal-list');
         if (!panel || !list) return;
+        if (triggerEl) this.lastPanelTrigger = triggerEl;
+        this.galleryView.hide();
+        this.settingsView.hide();
 
         const readings = await this.readJournalEntries();
         this.renderJournal(readings);
@@ -361,16 +401,24 @@ export class DivineInsightApp {
 
         panel.classList.remove('hidden');
         panel.setAttribute('aria-hidden', 'false');
+        panel.removeAttribute('inert');
+        this.handlePanelShown();
+        document.getElementById('btn-close-journal')?.focus();
     }
 
     /**
      * Closes the journal UI panel.
      */
-    hideJournal() {
+    hideJournal(restoreFocus = false) {
         const panel = document.getElementById('journal-panel');
         if (!panel) return;
         panel.classList.add('hidden');
         panel.setAttribute('aria-hidden', 'true');
+        panel.setAttribute('inert', '');
+        this.handlePanelHidden();
+        if (restoreFocus && this.lastPanelTrigger instanceof HTMLElement) {
+            this.lastPanelTrigger.focus();
+        }
     }
 
     /**
@@ -431,11 +479,22 @@ export class DivineInsightApp {
     /**
      * Displays the deck gallery and requests worker rendering.
      */
-    showGallery() {
+    showGallery(triggerEl = null) {
         if (!this.deckData) return;
+        if (triggerEl) this.lastPanelTrigger = triggerEl;
+        this.hideJournal();
+        this.settingsView.hide();
 
         this.galleryView.show({ cards: extractCards(this.deckData) });
         this.requestGalleryRender();
+    }
+
+    showSettings(triggerEl = null) {
+        if (triggerEl) this.lastPanelTrigger = triggerEl;
+        this.hideJournal();
+        this.galleryView.hide();
+        this.settingsView.show();
+        document.getElementById('btn-close-settings')?.focus();
     }
 
     /**
@@ -508,6 +567,10 @@ export class DivineInsightApp {
      */
     setMasterVolume(value) {
         const normalized = Math.max(0, Math.min(1, Number(value)));
+        if (normalized > 0) {
+            this.lastNonMutedVolume = normalized;
+            this.audioMuted = false;
+        }
         ['audio-base', 'audio-swoosh', 'audio-hover', 'audio-draw', 'audio-flip']
             .map(id => document.getElementById(id))
             .filter(Boolean)
@@ -526,6 +589,53 @@ export class DivineInsightApp {
         if (starfield) starfield.style.opacity = String(Math.min(1, normalized));
         const panel = document.getElementById('insight-panel');
         if (panel) panel.style.filter = `saturate(${normalized})`;
+    }
+
+    isJournalVisible() {
+        const panel = document.getElementById('journal-panel');
+        return !!panel && !panel.classList.contains('hidden');
+    }
+
+    isAnyPanelVisible() {
+        return this.isJournalVisible() || this.galleryView.isVisible() || this.settingsView.isVisible();
+    }
+
+    setBackgroundInteractionDisabled(isDisabled) {
+        const sideNav = document.getElementById('sideNav');
+        const mainContent = document.getElementById('main-content');
+        const mobileNav = document.getElementById('mobile-nav');
+        const targets = [sideNav, mainContent, mobileNav].filter(Boolean);
+        targets.forEach((node) => {
+            if (isDisabled) node.setAttribute('inert', '');
+            else node.removeAttribute('inert');
+        });
+    }
+
+    handlePanelShown() {
+        this.setBackgroundInteractionDisabled(true);
+    }
+
+    handlePanelHidden() {
+        this.setBackgroundInteractionDisabled(this.isAnyPanelVisible());
+        if (!this.isAnyPanelVisible() && this.lastPanelTrigger instanceof HTMLElement) {
+            this.lastPanelTrigger.focus();
+        }
+    }
+
+    toggleAudioMute(toggleBtn) {
+        if (!this.audioMuted) {
+            this.audioMuted = true;
+            this.setMasterVolume(0);
+            this.setStatus('Audio muted. Use the speaker button to unmute.');
+        } else {
+            this.audioMuted = false;
+            this.setMasterVolume(this.lastNonMutedVolume || 0.3);
+            this.setStatus('Audio restored.');
+        }
+
+        const icon = toggleBtn?.querySelector('.material-symbols-outlined');
+        if (icon) icon.textContent = this.audioMuted ? 'volume_off' : 'volume_up';
+        if (toggleBtn) toggleBtn.setAttribute('aria-label', this.audioMuted ? 'Unmute audio' : 'Mute audio');
     }
 
     /**
