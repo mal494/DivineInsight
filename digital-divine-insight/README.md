@@ -8,7 +8,7 @@ This MVP focuses on processing speed and fluid interaction, utilizing modern web
 
 * **Modular Structure:** The front-end is cleanly divided into specific controllers for state orchestration, DOM manipulation, and pointer tracking.
 * **Web Worker Engine:** Core calculations—including the 1-to-5 influence scale, entropy pooling based on user swipe speed, and array shuffling—are offloaded to a background thread to prevent main-thread blocking.
-* **Decoupled Taxonomy:** Card data is managed via a rigid JSON schema (`tarot_data.json`) containing structured metadata (elemental affinities, astrological associations) for dynamic, context-aware readings.
+* **Decoupled Taxonomy:** Card data is managed via a rigid JSON schema (`divine-insight-optimized.json`) containing structured metadata (elemental affinities, astrological associations) for dynamic, context-aware readings.
 * **Interactive Audio:** Utilizes the Web Audio API to drive an ambient soundscape that reacts to the application's state.
 
 ## Vector Spread Contract
@@ -89,11 +89,11 @@ To run this project locally, a development server is required so the ES6 modules
 
    git clone <https://github.com/mal494/DivineInsight.git>
 
-2. Navigate to the project directory:
+2. Navigate to the app directory (from the repository root):
 
-    cd DivineInsight
+    cd digital-divine-insight
 
-3. Start a local development server. You can use any static server
+3. Start a local development server. You can use any static server:
 
     python3 -m http.server 8000
 
